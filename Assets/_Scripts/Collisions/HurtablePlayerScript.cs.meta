@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 8748f924fae75294dbe8b456eef2c405
+timeCreated: 1516529946
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - invincible: {fileID: 11400000, guid: a28dbc5215ba24b409aa954822f85470, type: 2}
+  - playerMaxHealth: {fileID: 11400000, guid: 659da0c044e21214d80524b89c1c6bfa, type: 2}
+  - damageTaken: {instanceID: 0}
+  - otherDamageTaken: {instanceID: 0}
+  - playerDefense: {instanceID: 0}
+  - invinciblePlayer: {fileID: 11400000, guid: a28dbc5215ba24b409aa954822f85470, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

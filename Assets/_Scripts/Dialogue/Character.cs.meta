@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6caa9959b8b8bfb48955b54fb93f283b
+timeCreated: 1512819003
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - characterLibrary: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - characterIndex: {instanceID: 0}
+  - poseIndex: {instanceID: 0}
+  - characterSprite: {instanceID: 0}
+  - poseSprite: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

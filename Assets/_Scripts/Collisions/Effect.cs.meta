@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 24bac5b28c766b94c8de5b2dd2dac1fd
+timeCreated: 1514577266
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paused: {fileID: 11400000, guid: a6a7974a7061e1f488dd3a55225ba7f2, type: 2}
+  - canBeSlowed: {fileID: 11400000, guid: df6f0260f1572b4449c8f1c794a53d9e, type: 2}
+  - slowLeftSide: {fileID: 11400000, guid: e26c7dcc3b7297048b25381efd359e9e, type: 2}
+  - slowAmount: {fileID: 11400000, guid: 4c194e2da51e6404baec6c54f7905337, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 444dda7a0cdbfe94c805a776490df0a7
+timeCreated: 1512509001
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - battleUuid: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
+  - enemyLibrary: {fileID: 11400000, guid: 35486eb2ec26012468288b206c04cb41, type: 2}
+  - towerBattle: {fileID: 11400000, guid: 4ab372cd18114d246b7acb8fa4bf6e71, type: 2}
+  - towerLevel: {fileID: 11400000, guid: fe745d713ad1de64a8609c852fa44b6e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

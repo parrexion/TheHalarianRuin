@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: f21164a212c369f45851d8bb0321e2d2
+timeCreated: 1516530578
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - invinciblePlayers: {fileID: 11400000, guid: a28dbc5215ba24b409aa954822f85470,
+      type: 2}
+  - invincibleEnemies: {fileID: 11400000, guid: d6cb97b18f8b43346aaf3906adc9814f,
+      type: 2}
+  - alwaysEscapeBattle: {fileID: 11400000, guid: 2481b0d3b2287904185fc9dd3a70ae05,
+      type: 2}
+  - speedHack: {fileID: 11400000, guid: 916b3a23fd3a4b84ab68ba940aa798ae, type: 2}
+  - alwaysSkippableDialogue: {fileID: 11400000, guid: 9ce7a4058c547224eb9a04691fb882ff,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

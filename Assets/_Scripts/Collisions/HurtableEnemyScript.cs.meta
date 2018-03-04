@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ba9f645f3bf4dca4b9c04c8f3bd2ae80
+timeCreated: 1516529871
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - damageNumbers: {instanceID: 0}
+  - invincibleEnemy: {fileID: 11400000, guid: d6cb97b18f8b43346aaf3906adc9814f, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

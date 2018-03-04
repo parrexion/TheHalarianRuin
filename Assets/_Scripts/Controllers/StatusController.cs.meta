@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 49ad7391defea3f4a8a05edb820ade3d
+timeCreated: 1514661995
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ingameDay: {fileID: 11400000, guid: b5c7d615309c334408ec7078e0ade7cd, type: 2}
+  - playerLevel: {fileID: 11400000, guid: 68490c0991dd89d408ac266cc145346c, type: 2}
+  - totalExp: {fileID: 11400000, guid: 862f92cc480c4134ea10ab4362ff1360, type: 2}
+  - money: {fileID: 11400000, guid: dd4171d0e6dec52418abddeaa107dcd9, type: 2}
+  - playTime: {fileID: 11400000, guid: a0e43e23999c6fe4ba95330a2223d9f0, type: 2}
+  - maxHealth: {fileID: 11400000, guid: 659da0c044e21214d80524b89c1c6bfa, type: 2}
+  - attack: {fileID: 11400000, guid: 347591f73a548254c98504e2242ad27c, type: 2}
+  - defense: {fileID: 11400000, guid: 6bff1a6c6cf74bd4a994bb9cb17ee121, type: 2}
+  - sAttack: {fileID: 11400000, guid: 5740fbbd3a9baa44c8a79ef0739f7f87, type: 2}
+  - sDefense: {fileID: 11400000, guid: 8b921945b8d60594199dade02a28567e, type: 2}
+  - dayText: {instanceID: 0}
+  - levelText: {instanceID: 0}
+  - expText: {instanceID: 0}
+  - moneyText: {instanceID: 0}
+  - playtimeText: {instanceID: 0}
+  - healthText: {instanceID: 0}
+  - attackText: {instanceID: 0}
+  - defenseText: {instanceID: 0}
+  - sAttackText: {instanceID: 0}
+  - sDefenseText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

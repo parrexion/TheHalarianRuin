@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: fdb5b4a6deab50145838e26789305d91
+timeCreated: 1517080694
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueUUID: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
+  - currentArea: {fileID: 11400000, guid: 12a76b9ecb4623145b88105a05db7654, type: 2}
+  - playerArea: {fileID: 11400000, guid: 97c8c168a575ed94fac5f33ca22a66d5, type: 2}
+  - backgroundLibrary: {fileID: 11400000, guid: 891f70156dfccd8478b72770afdffb20,
+      type: 2}
+  - characterLibrary: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - dialogueLibrary: {fileID: 11400000, guid: 81638be706d6e734c8573fd18a978b3c, type: 2}
+  - entry: {fileID: 11400000, guid: 5f1296937a325ad4f8eef2b3ec8a75be, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

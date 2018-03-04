@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 93800eed45bbccc408a0fd0a13089124
+timeCreated: 1514800257
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bestTowerLevel: {fileID: 11400000, guid: f8c299aac5cda19468e2de46718dc1db, type: 2}
+  - currentTowerLevel: {fileID: 11400000, guid: fe745d713ad1de64a8609c852fa44b6e,
+      type: 2}
+  - musicVolume: {fileID: 11400000, guid: 57e0a641820786e489b71b139ade22e3, type: 2}
+  - effectVolume: {fileID: 11400000, guid: f0ee9cb5274ed5c448393806bd0307f0, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

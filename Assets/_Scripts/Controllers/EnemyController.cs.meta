@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a3c4b600cdf14e5409a39588d9df37db
+timeCreated: 1512509694
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - battleLibrary: {fileID: 11400000, guid: 9df050c932e95ad4a8d04ba17b99fe4e, type: 2}
+  - battleUuid: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
+  - be: {instanceID: 0}
+  - deadEnemy: {fileID: 4000012027904104, guid: 624f3b9700fd48448bed0cd1d00ba240,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

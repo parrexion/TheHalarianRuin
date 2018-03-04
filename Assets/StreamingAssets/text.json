@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "key": "kanji_earth",
+      "value": "Earth"
+    },
+    {
+      "key": "kanji_wind",
+      "value": "Wind"
+    },
+    {
+      "key": "kanji_fire",
+      "value": "Fire"
+    },
+    {
+      "key": "kanji_water",
+      "value": "Water"
+    }
+  ]
+}

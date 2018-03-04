@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 13f7d36392a6e3f4e917f59cf2e9ed66
+timeCreated: 1511896718
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - recordText: {instanceID: 0}
+  - mainMenuCanvas: {instanceID: 0}
+  - levelSelectCanvas: {instanceID: 0}
+  - levelMaxButton: {instanceID: 0}
+  - levelMaxText: {instanceID: 0}
+  - levelMinus5Button: {instanceID: 0}
+  - levelMinus5Text: {instanceID: 0}
+  - currentTowerLevel: {fileID: 11400000, guid: fe745d713ad1de64a8609c852fa44b6e,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4c9fa34f862bce140bc5f05a389bd0b7
+timeCreated: 1512509446
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paused: {fileID: 11400000, guid: a6a7974a7061e1f488dd3a55225ba7f2, type: 2}
+  - posx: {fileID: 11400000, guid: 0eca8d82750de4c4981212018d942288, type: 2}
+  - posy: {fileID: 11400000, guid: 309179cbb9cd2f0458e68543f41dc12e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

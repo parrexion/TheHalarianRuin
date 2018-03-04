@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f7e31a33e94a1724fb5fa43d350784b1
+timeCreated: 1512819136
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - backgroundLibrary: {fileID: 11400000, guid: 891f70156dfccd8478b72770afdffb20,
+      type: 2}
+  - dialogueBackground: {fileID: 11400000, guid: 3fc1a8ac108b1194091ec2a97d09c0c7,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

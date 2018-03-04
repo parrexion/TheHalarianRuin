@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a8a90cfcdffaced489067a7b9b8a6dee
+timeCreated: 1512819190
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - charLib: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - characterName: {fileID: 11400000, guid: 71ff3a55a95c2bd459cd6a2bf6bfa98b, type: 2}
+  - characterIndex: {fileID: 11400000, guid: 9bd845a1af265f54ab88322b70841fac, type: 2}
+  - poseIndex: {fileID: 11400000, guid: bc6ab626d99b1b242977f7874e0189df, type: 2}
+  - characterNameBox: {instanceID: 0}
+  - characterRenderer: {instanceID: 0}
+  - poseRenderer: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

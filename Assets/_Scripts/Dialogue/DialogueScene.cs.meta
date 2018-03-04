@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: f20eebd0bdf54304fa4a6a7905c3735a
+timeCreated: 1513108440
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueUuid: {instanceID: 0}
+  - background: {instanceID: 0}
+  - character0: {instanceID: 0}
+  - character1: {instanceID: 0}
+  - character2: {instanceID: 0}
+  - character3: {instanceID: 0}
+  - pose0: {fileID: 11400000, guid: 39e4c49404220f540a1854a04e4665de, type: 2}
+  - pose1: {fileID: 11400000, guid: 17cc9e33d248bfd499ae32c9fa925ac9, type: 2}
+  - pose2: {fileID: 11400000, guid: a196e43c51f71a944b49dcc66b602cb2, type: 2}
+  - pose3: {fileID: 11400000, guid: ac4fe95bc0e48214fba12605c9457902, type: 2}
+  - talkingName: {fileID: 11400000, guid: 71ff3a55a95c2bd459cd6a2bf6bfa98b, type: 2}
+  - talkingIndex: {fileID: 11400000, guid: 9bd845a1af265f54ab88322b70841fac, type: 2}
+  - talkingPose: {fileID: 11400000, guid: bc6ab626d99b1b242977f7874e0189df, type: 2}
+  - dialogueText: {fileID: 11400000, guid: b72e866c29712e74f977ab4d53b4f859, type: 2}
+  - paused: {instanceID: 0}
+  - battleUuid: {instanceID: 0}
+  - playerPosX: {instanceID: 0}
+  - playerPosY: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

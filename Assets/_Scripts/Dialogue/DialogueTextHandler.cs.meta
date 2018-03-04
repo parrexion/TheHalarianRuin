@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f73cc9ce8c6d3a34fb41add0e2a8a231
+timeCreated: 1511716679
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueText: {fileID: 11400000, guid: b72e866c29712e74f977ab4d53b4f859, type: 2}
+  - dialogueTextBox: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

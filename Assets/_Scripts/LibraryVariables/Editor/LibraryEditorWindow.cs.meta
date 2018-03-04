@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: a017a9e970e2a9440b5da2e89cdc9b3d
+timeCreated: 1517078636
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - currentWindow: {fileID: 11400000, guid: 79203f0d75591ab4e86b5e9ec1eaa78f, type: 2}
+  - battleLibrary: {fileID: 11400000, guid: 39d7402c7da68f84b988205345a2103b, type: 2}
+  - battleContainer: {fileID: 11400000, guid: 84d29a1c27cb59d429d51a3c4dfc7e08, type: 2}
+  - characterLibrary: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - charContainer: {fileID: 11400000, guid: d6d2495589f13de4db0c3705de9feade, type: 2}
+  - poseList: {fileID: 11400000, guid: be66ce74782dbda43a7c3e4f5be33aab, type: 2}
+  - enemyLibrary: {fileID: 11400000, guid: 0bcb95b7cfdd4ad49b878c00855c24d1, type: 2}
+  - enemyContainer: {fileID: 11400000, guid: b5c47667ecc1bb5458ef4172cba1c7cb, type: 2}
+  - backgroundLibrary: {fileID: 11400000, guid: 891f70156dfccd8478b72770afdffb20,
+      type: 2}
+  - backgroundContainer: {fileID: 11400000, guid: 838b583483dd3c84985492e3e0813fec,
+      type: 2}
+  - itemLibrary: {fileID: 11400000, guid: 8db4087cf91860c44b6a447c30365620, type: 2}
+  - itemContainer: {fileID: 11400000, guid: 1f4246b23c99c4c4aa97d95fc5f6b686, type: 2}
+  - moduleLibrary: {fileID: 11400000, guid: b964049d8fe9be3469c62a0576e3ec62, type: 2}
+  - moduleContainer: {fileID: 11400000, guid: d9a54feb20aa46a47bd8c667444ef3c6, type: 2}
+  - musicLibrary: {fileID: 11400000, guid: 3fadf3e8c88ef1440832f31cc781af3c, type: 2}
+  - musicContainer: {fileID: 11400000, guid: 9a34080fc0cc0b849af7f76ecc91a694, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

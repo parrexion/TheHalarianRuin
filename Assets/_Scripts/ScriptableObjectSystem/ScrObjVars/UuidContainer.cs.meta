@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cd72f72e0811f9446942a9f39f774203
+timeCreated: 1513419632
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - battleUuid: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
+  - dialogueUuid: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
