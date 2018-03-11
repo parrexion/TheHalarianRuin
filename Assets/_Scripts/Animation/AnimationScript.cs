@@ -15,6 +15,8 @@ public abstract class AnimationScript : MonoBehaviour {
 		Idle,
 		WalkLeft,
 		WalkRight,
+		WalkUp,
+		WalkDown,
 		Chase,
 		Attack,
 		Block,
@@ -27,6 +29,8 @@ public abstract class AnimationScript : MonoBehaviour {
 	protected const string kIdleAnim = "Idle";
 	protected const string kWalkLAnim = "WalkLeft";
 	protected const string kWalkRAnim = "WalkRight";
+	protected const string kWalkUAnim = "WalkUp";
+	protected const string kWalkDAnim = "WalkDown";
 	protected const string kChaseAnim = "Chase";
 	protected const string kAttackAnim = "Attack";
 	protected const string kBlockAnim = "Block";

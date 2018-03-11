@@ -13,6 +13,7 @@ public class SlowTimeCamera : MonoBehaviour {
 	public bool isSoldierCamera;
 	public Color colorTint;
 
+	private Camera displayCamera;
 	private CameraRatio cameraRatio;
 	private Texture2D effectTexture;
 	private Rect cameraRect;
@@ -30,7 +31,8 @@ public class SlowTimeCamera : MonoBehaviour {
 			yield return null;
 		}
 
-		Rect tempRect = GetComponent<Camera>().rect;
+		displayCamera = GetComponent<Camera>();
+		Rect tempRect = displayCamera.rect;
 		cameraRect = new Rect(tempRect.x * Screen.width, (1-tempRect.y-tempRect.height) * Screen.height, tempRect.width * Screen.width, tempRect.height * Screen.height);
 
 		effectTexture = new Texture2D(1,1);
@@ -47,7 +49,7 @@ public class SlowTimeCamera : MonoBehaviour {
 	/// </summary>
     void OnGUI() {
 
-		if (!initialized)
+		if (!initialized || !displayCamera.enabled)
 			return;
 
 		if (!useSlowTime.value || slowSoldierSide.value != isSoldierCamera)

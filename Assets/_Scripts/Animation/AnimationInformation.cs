@@ -12,5 +12,7 @@ public class AnimationInformation {
 	public bool chasing = false;
 	public bool attacking = false;
 	public bool jumping = false;
+	public bool overheat = false;
 
+	public Constants.Direction walkDirection = Constants.Direction.NEUTRAL;
 }

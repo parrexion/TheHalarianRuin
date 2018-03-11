@@ -33,9 +33,7 @@ public class ExpMeterUI : MonoBehaviour {
 		ExpLevel expLevel = new ExpLevel((int)startExp);
 		float filled = expLevel.PercentToNext();
 		valueImage.fillAmount = filled;
-		Debug.Log("Filled is now: " + filled);
 
-		Debug.Log("Waiting for start delay");
 		yield return new WaitForSeconds(startDelay);
 		float value = startExp;
 
@@ -44,9 +42,9 @@ public class ExpMeterUI : MonoBehaviour {
 			value = Mathf.Lerp(startExp,endExp,currentAnimationTime);
 			bool levelUp = expLevel.SetExp((int)value);
 			valueImage.fillAmount = expLevel.PercentToNext();
-			// Debug.Log("Amount is now: " + value);
+
 			if (levelUp){
-				// Debug.Log("#######Levelup!");
+
 				valueImage.color = levelupColor;
 				valueImage.fillAmount = 1;
 				yield return new WaitForSeconds(1);

@@ -7,13 +7,14 @@ using UnityEngine;
 /// </summary>
 public class CharacterAnimationScript : AnimationScript {
 
-	enum State { IDLE, WALK_LEFT, WALK_RIGHT, ATTACK }
-
 
 	public override void UpdateState(AnimationInformation info, float speed) {
 		animator.speed = speed;
 
 		if (info.hurt) {
+			animator.Play(kHurtAnim);
+		}
+		else if (info.overheat) {
 			animator.Play(kHurtAnim);
 		}
 		else if (info.blocking) {

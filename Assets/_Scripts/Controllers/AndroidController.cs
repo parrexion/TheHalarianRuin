@@ -148,7 +148,4 @@ public class AndroidController : MonoBehaviour {
 		animScript.UpdateState(animInfo, speed);
 	}
 
-	public void SetHurtAnimation() {
-		hurting = delayPlayerHurt;
-	}
 }
