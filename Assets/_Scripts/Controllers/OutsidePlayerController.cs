@@ -53,6 +53,7 @@ public class OutsidePlayerController : MonoBehaviour {
 		transform.position = new Vector3(posx.value,posy.value,0);
 		moveToPosition.moveToPosition = transform.position;
 		Debug.Log("Position is now: " + posx.value + ", " + posy.value);
+		follower.transform.position = new Vector3(posx.value,posy.value,0);
 	}
 
 	/// <summary>
@@ -61,10 +62,14 @@ public class OutsidePlayerController : MonoBehaviour {
 	public void UpdateAnimation(float timeStep) {
 		animInfo.walkDirection = Constants.Direction.NEUTRAL;
 
-		if (moveToPosition.moveDirectionX == 1)
+		if (moveToPosition.moveDirectionX == -2)
 			animInfo.walkDirection = Constants.Direction.LEFT;
-		else if (moveToPosition.moveDirectionX == -1)
+		else if (moveToPosition.moveDirectionX == 2)
 			animInfo.walkDirection = Constants.Direction.RIGHT;
+		else if (moveToPosition.moveDirectionY == 2)
+			animInfo.walkDirection = Constants.Direction.UP;
+		else if (moveToPosition.moveDirectionY == -2)
+			animInfo.walkDirection = Constants.Direction.DOWN;
 
 		animScript.UpdateState(animInfo, 1f);
 	}
