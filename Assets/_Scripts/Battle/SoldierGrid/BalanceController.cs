@@ -39,6 +39,9 @@ public class BalanceController : MonoBehaviour {
 	private void Start() {
 		currentCooldownWait = 0;
 		balanceValue.value = 0;
+
+		valueBkg.enabled = false;
+		valueImage.enabled = false;
 	}
 
 	/// <summary>
@@ -58,8 +61,10 @@ public class BalanceController : MonoBehaviour {
 	/// </summary>
 	void DrawBalanceMeter() {
 		float filled = balanceValue.value / maxBalanceValue.value;
-
 		valueImage.fillAmount = filled;
+		
+		valueBkg.enabled = true;
+		valueImage.enabled = true;
 	}
 
 	void Update() {

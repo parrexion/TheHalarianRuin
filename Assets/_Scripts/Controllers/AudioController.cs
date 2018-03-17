@@ -45,7 +45,7 @@ public class AudioController : MonoBehaviour {
 	/// </summary>
 	/// <param name="clip">Clip.</param>
 	public void PlayBackgroundMusic() {
-		Debug.Log("MUSIC!!!");
+		// Debug.Log("MUSIC!!!");
 		AudioClip selectedSong = GetCurrentClip();
 		
 		if (selectedSong == null) {

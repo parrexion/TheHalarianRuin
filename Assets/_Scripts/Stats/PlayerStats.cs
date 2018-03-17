@@ -46,6 +46,10 @@ public class PlayerStats : MonoBehaviour {
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 
+	[Header("Follower values")]
+	public BoolVariable playingAsAndroid;
+	public BoolVariable useFollower;
+
 	[Header("Level")]
 	public IntVariable playerLevel;
 	public IntVariable totalExp;
@@ -225,6 +229,10 @@ public class PlayerStats : MonoBehaviour {
 		playerPosX.value = saveData.playerPosX;
 		playerPosY.value = saveData.playerPosY;
 
+		//Follower
+		playingAsAndroid.value = saveData.playingAsAndroid;
+		useFollower.value = saveData.useFollower;
+
 		//Exp
 		totalExp.value = saveData.expTotal;
 
@@ -253,6 +261,10 @@ public class PlayerStatsSaveClass {
 	public int playerArea;
 	public float playerPosX;
 	public float playerPosY;
+
+	[Header("Follower values")]
+	public bool playingAsAndroid;
+	public bool useFollower;
 
 	[Header("Level")]
 	public int expTotal;

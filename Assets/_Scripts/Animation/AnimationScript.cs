@@ -15,14 +15,14 @@ public abstract class AnimationScript : MonoBehaviour {
 		Idle,
 		WalkLeft,
 		WalkRight,
-		WalkUp,
-		WalkDown,
 		Chase,
 		Attack,
 		Block,
 		Hurt,
 		Jump,
-		Dash
+		Dash,
+		WalkUp,
+		WalkDown
 	}
 
 	//Animations

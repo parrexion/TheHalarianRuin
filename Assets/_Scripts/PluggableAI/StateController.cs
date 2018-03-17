@@ -47,10 +47,7 @@ public abstract class StateController : MonoBehaviour {
 	[Header("Enemy Values")]
 	//Most of the stats
 	public EnemyEntry values;
-	//
-
-
-
+	
 
 	/// /////////////////////////////////////////////////////
 

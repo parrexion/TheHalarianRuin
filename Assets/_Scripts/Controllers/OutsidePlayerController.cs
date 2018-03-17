@@ -13,10 +13,13 @@ public class OutsidePlayerController : MonoBehaviour {
 	[HideInInspector] public Camera cam;
 
 	[Header("Animations")]
-	public AnimationScript animScript;
+	public RuntimeAnimatorController androidAnimator;
+	public RuntimeAnimatorController soldierAnimator;
+	private AnimationScript animScript;
 	private AnimationInformation animInfo;
 
 	[Header("Follower")]
+	public BoolVariable playingAsAndroid;
 	public BoolVariable useFollower;
 	public GameObject follower;
 
@@ -24,12 +27,16 @@ public class OutsidePlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
-		animInfo = new AnimationInformation();
 		SetPlayerPosition();
-		paused.value = false;
 #if UNITY_EDITOR
 		moveToPosition.speed *= speedHack.value;
 #endif
+
+		animScript = GetComponent<AnimationScript>();
+		animInfo = new AnimationInformation();
+		SetupCharacterAnimations();
+
+		paused.value = false;
 		follower.gameObject.SetActive(useFollower.value);
 	}
 	
@@ -48,12 +55,16 @@ public class OutsidePlayerController : MonoBehaviour {
 		UpdateAnimation(Time.deltaTime);
 	}
 
+	void SetupCharacterAnimations() {
+		GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? androidAnimator : soldierAnimator;
+		follower.GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? soldierAnimator : androidAnimator;
+	}
 
-	public void SetPlayerPosition() {
+	void SetPlayerPosition() {
 		transform.position = new Vector3(posx.value,posy.value,0);
 		moveToPosition.moveToPosition = transform.position;
 		Debug.Log("Position is now: " + posx.value + ", " + posy.value);
-		follower.transform.position = new Vector3(posx.value,posy.value,0);
+		follower.transform.position = new Vector3(posx.value,posy.value,1);
 	}
 
 	/// <summary>

@@ -18,7 +18,7 @@ public class TriggerChapter : MonoBehaviour {
 
 	public bool SetupTriggers(bool editorCall) {
 		if (!editorCall && transform.childCount == containers.Count){
-			Debug.Log("Nothing to update for " + activeArea.ToString());
+			// Debug.Log("Nothing to update for " + activeArea.ToString());
 			return false;
 		}
 
@@ -50,7 +50,7 @@ public class TriggerChapter : MonoBehaviour {
 		bool state = (sceneIndex == activeArea && roomNumber == number);
 		containers[0].gameObject.SetActive(state);
 		for (int i = 1; i < containers.Count; i++) {
-			Debug.Log("Checking " + chapterIDs[i] + ", object pos " + i + ", Index: " + activeArea);
+			// Debug.Log("Checking " + chapterIDs[i] + ", object pos " + i + ", Index: " + activeArea);
 			containers[i].gameObject.SetActive(state && chapterID == chapterIDs[i]);
 		}
 	}

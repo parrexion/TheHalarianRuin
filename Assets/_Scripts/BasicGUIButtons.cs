@@ -56,7 +56,7 @@ public class BasicGUIButtons : MonoBehaviour {
 		}
 
 		fading = false;
-		Debug.Log("Moving to index: " + currentScene.value);
+		// Debug.Log("Moving to index: " + currentScene.value);
 		SceneManager.LoadScene(currentScene.value);
 
 		yield break;

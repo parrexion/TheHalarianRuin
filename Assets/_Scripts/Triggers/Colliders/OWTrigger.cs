@@ -13,6 +13,7 @@ public abstract class OWTrigger : MonoBehaviour {
 	[Header("Deactivate/Activate triggers")]
 	public List<OWTrigger> deactivateTriggers = new List<OWTrigger>();
 	public List<OWTrigger> activateTriggers = new List<OWTrigger>();
+	public List<VarTrigger> varTriggers = new List<VarTrigger>();
 
 	[Header("References - don't touch")]
 	public bool active;
@@ -53,7 +54,7 @@ public abstract class OWTrigger : MonoBehaviour {
 			return;
 
 		if (otherCollider.gameObject.tag != "Player") {
-			Debug.Log("That was not a player");
+			// Debug.Log("That was not a player");
 			return;
 		}
 
@@ -113,6 +114,13 @@ public abstract class OWTrigger : MonoBehaviour {
 				continue;
 			}
 			activateTriggers[i].Activate();
+		}
+		for (int i = 0; i < varTriggers.Count; i++) {
+			if (varTriggers[i] == null){
+				Debug.LogError("Trigger is null in trigger triggers");
+				continue;
+			}
+			varTriggers[i].Trigger();
 		}
 	}
 }

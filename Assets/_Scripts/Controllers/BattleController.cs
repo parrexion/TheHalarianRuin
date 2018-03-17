@@ -64,7 +64,7 @@ public class BattleController : MonoBehaviour {
 		SetupBackgrounds();
 		paused.value = true;
 		StartCoroutine(CreateEnemies());
-		Debug.Log("Start");
+		// Debug.Log("Start");
 	}
 
 	/// <summary>
@@ -78,7 +78,7 @@ public class BattleController : MonoBehaviour {
 		}
 		enemyController.CreateEnemies(be.removeSide != BattleEntry.RemoveSide.RIGHT, be.removeSide != BattleEntry.RemoveSide.LEFT);
 		initiated = true;
-		Debug.Log("Initiated");
+		// Debug.Log("Initiated");
 	}
 	
 	// Update is called once per frame
@@ -91,11 +91,11 @@ public class BattleController : MonoBehaviour {
 			currentTime += Time.deltaTime;
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			Debug.Log("Press escape");
+			// Debug.Log("Press escape");
 			if (escape) {
 				escape = false;
 				StartBattle();
-				Debug.Log("ESCAPED");
+				// Debug.Log("ESCAPED");
 			}
 			else if (state == 2) {
 				PauseGame();

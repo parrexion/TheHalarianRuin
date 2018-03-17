@@ -97,7 +97,7 @@ public class DrawScoreScreen : MonoBehaviour {
 	public void LeaveScoreScreen(){
 		buttonClickEvent.Invoke();
 		battleLibrary.GenerateDictionary();
-		Debug.Log("UUID is: " + battleUuid.value);
+		// Debug.Log("UUID is: " + battleUuid.value);
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 		switch (be.nextLocation)
 		{

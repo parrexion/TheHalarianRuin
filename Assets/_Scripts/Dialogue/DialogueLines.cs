@@ -27,7 +27,7 @@ public class DialogueLines : MonoBehaviour {
 		dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
 		currentFrame.value = 0;
 		scene.SetFromFrame(dialogueEntry.frames[0]);
-		Debug.Log("Set frame 0 of dialogue " + dialogueUuid.value);
+		// Debug.Log("Set frame 0 of dialogue " + dialogueUuid.value);
 
 		backgroundChanged.Invoke();
 		bkgMusicChanged.Invoke();

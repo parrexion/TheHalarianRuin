@@ -6,28 +6,35 @@ using UnityEngine.Events;
 
 public class MainMenuScript : MonoBehaviour {
 
-	public Text recordText;
+	public Canvas mainMenuCanvas;
 
+	[Header("Areas")]
 	public StringVariable currentChapter;
 	public IntVariable currentArea;
 	public IntVariable currentRoomNumber;
 	public IntVariable playerArea;
 
-	public Canvas mainMenuCanvas;
-	public Canvas levelSelectCanvas;
+	[Header("Story stuff")]
+	public string dialogueUuidStr = "WakeUpAndroid";
+	public string currentChapterStr = "Prologue";
+	public StringVariable dialogueUuid;
+	public BoolVariable playingAsAndroid;
+	public BoolVariable useFollower;
+	
+	[Header("Events")]
+	public UnityEvent buttonClickEvent;
+	public UnityEvent mapChangeEvent;
+	public UnityEvent dialogueEvent;
 
+	[Header("Battle tower stuff")]
+	public Text recordText;
+	public Canvas levelSelectCanvas;
+	public IntVariable bestTowerLevel;
+	public IntVariable currentTowerLevel;
 	public Button levelMaxButton;
 	public Text levelMaxText;
 	public Button levelMinus5Button;
 	public Text levelMinus5Text;
-
-	public StringVariable dialogueUuid;
-	public IntVariable bestTowerLevel;
-	public IntVariable currentTowerLevel;
-	
-	public UnityEvent buttonClickEvent;
-	public UnityEvent mapChangeEvent;
-	public UnityEvent dialogueEvent;
 
 
 	void Start(){
@@ -49,10 +56,15 @@ public class MainMenuScript : MonoBehaviour {
 	/// </summary>
 	public void StoryClicked(){
 		buttonClickEvent.Invoke();
-		dialogueUuid.value = "WakeUpAndroid";
-		currentChapter.value = "Prologue";
+		
+		playingAsAndroid.value = true;
+		useFollower.value = false;
+
+		dialogueUuid.value = dialogueUuidStr;
+		currentChapter.value = currentChapterStr;
 		currentRoomNumber.value = 0;
 		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+
 		dialogueEvent.Invoke();
 	}
 

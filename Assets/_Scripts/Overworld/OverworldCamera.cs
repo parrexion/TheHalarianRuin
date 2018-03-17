@@ -26,7 +26,6 @@ public class OverworldCamera : MonoBehaviour {
 			lockCamera.enabled = true;
 			cam.orthographicSize = values.size;
 			cam.transform.position = new Vector3(values.position.x, values.position.y, -10);
-			Debug.Log("SET THE LOCK CAMERA");
 		}
 		else {
 			cam = followCamera;
@@ -38,7 +37,6 @@ public class OverworldCamera : MonoBehaviour {
 			box.bottom = values.cameraBox.yMax;
 			box.left = values.cameraBox.xMin;
 			box.right = values.cameraBox.xMax;
-			Debug.Log("SET THE FOLLOW CAMERA");
 		}
 
 		playerController.cam = cam;
