@@ -8,6 +8,7 @@ public class BattleEditorWindow {
 
 	public ScrObjLibraryVariable battleLibrary;
 	public BattleEntry battleValues;
+	private GUIContent[] currentEntryList;
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -22,6 +23,7 @@ public class BattleEditorWindow {
 	Vector2 selScrollPos;
 	string battleUuid;
 	int selBattle = -1;
+	string filterStr = "";
 
 
 	public BattleEditorWindow(ScrObjLibraryVariable entries, BattleEntry container){
@@ -51,11 +53,11 @@ public class BattleEditorWindow {
 		selectTex.Apply();
 
 		battleValues.ResetValues();
+		currentEntryList = battleLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
-
 	public void DrawWindow() {
-
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("Battle Editor", EditorStyles.boldLabel);
 		if (selBattle != -1) {
@@ -73,7 +75,6 @@ public class BattleEditorWindow {
 	}
 
 	void GenerateAreas() {
-
 		selectRect.x = 0;
 		selectRect.y = 50;
 		selectRect.width = 200;
@@ -97,12 +98,19 @@ public class BattleEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = battleLibrary.GetRepresentations("",filterStr);
 
 		selScrollPos = EditorGUILayout.BeginScrollView(selScrollPos, GUILayout.Width(selectRect.width), 
-							GUILayout.Height(selectRect.height-90));
+							GUILayout.Height(selectRect.height-110));
 
 		int oldSelected = selBattle;
-		selBattle = GUILayout.SelectionGrid(selBattle, battleLibrary.GetRepresentations("",""),1);
+		selBattle = GUILayout.SelectionGrid(selBattle, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selBattle) {
@@ -110,7 +118,6 @@ public class BattleEditorWindow {
 			SelectBattle();
 		}
 
-		EditorGUIUtility.labelWidth = 80;
 		battleUuid = EditorGUILayout.TextField("Battle uuid", battleUuid);
 		if (GUILayout.Button("Create new")) {
 			InstansiateBattle();
@@ -241,6 +248,7 @@ public class BattleEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = battleLibrary.GetRepresentations("",filterStr);
 		battleUuid = "";
 		selBattle = 0;
 		SelectBattle();
@@ -257,6 +265,8 @@ public class BattleEditorWindow {
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = battleLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed battle: " + be.uuid);

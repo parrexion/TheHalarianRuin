@@ -9,12 +9,14 @@ public class CharacterEditorWindow {
 	public ScrObjLibraryVariable characterLibrary;
 	public CharacterEntry charValues;
 	public SpriteListVariable poseLibrary;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selCharacter = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -62,6 +64,8 @@ public class CharacterEditorWindow {
 		dispOffset.right = 10;
 
 		charValues.ResetValues();
+		currentEntryList = characterLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
 
@@ -103,12 +107,19 @@ public class CharacterEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = characterLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-130));
+						GUILayout.Height(selectRect.height-150));
 
 		int oldSelected = selCharacter;
-		selCharacter = GUILayout.SelectionGrid(selCharacter, characterLibrary.GetRepresentations("",""),1);
+		selCharacter = GUILayout.SelectionGrid(selCharacter, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selCharacter)
@@ -193,6 +204,7 @@ public class CharacterEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = characterLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selCharacter = 0;
 		SelectCharacter();
@@ -209,6 +221,8 @@ public class CharacterEditorWindow {
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = characterLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed character: " + c.uuid);

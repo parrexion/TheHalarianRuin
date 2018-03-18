@@ -8,12 +8,14 @@ public class EnemyEditorWindow {
 
 	public ScrObjLibraryVariable enemyLibrary;
 	public EnemyEntry enemyValues;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selEnemy = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -51,6 +53,10 @@ public class EnemyEditorWindow {
 		selectTex = new Texture2D(1, 1);
 		selectTex.SetPixel(0, 0, new Color(0.8f, 0.8f, 0.8f));
 		selectTex.Apply();
+
+		enemyValues.ResetValues();
+		currentEntryList = enemyLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
 
@@ -92,12 +98,19 @@ public class EnemyEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = enemyLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-																GUILayout.Height(selectRect.height-130));
+																GUILayout.Height(selectRect.height-150));
 
 		int oldSelected = selEnemy;
-		selEnemy = GUILayout.SelectionGrid(selEnemy, enemyLibrary.GetRepresentations("",""),1);
+		selEnemy = GUILayout.SelectionGrid(selEnemy, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 		
 		if (oldSelected != selEnemy)
@@ -205,6 +218,7 @@ public class EnemyEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = enemyLibrary.GetRepresentations("",filterStr);
 		enemyUuid = "";
 		selEnemy = 0;
 		SelectEnemy();
@@ -221,6 +235,8 @@ public class EnemyEditorWindow {
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = enemyLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed enemy: " + ee.uuid);

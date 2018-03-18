@@ -8,12 +8,14 @@ public class MusicEditorWindow {
 
 	public ScrObjLibraryVariable musicLibrary;
 	public MusicEntry musicValues;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selMusic = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -59,6 +61,8 @@ public class MusicEditorWindow {
 		dispOffset.right = 10;
 
 		musicValues.ResetValues();
+		currentEntryList = musicLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
 
@@ -100,12 +104,19 @@ public class MusicEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = musicLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-130));
+						GUILayout.Height(selectRect.height-150));
 
 		int oldSelected = selMusic;
-		selMusic = GUILayout.SelectionGrid(selMusic, musicLibrary.GetRepresentations("",""),1);
+		selMusic = GUILayout.SelectionGrid(selMusic, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selMusic) {
@@ -183,6 +194,7 @@ public class MusicEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selMusic = 0;
 		SelectMusic();
@@ -199,6 +211,8 @@ public class MusicEditorWindow {
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+		
+		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed music: " + me.uuid);

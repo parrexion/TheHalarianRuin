@@ -8,12 +8,14 @@ public class ItemEditorWindow {
 
 	public ScrObjLibraryVariable itemLibrary;
 	public ItemEquip itemValues;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selItem = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -61,6 +63,8 @@ public class ItemEditorWindow {
 		dispOffset.right = 10;
 
 		itemValues.ResetValues();
+		currentEntryList = itemLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
 
@@ -102,12 +106,19 @@ public class ItemEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = itemLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-130));
+						GUILayout.Height(selectRect.height-150));
 
 		int oldSelected = selItem;
-		selItem = GUILayout.SelectionGrid(selItem, itemLibrary.GetRepresentations("",""),1);
+		selItem = GUILayout.SelectionGrid(selItem, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selItem)
@@ -224,6 +235,7 @@ EditorGUIUtility.labelWidth = 100;
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = itemLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selItem = 0;
 		SelectItem();
@@ -240,6 +252,8 @@ EditorGUIUtility.labelWidth = 100;
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = itemLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed item: " + c.uuid);

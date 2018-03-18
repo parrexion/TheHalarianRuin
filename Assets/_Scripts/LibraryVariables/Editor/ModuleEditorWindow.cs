@@ -9,12 +9,14 @@ public class ModuleEditorWindow {
 	public ScrObjLibraryVariable moduleLibrary;
 	public Module moduleBase;
 	private ModuleValues kv;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selModule = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -65,6 +67,8 @@ public class ModuleEditorWindow {
 		dispOffset.right = 10;
 
 		moduleBase.ResetValues();
+		currentEntryList = moduleLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
 
 
@@ -106,12 +110,19 @@ public class ModuleEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = moduleLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-110));
+						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selModule;
-		selModule = GUILayout.SelectionGrid(selModule, moduleLibrary.GetRepresentations("",""),1);
+		selModule = GUILayout.SelectionGrid(selModule, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selModule)
@@ -279,6 +290,7 @@ EditorGUIUtility.labelWidth = 100;
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = moduleLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selModule = 0;
 		SelectModule();
@@ -295,6 +307,8 @@ EditorGUIUtility.labelWidth = 100;
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = moduleLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed module: " + c.uuid);

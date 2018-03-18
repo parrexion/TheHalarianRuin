@@ -8,12 +8,14 @@ public class BackgroundEditorWindow {
 
 	public ScrObjLibraryVariable backgroundLibrary;
 	public BackgroundEntry backgroundValues;
+	private GUIContent[] currentEntryList;
 
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
 	int selBackground = -1;
+	string filterStr = "";
 
 	// Display screen
 	Rect dispRect = new Rect();
@@ -59,8 +61,9 @@ public class BackgroundEditorWindow {
 		dispOffset.right = 10;
 
 		backgroundValues.ResetValues();
+		currentEntryList = backgroundLibrary.GetRepresentations("","");
+		filterStr = "";
 	}
-
 
 	public void DrawWindow() {
 
@@ -100,12 +103,19 @@ public class BackgroundEditorWindow {
 
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
+		GUILayout.Space(5);
+		EditorGUIUtility.labelWidth = 80;
+
+		string oldFilter = filterStr;
+		filterStr = EditorGUILayout.TextField("Filter", filterStr);
+		if (filterStr != oldFilter)
+			currentEntryList = backgroundLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-130));
+						GUILayout.Height(selectRect.height-150));
 
 		int oldSelected = selBackground;
-		selBackground = GUILayout.SelectionGrid(selBackground, backgroundLibrary.GetRepresentations("",""),1);
+		selBackground = GUILayout.SelectionGrid(selBackground, currentEntryList,1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selBackground) {
@@ -183,6 +193,7 @@ public class BackgroundEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		currentEntryList = backgroundLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selBackground = 0;
 		SelectBackground();
@@ -199,6 +210,8 @@ public class BackgroundEditorWindow {
 		bool res = AssetDatabase.MoveAssetToTrash(path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		currentEntryList = backgroundLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed background: " + bke.uuid);
