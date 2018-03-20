@@ -10,6 +10,8 @@ public abstract class AnimationScript : MonoBehaviour {
 	protected Animator animator;
 	protected State currentState;
 	protected Vector3 defaultScale;
+	protected float currentSpeed;
+	protected bool paused = false;
 
 	public enum StateString {
 		Idle,
@@ -51,6 +53,18 @@ public abstract class AnimationScript : MonoBehaviour {
 
 	protected void Face(int direction) {
 		transform.localScale = new Vector3(defaultScale.x*direction,defaultScale.y,defaultScale.z);
+	}
+
+	public void PauseAnimation() {
+		if (!paused) {
+			paused = true;
+			currentSpeed = animator.speed;
+			animator.speed = 0;
+		}
+		else {
+			paused = false;
+			animator.speed = currentSpeed;
+		}
 	}
 
 }

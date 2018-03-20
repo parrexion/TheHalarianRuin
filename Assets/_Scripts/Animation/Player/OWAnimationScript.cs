@@ -23,7 +23,8 @@ public class OWAnimationScript : AnimationScript {
 			animator.Play(kWalkDAnim);
 		}
 		else {
-			animator.Play(kIdleAnim);
+			// animator.Play(kIdleAnim);
+			animator.speed = 0;
 		}
 
 	}

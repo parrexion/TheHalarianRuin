@@ -14,7 +14,7 @@ public class MoveHomingNoLimit : MonoBehaviour {
 
 	public Vector2 movement;
 	private Rigidbody2D rigidbodyComponent;
-	public float minimumDistance = 0f;
+	public float minimumDistance = 0.05f;
 
 
 	void Start() {
@@ -30,19 +30,11 @@ public class MoveHomingNoLimit : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		if (objectToFollow == null) {
-			if (Vector2.Distance(transform.position, moveToPosition) > minimumDistance) {
-				movement = Vector2.MoveTowards(transform.position,moveToPosition,speed.x*Time.fixedDeltaTime);
-				CalculateAnimationAngle();
-			}
-			else {
-				movement = transform.position;
-				moveDirectionX = 0;
-				moveDirectionY = 0;
-			}
-		}
-		else if (Vector2.Distance(transform.position, objectToFollow.position) > minimumDistance) {
-			movement = Vector2.MoveTowards(transform.position, objectToFollow.position, speed.x * Time.fixedDeltaTime);
+		Vector2 movePosition = (objectToFollow != null) ? (Vector2)objectToFollow.position : moveToPosition;
+		float distance = Vector2.Distance(transform.position, movePosition);
+
+		if (distance > minimumDistance) {
+			movement = Vector2.MoveTowards(transform.position,movePosition,speed.x*Time.fixedDeltaTime);
 			CalculateAnimationAngle();
 		}
 		else {
@@ -61,9 +53,8 @@ public class MoveHomingNoLimit : MonoBehaviour {
 		moveDirectionX = (distX < 0) ? -1 : 1;
 		moveDirectionY = (distY < 0) ? -1 : 1;
 
-		if (Mathf.Abs(distX) > Mathf.Abs(distY)) {
+		if (Mathf.Abs(distX) > Mathf.Abs(distY))
 			moveDirectionX *= 2;
-		}
 		else
 			moveDirectionY *= 2;
 	}

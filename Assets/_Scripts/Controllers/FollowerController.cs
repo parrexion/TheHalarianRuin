@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OutsidePlayerController : MonoBehaviour {
+public class FollowerController : MonoBehaviour {
 
 	public BoolVariable paused;
-	private MoveHomingNoLimit moveToPosition;
 	public FloatVariable posx, posy;
-	public FloatVariable speedHack;
-
-	[HideInInspector] public Camera cam;
+	private MoveHomingNoLimit moveToPosition;
+	public float minimumDistance;
 
 	[Header("Animations")]
 	public RuntimeAnimatorController androidAnimator;
@@ -20,46 +18,39 @@ public class OutsidePlayerController : MonoBehaviour {
 
 	[Header("Follower")]
 	public BoolVariable playingAsAndroid;
+	public BoolVariable useFollower;
 
 
 	// Use this for initialization
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
+		moveToPosition.minimumDistance = minimumDistance;
 		SetPlayerPosition();
-#if UNITY_EDITOR
-		moveToPosition.speed *= speedHack.value;
-#endif
 
 		animScript = GetComponent<AnimationScript>();
 		animInfo = new AnimationInformation();
 		SetupCharacterAnimations();
 
 		paused.value = false;
+		gameObject.SetActive(useFollower.value);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		UpdateAnimation();
-
-		if (paused.value)
-			return;
-
-		if (Input.GetMouseButton(1) && cam != null) {
-			moveToPosition.moveToPosition = cam.ScreenToWorldPoint(Input.mousePosition);
-		}
-		posx.value = transform.position.x;
-		posy.value = transform.position.y;
 	}
 
 	void SetupCharacterAnimations() {
-		GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? androidAnimator : soldierAnimator;
+		GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? soldierAnimator : androidAnimator;
 	}
 
 	void SetPlayerPosition() {
-		transform.position = new Vector3(posx.value,posy.value,0);
-		moveToPosition.moveToPosition = transform.position;
-		Debug.Log("Position is now: " + posx.value + ", " + posy.value);
+		float x = Random.Range(-0.5f, 0.5f);
+		x = 0.5f * Mathf.Sign(x) + x;
+		float y = Random.Range(-0.5f, 0.5f);
+		y = 0.5f * Mathf.Sign(y) + y;
+		Vector3 startOffset = minimumDistance * new Vector3(x,y,0);
+		transform.position = new Vector3(posx.value,posy.value,1) + startOffset;
 	}
 
 	/// <summary>
