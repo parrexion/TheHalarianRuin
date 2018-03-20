@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, MODULE = 5, MUSIC = 6 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, MODULE = 5, SOUND = 6 }
 
 	// Header
 	Rect headerRect = new Rect();
@@ -43,7 +43,7 @@ public class LibraryEditorWindow : EditorWindow {
 	public ScrObjLibraryVariable musicLibrary;
 	public MusicEntry musicContainer;
 
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Module", "Music"};
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Module", "Sound"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -86,7 +86,7 @@ public class LibraryEditorWindow : EditorWindow {
 			case State.MODULE:
 				moduleEditor.DrawWindow();
 				break;
-			case State.MUSIC:
+			case State.SOUND:
 				musicEditor.DrawWindow();
 				break;
 		}

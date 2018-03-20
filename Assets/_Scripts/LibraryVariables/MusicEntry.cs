@@ -6,18 +6,21 @@ using UnityEngine;
 public class MusicEntry : ScrObjLibraryEntry {
 
 	public AudioClip clip;
+	public int identifier;
 
 
 	public override void ResetValues() {
 		base.ResetValues();
 
 		clip = null;
+		identifier = -1;
 	}
 
 	public override void CopyValues(ScrObjLibraryEntry other) {
 		base.CopyValues(other);
-		MusicEntry ce = (MusicEntry)other;
+		MusicEntry me = (MusicEntry)other;
 
-		clip = ce.clip;
+		clip = me.clip;
+		identifier = me.identifier;
 	}
 }

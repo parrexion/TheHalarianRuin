@@ -44,6 +44,9 @@ public class FollowerController : MonoBehaviour {
 		GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? soldierAnimator : androidAnimator;
 	}
 
+	/// <summary>
+	/// Sets the start position of the follower with a small offset from the main character.
+	/// </summary>
 	void SetPlayerPosition() {
 		float x = Random.Range(-0.5f, 0.5f);
 		x = 0.5f * Mathf.Sign(x) + x;

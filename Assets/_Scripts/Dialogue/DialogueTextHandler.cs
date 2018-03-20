@@ -65,6 +65,8 @@ public class DialogueTextHandler : MonoBehaviour {
 		float timeInSeconds = .02f;
 		textUpdating = true;
 		for (int j = 0; j < words.Length; j++) {
+			if (IsSpecialWord(words[j]))
+				continue;
 			if (FitNextWord(words[j]+" "))
 				currentDialogue += "\n";
 			for (int i = 0; i < words[j].Length; i++) {
@@ -91,6 +93,15 @@ public class DialogueTextHandler : MonoBehaviour {
 		return newHeight > originalHeight;
 	}
 
+	bool IsSpecialWord(string word) {
+
+		if (word[0] == '@'){
+			Debug.Log("Found an sfx!");
+			return true;
+		}
+
+		return false;
+	}
 
 
 

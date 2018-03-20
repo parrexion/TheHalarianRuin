@@ -26,6 +26,10 @@ public class MusicEditorWindow {
 	//Creation
 	string uuid = "";
 	Color repColor = new Color(0,0,0,1);
+	string currentSoundTypeTag = "MUSIC";
+	string[] soundTypeStrings = new string[]{"MUSIC", "SFX"};
+	bool isSfx = false;
+	int soundType = 0;
 
 
 	/// <summary>
@@ -61,7 +65,7 @@ public class MusicEditorWindow {
 		dispOffset.right = 10;
 
 		musicValues.ResetValues();
-		currentEntryList = musicLibrary.GetRepresentations("","");
+		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,"");
 		filterStr = "";
 	}
 
@@ -105,12 +109,19 @@ public class MusicEditorWindow {
 	void DrawEntryList() {
 		GUILayout.BeginArea(selectRect);
 		GUILayout.Space(5);
+
+		int oldType = soundType;
+		soundType = GUILayout.Toolbar(soundType, soundTypeStrings);
+		currentSoundTypeTag = soundTypeStrings[soundType];
+		if (oldType != soundType)
+			currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
+
 		EditorGUIUtility.labelWidth = 80;
 
 		string oldFilter = filterStr;
 		filterStr = EditorGUILayout.TextField("Filter", filterStr);
 		if (filterStr != oldFilter)
-			currentEntryList = musicLibrary.GetRepresentations("",filterStr);
+			currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
 						GUILayout.Height(selectRect.height-150));
@@ -125,14 +136,27 @@ public class MusicEditorWindow {
 		}
 
 		EditorGUIUtility.labelWidth = 110;
-		GUILayout.Label("Create new music", EditorStyles.boldLabel);
-		uuid = EditorGUILayout.TextField("Music Name", uuid);
-		repColor = EditorGUILayout.ColorField("List Color", repColor);
-		if (GUILayout.Button("Create new")) {
-			InstansiateMusic();
+		if (soundType == 0) {
+			GUILayout.Label("Create new music", EditorStyles.boldLabel);
+			uuid = EditorGUILayout.TextField("Music Name", uuid);
+			repColor = EditorGUILayout.ColorField("List Color", repColor);
+			if (GUILayout.Button("Create music")) {
+				InstansiateMusic();
+			}
+			if (GUILayout.Button("Delete music")) {
+				DeleteMusic();
+			}
 		}
-		if (GUILayout.Button("Delete music")) {
-			DeleteMusic();
+		else if (soundType == 1) {
+			GUILayout.Label("Create new sfx", EditorStyles.boldLabel);
+			uuid = EditorGUILayout.TextField("Sfx Name", uuid);
+			repColor = EditorGUILayout.ColorField("List Color", repColor);
+			if (GUILayout.Button("Create sfx")) {
+				InstansiateMusic();
+			}
+			if (GUILayout.Button("Delete sfx")) {
+				DeleteMusic();
+			}
 		}
 
 		GUILayout.EndArea();
@@ -170,7 +194,7 @@ public class MusicEditorWindow {
 	void SaveSelectedMusic() {
 		MusicEntry me = (MusicEntry)musicLibrary.GetEntryByIndex(selMusic);
 		me.CopyValues(musicValues);
-		Undo.RecordObject(me, "Updated music");
+		Undo.RecordObject(me, "Updated sound");
 		EditorUtility.SetDirty(me);
 	}
 
@@ -183,6 +207,7 @@ public class MusicEditorWindow {
 		MusicEntry me = Editor.CreateInstance<MusicEntry>();
 		me.name = uuid;
 		me.uuid = uuid;
+		me.tag = currentSoundTypeTag;
 		me.entryName = uuid;
 		me.repColor = repColor;
 		string path = "Assets/LibraryData/Music/" + uuid + ".asset";
@@ -194,7 +219,7 @@ public class MusicEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
-		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
+		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
 		uuid = "";
 		selMusic = 0;
 		SelectMusic();
@@ -212,7 +237,7 @@ public class MusicEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 		
-		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
+		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
 
 		if (res) {
 			Debug.Log("Removed music: " + me.uuid);
