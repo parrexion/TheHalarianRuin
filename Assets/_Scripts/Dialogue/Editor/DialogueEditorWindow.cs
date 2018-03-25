@@ -42,6 +42,7 @@ public class DialogueEditorWindow : EditorWindow {
 	string filterEnum;
 	string filterString;
 	Constants.CHAPTER filter = Constants.CHAPTER.DEFAULT;
+	MusicEntry currentSfx = null;
 
 	//Creation
 	string dialogueUuid = "";
@@ -351,6 +352,15 @@ public class DialogueEditorWindow : EditorWindow {
 			GUILayout.Label("Selected Music: " + dialogueValues.frames[lastIndex].bkgMusic.name);
 		else
 			GUILayout.Label("Selected Music: NONE");
+
+		GUILayout.Space(20);
+
+		GUILayout.Label("Add SFX", EditorStyles.boldLabel);
+		currentSfx = (MusicEntry)EditorGUILayout.ObjectField("Selected SFX", currentSfx, typeof(MusicEntry), false);
+		GUILayout.Label("COPY ID:");
+		if (currentSfx != null) {
+			EditorGUILayout.SelectableLabel("@" + currentSfx.identifier);
+		}
 			
 		GUILayout.EndArea();
 	}

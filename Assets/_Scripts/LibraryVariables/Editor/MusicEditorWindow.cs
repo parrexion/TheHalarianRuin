@@ -8,6 +8,8 @@ public class MusicEditorWindow {
 
 	public ScrObjLibraryVariable musicLibrary;
 	public MusicEntry musicValues;
+	public ScrObjLibraryVariable sfxLibrary;
+	public SfxEntry sfxValues;
 	private GUIContent[] currentEntryList;
 
 	// Selection screen
@@ -26,20 +28,20 @@ public class MusicEditorWindow {
 	//Creation
 	string uuid = "";
 	Color repColor = new Color(0,0,0,1);
-	string currentSoundTypeTag = "MUSIC";
 	string[] soundTypeStrings = new string[]{"MUSIC", "SFX"};
-	bool isSfx = false;
 	int soundType = 0;
 
 
 	/// <summary>
-	/// Constructor
+	/// Constructor for the editor window.
 	/// </summary>
 	/// <param name="entries"></param>
 	/// <param name="container"></param>
-	public MusicEditorWindow(ScrObjLibraryVariable entries, MusicEntry container){
+	public MusicEditorWindow(ScrObjLibraryVariable entries, MusicEntry container, ScrObjLibraryVariable entries2, SfxEntry container2){
 		musicLibrary = entries;
 		musicValues = container;
+		sfxLibrary = entries2;
+		sfxValues = container2;
 		LoadLibrary();
 	}
 
@@ -47,6 +49,7 @@ public class MusicEditorWindow {
 		Debug.Log("Loading music libraries...");
 
 		musicLibrary.GenerateDictionary();
+		sfxLibrary.GenerateDictionary();
 
 		Debug.Log("Finished loading music libraries");
 
@@ -65,17 +68,16 @@ public class MusicEditorWindow {
 		dispOffset.right = 10;
 
 		musicValues.ResetValues();
-		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,"");
+		sfxValues.ResetValues();
+		currentEntryList = musicLibrary.GetRepresentations("","");
 		filterStr = "";
 	}
 
-
 	public void DrawWindow() {
-
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("Music Editor", EditorStyles.boldLabel);
 		if (selMusic != -1) {
-			if (GUILayout.Button("Save Music")){
+			if (GUILayout.Button((soundType == 0) ? "Save Music" : "Save Sfx")){
 				SaveSelectedMusic();
 			}
 		}
@@ -84,12 +86,15 @@ public class MusicEditorWindow {
 		GenerateAreas();
 		DrawBackgrounds();
 		DrawEntryList();
-		if (selMusic != -1)
-			DrawDisplayWindow();
+		if (selMusic != -1){
+			if (soundType == 0)
+				DrawDisplayWindowMusic();
+			else
+				DrawDisplayWindowSfx();
+		}
 	}
 
 	void GenerateAreas() {
-
 		selectRect.x = 0;
 		selectRect.y = 50;
 		selectRect.width = 200;
@@ -112,16 +117,18 @@ public class MusicEditorWindow {
 
 		int oldType = soundType;
 		soundType = GUILayout.Toolbar(soundType, soundTypeStrings);
-		currentSoundTypeTag = soundTypeStrings[soundType];
-		if (oldType != soundType)
-			currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
+
+		if (oldType != soundType) {
+			currentEntryList = (soundType == 0) ? musicLibrary.GetRepresentations("",filterStr) : sfxLibrary.GetRepresentations("",filterStr);
+			SelectMusic();
+		}
 
 		EditorGUIUtility.labelWidth = 80;
 
 		string oldFilter = filterStr;
 		filterStr = EditorGUILayout.TextField("Filter", filterStr);
 		if (filterStr != oldFilter)
-			currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
+			currentEntryList = (soundType == 0) ? musicLibrary.GetRepresentations("",filterStr) : sfxLibrary.GetRepresentations("",filterStr);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
 						GUILayout.Height(selectRect.height-150));
@@ -152,17 +159,17 @@ public class MusicEditorWindow {
 			uuid = EditorGUILayout.TextField("Sfx Name", uuid);
 			repColor = EditorGUILayout.ColorField("List Color", repColor);
 			if (GUILayout.Button("Create sfx")) {
-				InstansiateMusic();
+				InstansiateSfx();
 			}
 			if (GUILayout.Button("Delete sfx")) {
-				DeleteMusic();
+				DeleteSfx();
 			}
 		}
 
 		GUILayout.EndArea();
 	}
 
-	void DrawDisplayWindow() {
+	void DrawDisplayWindowMusic() {
 		GUILayout.BeginArea(dispRect);
 
 		GUI.skin.textField.margin.right = 20;
@@ -179,23 +186,58 @@ public class MusicEditorWindow {
 		GUILayout.EndArea();
 	}
 
+	void DrawDisplayWindowSfx() {
+		GUILayout.BeginArea(dispRect);
+
+		GUI.skin.textField.margin.right = 20;
+
+		GUILayout.Label("Selected Background", EditorStyles.boldLabel);
+		EditorGUILayout.SelectableLabel("UUID: " + sfxValues.uuid);
+		sfxValues.repColor = EditorGUILayout.ColorField("List color", sfxValues.repColor);
+
+		GUILayout.Space(20);
+
+		sfxValues.entryName = EditorGUILayout.TextField("Name", sfxValues.entryName);
+		sfxValues.clip = (AudioClip)EditorGUILayout.ObjectField("Audio Clip", sfxValues.clip, typeof(AudioClip),false);
+
+		GUILayout.EndArea();
+	}
+
 	void SelectMusic() {
 		if (selMusic == -1) {
 			// Nothing selected
-			musicValues.ResetValues();
+			if (soundType == 0)
+				musicValues.ResetValues();
+			else
+				sfxValues.ResetValues();
 		}
 		else {
 			// Something selected
-			MusicEntry me = (MusicEntry)musicLibrary.GetEntryByIndex(selMusic);
-			musicValues.CopyValues(me);
+			selMusic = Mathf.Min(currentEntryList.Length -1, selMusic);
+			if (soundType == 0) {
+				MusicEntry me = (MusicEntry)musicLibrary.GetEntryByIndex(selMusic);
+				musicValues.CopyValues(me);
+			}
+			else {
+				SfxEntry se = (SfxEntry)sfxLibrary.GetEntryByIndex(selMusic);
+				sfxValues.CopyValues(se);
+			}
 		}
 	}
 
 	void SaveSelectedMusic() {
-		MusicEntry me = (MusicEntry)musicLibrary.GetEntryByIndex(selMusic);
-		me.CopyValues(musicValues);
-		Undo.RecordObject(me, "Updated sound");
-		EditorUtility.SetDirty(me);
+		if (soundType == 0) {
+			MusicEntry me = (MusicEntry)musicLibrary.GetEntryByIndex(selMusic);
+			me.CopyValues(musicValues);
+			Undo.RecordObject(me, "Updated music");
+			EditorUtility.SetDirty(me);
+		}
+		else {
+			SfxEntry se = (SfxEntry)sfxLibrary.GetEntryByIndex(selMusic);
+			se.CopyValues(sfxValues);
+			Undo.RecordObject(se, "Updated sfx");
+			EditorUtility.SetDirty(se);
+		}
 	}
 
 	void InstansiateMusic() {
@@ -207,7 +249,6 @@ public class MusicEditorWindow {
 		MusicEntry me = Editor.CreateInstance<MusicEntry>();
 		me.name = uuid;
 		me.uuid = uuid;
-		me.tag = currentSoundTypeTag;
 		me.entryName = uuid;
 		me.repColor = repColor;
 		string path = "Assets/LibraryData/Music/" + uuid + ".asset";
@@ -219,7 +260,33 @@ public class MusicEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
-		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
+		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
+		uuid = "";
+		selMusic = 0;
+		SelectMusic();
+	}
+	
+	void InstansiateSfx() {
+		GUI.FocusControl(null);
+		if (sfxLibrary.ContainsID(uuid)) {
+			Debug.Log("uuid already exists!");
+			return;
+		}
+		SfxEntry se = Editor.CreateInstance<SfxEntry>();
+		se.name = uuid;
+		se.uuid = uuid;
+		se.entryName = uuid;
+		se.repColor = repColor;
+		string path = "Assets/LibraryData/Sfx/" + uuid + ".asset";
+
+		AssetDatabase.CreateAsset(se, path);
+		sfxLibrary.InsertEntry(se,0);
+		Undo.RecordObject(sfxLibrary, "Added sfxx");
+		EditorUtility.SetDirty(sfxLibrary);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+
+		currentEntryList = sfxLibrary.GetRepresentations("",filterStr);
 		uuid = "";
 		selMusic = 0;
 		SelectMusic();
@@ -237,10 +304,30 @@ public class MusicEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 		
-		currentEntryList = musicLibrary.GetRepresentations(currentSoundTypeTag,filterStr);
+		currentEntryList = musicLibrary.GetRepresentations("",filterStr);
 
 		if (res) {
 			Debug.Log("Removed music: " + me.uuid);
+			selMusic = -1;
+		}
+	}
+
+	void DeleteSfx() {
+		GUI.FocusControl(null);
+		SfxEntry se = (SfxEntry)sfxLibrary.GetEntryByIndex(selMusic);
+		string path = "Assets/LibraryData/Sfx/" + se.uuid + ".asset";
+
+		sfxLibrary.RemoveEntryByIndex(selMusic);
+		Undo.RecordObject(sfxLibrary, "Deleted sfx");
+		EditorUtility.SetDirty(sfxLibrary);
+		bool res = AssetDatabase.MoveAssetToTrash(path);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+		
+		currentEntryList = sfxLibrary.GetRepresentations("",filterStr);
+
+		if (res) {
+			Debug.Log("Removed sfx: " + se.uuid);
 			selMusic = -1;
 		}
 	}

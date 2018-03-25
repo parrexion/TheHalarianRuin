@@ -25,6 +25,8 @@ MonoImporter:
   - moduleContainer: {fileID: 11400000, guid: d9a54feb20aa46a47bd8c667444ef3c6, type: 2}
   - musicLibrary: {fileID: 11400000, guid: 3fadf3e8c88ef1440832f31cc781af3c, type: 2}
   - musicContainer: {fileID: 11400000, guid: 9a34080fc0cc0b849af7f76ecc91a694, type: 2}
+  - sfxLibrary: {fileID: 11400000, guid: 0a2d8d62fa7255247a76c95085e079dc, type: 2}
+  - sfxContainer: {fileID: 11400000, guid: 1c3994dfa75a41d4580c56db3eeaa1b5, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -42,6 +42,8 @@ public class LibraryEditorWindow : EditorWindow {
 	public MusicEditorWindow musicEditor;
 	public ScrObjLibraryVariable musicLibrary;
 	public MusicEntry musicContainer;
+	public ScrObjLibraryVariable sfxLibrary;
+	public SfxEntry sfxContainer;
 
 	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Module", "Sound"};
 
@@ -113,7 +115,7 @@ public class LibraryEditorWindow : EditorWindow {
 		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
 		itemEditor = new ItemEditorWindow(itemLibrary, itemContainer);
 		moduleEditor = new ModuleEditorWindow(moduleLibrary, moduleContainer);
-		musicEditor = new MusicEditorWindow(musicLibrary, musicContainer);
+		musicEditor = new MusicEditorWindow(musicLibrary, musicContainer, sfxLibrary, sfxContainer);
 
 		InitializeWindow();
 	}

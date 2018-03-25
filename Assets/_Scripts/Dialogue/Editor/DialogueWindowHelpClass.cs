@@ -82,7 +82,7 @@ public class DialogueWindowHelpClass {
 		int dialoguePartWidth = 320;
 		int dialoguePartHeight = 140;
 		int bottomPartHeight = 168;
-		int soundPartHeight = 80;
+		int soundPartHeight = 160;
 		int screenStep = characterWidth; //(Screen.width - rightPartWidth) / 5f;
 
 		headerRect.x = 0;
