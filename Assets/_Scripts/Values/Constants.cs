@@ -9,8 +9,8 @@ public static class Constants {
 	public const int SCREEN_HEIGHT = 525;
 
 	//Battle arena
-	public static float AndroidBorderWidth = 6.0f;
-	public static float AndroidBorderHeight = 3f;
+	public static float AndroidBorderWidth = 6.1f;
+	public static float AndroidBorderHeight = 3.5f;
 	public static float AndroidStartX = -5.0f;
 	public static float AndroidStartY = 0f;
 	public static float SpiritBorderWidth = 3.5f;

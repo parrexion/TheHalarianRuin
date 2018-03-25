@@ -25,6 +25,7 @@ public class BasicGUIButtons : MonoBehaviour {
 	/// </summary>
 	/// <param name="scene">Scene.</param>
 	public void MoveToSceneButton(int sceneIndex) {
+		Debug.Log("ADDJASDLJASLDJAS");
 		if (fading)
 			return;
 		fading = true;

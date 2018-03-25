@@ -12,6 +12,11 @@ public class DialogueTextHandler : MonoBehaviour {
 	// public GameObject choiceBox;
 	public UnityEvent nextFrameEvent;
 
+	[Header("SFX")]
+	public ScrObjLibraryVariable sfxLibrary;
+	public AudioVariable sfxClip;
+	public UnityEvent playSfx;
+
 	private string[] words = new string[0];
 	private bool textUpdating = false;
 
@@ -20,6 +25,7 @@ public class DialogueTextHandler : MonoBehaviour {
 	void Start () {
 		dialogueText.value = "";
 		dialogueTextBox.text = "";
+		sfxLibrary.GenerateDictionary();
 	}
 
 	void Update() {
@@ -97,6 +103,15 @@ public class DialogueTextHandler : MonoBehaviour {
 
 		if (word[0] == '@'){
 			Debug.Log("Found an sfx!");
+			string sfxString = word.Substring(1);
+			Debug.Log(sfxString);
+			SfxEntry sfx = (SfxEntry)sfxLibrary.GetEntry(sfxString);
+#if !UNITY_EDITOR
+			if (sfx == null)
+				return true;
+#endif
+			sfxClip.value = sfx.clip;
+			playSfx.Invoke();
 			return true;
 		}
 
