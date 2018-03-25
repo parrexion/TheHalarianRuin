@@ -65,9 +65,9 @@ public class WeaponSlot : MonoBehaviour {
 		float resize = (1 - 2*borderAdd);
 		float widthDiff = (float)Screen.width / (float)Constants.SCREEN_WIDTH;
 
-		size = Constants.moduleSize*widthDiff;
-		moduleWidth = Constants.moduleGuiOffsetWidth;
-		moduleHeight = borderAdd + Constants.moduleGuiOffsetHeight * resize;
+		size = Constants.MODULE_SPRITE_SIZE*widthDiff;
+		moduleWidth = Constants.MODULE_GUI_XPOS;
+		moduleHeight = borderAdd + Constants.MODULE_GUI_YPOS * resize;
 	}
 
 	/// <summary>

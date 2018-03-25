@@ -9,34 +9,31 @@ public static class Constants {
 	public const int SCREEN_HEIGHT = 525;
 
 	//Battle arena
-	public static float AndroidBorderWidth = 6.1f;
-	public static float AndroidBorderHeight = 3.5f;
-	public static float AndroidStartX = -5.0f;
-	public static float AndroidStartY = 0f;
-	public static float SpiritBorderWidth = 3.5f;
-	public static float SpiritBorderHeight = 2.25f;
-	public static float SoldierStartX = 13.0f;
-	public static float SoldierStartY = 0f;
+	public const float ANDROID_BORDER_WIDTH = 6.1f;
+	public const float ANDROID_BORDER_HEIGHT = 3.5f;
+	public const float ANDROID_START_X = -5.0f;
+	public const float ANDROID_START_Y = 0f;
+	public const float SOLDIER_BORDER_WIDTH = 3.5f;
+	public const float SOLDIER_BORDER_HEIGHT = 2.25f;
+	public const float SOLDIER_START_X = 13.0f;
+	public const float SOLDIER_START_Y = 0f;
 
 
-	public const float cameraBorderWidth = 6.0f;
-	public const float cameraBorderHeight = 2.9f;
+	public const float CAMERA_BORDER_WIDTH_ANDROID = 6.0f;
+	public const float CAMERA_BORDER_HEIGHT_ANDROID = 2.9f;
 
 	//Dialogue
 	public const int DIALOGUE_PLAYERS_COUNT = 4;
 
 	//Spirit grid
-	public static int GRID_BRANCH = 5;
+	public const int GRID_BRANCH = 5;
 	public const int GRID_WIDTH = 7;
-	public static float SPIRIT_SIZE = 32.0f;
-	public static int SPIRIT_IMAGES = 18;
-	public static int BALANCE_IMAGES = 9;
 
 	//Weapon container
 	public const int MAX_EQUIPPED_MODULE = 4;
-	public const int moduleSize = 64;
-	public const float moduleGuiOffsetWidth = 0.55f;
-	public const float moduleGuiOffsetHeight = 0.04f;
+	public const int MODULE_SPRITE_SIZE = 64;
+	public const float MODULE_GUI_XPOS = 0.55f;
+	public const float MODULE_GUI_YPOS = 0.04f;
 
 	//Inventory
 	public const int gearEquipSpace = 4;

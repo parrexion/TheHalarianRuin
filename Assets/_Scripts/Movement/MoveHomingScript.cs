@@ -102,8 +102,8 @@ public class MoveHomingScript : MonoBehaviour {
 			}
 		}
 		movement.Set(
-			Mathf.Clamp(movement.x,Constants.AndroidStartX-Constants.AndroidBorderWidth,Constants.AndroidStartX+Constants.AndroidBorderWidth),
-			Mathf.Clamp(movement.y,Constants.AndroidStartY-Constants.AndroidBorderHeight,Constants.AndroidStartY+Constants.AndroidBorderHeight));
+			Mathf.Clamp(movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
+			Mathf.Clamp(movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_HEIGHT,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_HEIGHT));
 		
 		rigidbodyComponent.MovePosition(movement);
 	}

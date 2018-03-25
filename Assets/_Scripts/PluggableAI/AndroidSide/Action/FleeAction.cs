@@ -23,8 +23,8 @@ public class FleeAction : Action {
 							direction.normalized.y * ncon.values.speed.y) * speed);
 
 		ncon.movement.Set(
-			Mathf.Clamp(ncon.movement.x,Constants.AndroidStartX-Constants.AndroidBorderWidth,Constants.AndroidStartX+Constants.AndroidBorderWidth),
-			Mathf.Clamp(ncon.movement.y,Constants.AndroidStartY-Constants.AndroidBorderWidth,Constants.AndroidStartY+Constants.AndroidBorderWidth));
+			Mathf.Clamp(ncon.movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
+			Mathf.Clamp(ncon.movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_WIDTH));
 
 		ncon.rigidBody.MovePosition(ncon.movement);
 

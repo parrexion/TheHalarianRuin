@@ -15,8 +15,8 @@ public class MoveWithinBounds : Action {
 		AStateController ncon = (AStateController)controller;
 
 		ncon.movement.Set(
-			Mathf.Clamp(ncon.thisTransform.position.x,Constants.AndroidStartX-Constants.AndroidBorderWidth,Constants.AndroidStartX+Constants.AndroidBorderWidth),
-			Mathf.Clamp(ncon.thisTransform.position.y,Constants.AndroidStartY-Constants.AndroidBorderWidth,Constants.AndroidStartY+Constants.AndroidBorderWidth));
+			Mathf.Clamp(ncon.thisTransform.position.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
+			Mathf.Clamp(ncon.thisTransform.position.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_WIDTH));
 
 		ncon.rigidBody.MovePosition(ncon.movement);
 	}

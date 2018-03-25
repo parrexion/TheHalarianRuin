@@ -13,7 +13,7 @@ public class AStateController : StateController {
 	//
 
 	//Move to point
-	[HideInInspector] public Vector2 moveToPoint = new Vector2(-5*Constants.AndroidBorderWidth,-5*Constants.AndroidBorderHeight);
+	[HideInInspector] public Vector2 moveToPoint = new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT);
 	//
 
 
@@ -32,7 +32,7 @@ public class AStateController : StateController {
 			moveDirection = 1;
 		else
 			moveDirection = -1;
-		moveToPoint = new Vector2(-5*Constants.AndroidBorderWidth,-5*Constants.AndroidBorderHeight);
+		moveToPoint = new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT);
 	}
 
 	override protected void UpdateAnimation() {
@@ -79,6 +79,6 @@ public class AStateController : StateController {
 
 	public override Vector3 GetRandomLocation() {
 		Vector2 dist = Random.rotation * new Vector2(3,0);
-		return new Vector3(Constants.AndroidStartX + dist.x, Constants.AndroidStartY + dist.y,0);
+		return new Vector3(Constants.ANDROID_START_X + dist.x, Constants.ANDROID_START_Y + dist.y,0);
 	}
 }

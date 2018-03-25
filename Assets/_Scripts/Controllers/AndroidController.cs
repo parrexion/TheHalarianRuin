@@ -65,8 +65,8 @@ public class AndroidController : MonoBehaviour {
 		coll2D.enabled = (moveToPosition.GetDashPercent() > invulFramesForDash);
 
 		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x,startX-Constants.cameraBorderWidth,startX+Constants.cameraBorderWidth),
-			Mathf.Clamp(transform.position.y,startY-Constants.cameraBorderHeight,startY+Constants.cameraBorderHeight),
+			Mathf.Clamp(transform.position.x,startX-Constants.CAMERA_BORDER_WIDTH_ANDROID,startX+Constants.CAMERA_BORDER_WIDTH_ANDROID),
+			Mathf.Clamp(transform.position.y,startY-Constants.CAMERA_BORDER_HEIGHT_ANDROID,startY+Constants.CAMERA_BORDER_HEIGHT_ANDROID),
 			0);
 		mouseInfo.playerPosition = transform.position;
 		Vector3 pos = screenCamera.ScreenToWorldPoint(Input.mousePosition);

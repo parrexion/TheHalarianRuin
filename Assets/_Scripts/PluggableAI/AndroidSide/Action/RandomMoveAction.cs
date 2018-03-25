@@ -14,17 +14,17 @@ public class RandomMoveAction : Action {
 
 		AStateController ncon = (AStateController)controller;
 
-		if (ncon.moveToPoint == new Vector2(-5*Constants.AndroidBorderWidth,-5*Constants.AndroidBorderHeight)) {
-			float xpos = Random.Range(Constants.AndroidStartX-Constants.AndroidBorderWidth,Constants.AndroidStartX+Constants.AndroidBorderWidth);
-			float ypos = Random.Range(Constants.AndroidStartY-Constants.AndroidBorderHeight,Constants.AndroidStartY+Constants.AndroidBorderHeight);
+		if (ncon.moveToPoint == new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT)) {
+			float xpos = Random.Range(Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH);
+			float ypos = Random.Range(Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_HEIGHT,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_HEIGHT);
 			ncon.moveToPoint = new Vector2(xpos,ypos);
 		}
 
 		ncon.movement = Vector2.MoveTowards(ncon.thisTransform.position,ncon.moveToPoint,ncon.values.speed.x*Time.fixedDeltaTime);
 
 		ncon.movement.Set(
-			Mathf.Clamp(ncon.movement.x,Constants.AndroidStartX-Constants.AndroidBorderWidth,Constants.AndroidStartX+Constants.AndroidBorderWidth),
-			Mathf.Clamp(ncon.movement.y,Constants.AndroidStartY-Constants.AndroidBorderWidth,Constants.AndroidStartY+Constants.AndroidBorderWidth));
+			Mathf.Clamp(ncon.movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
+			Mathf.Clamp(ncon.movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_WIDTH));
 
 		ncon.rigidBody.MovePosition(ncon.movement);
 

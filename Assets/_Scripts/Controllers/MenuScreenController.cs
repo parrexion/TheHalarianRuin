@@ -93,7 +93,7 @@ public class MenuScreenController : MonoBehaviour {
 			mapButton.interactable = (currentScreen != MenuScreen.MAP);
 			messageButton.interactable = (currentScreen != MenuScreen.MESSAGE);
 			journalButton.interactable = (currentScreen != MenuScreen.JOURNAL);
-			// saveButton.interactable = (currentScreen != MenuScreen.SAVE);
+			saveButton.interactable = (currentScreen != MenuScreen.SAVE);
 		}
 	}
 

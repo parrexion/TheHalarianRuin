@@ -52,10 +52,10 @@ public class SStateController : StateController {
 		float xpos = 0f;
 		float ypos = 0f;
 		if (leftSide)
-			xpos = Random.Range(Constants.SoldierStartX-4f,Constants.SoldierStartX-2f);
+			xpos = Random.Range(Constants.SOLDIER_START_X-4f,Constants.SOLDIER_START_X-2f);
 		else
-			xpos = Random.Range(Constants.SoldierStartX+2f,Constants.SoldierStartX+4f);
-		ypos = Random.Range(Constants.SoldierStartY-2f,Constants.SoldierStartY);
+			xpos = Random.Range(Constants.SOLDIER_START_X+2f,Constants.SOLDIER_START_X+4f);
+		ypos = Random.Range(Constants.SOLDIER_START_Y-2f,Constants.SOLDIER_START_Y);
 		return new Vector3(xpos,ypos,0);
 	}
 }
