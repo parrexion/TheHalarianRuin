@@ -73,7 +73,6 @@ public class MenuScreenController : MonoBehaviour {
 	}
 
 	void UpdateCurrentScreen() {
-
 		//Set current screen
 		statusScreen.SetActive(currentScreen == MenuScreen.STATUS);
 		moduleScreen.SetActive(currentScreen == MenuScreen.MODULE);
