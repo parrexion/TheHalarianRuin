@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Class which keeps a reference to the player's stats throughout the game.
@@ -40,8 +41,10 @@ public class PlayerStats : MonoBehaviour {
 	public FloatVariable soldierDamageTaken;
 
 	[Header("Overworld values")]
-	public StringVariable currentChapter;
+	public StringVariable currentChapterString;
+	public IntVariable currentChapterIndex;
 	public IntVariable currentArea;
+	public IntVariable currentRoomNumber;
 	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
@@ -53,7 +56,6 @@ public class PlayerStats : MonoBehaviour {
 	[Header("Level")]
 	public IntVariable playerLevel;
 	public IntVariable totalExp;
-	// public IntVariable expToNext;
 
 	[Header("Inventory")]
 	public IntVariable totalMoney;
@@ -72,6 +74,12 @@ public class PlayerStats : MonoBehaviour {
 
 	[Header("Libraries")]
 	public ScrObjLibraryVariable itemLibrary;
+	public ScrObjLibraryVariable moduleLibrary;
+
+	[Header("Saving and Loading")]
+	public IntVariable currentSaveFileIndex;
+	public UnityEvent saveCheckEvent;
+	public UnityEvent loadCheckEvent;
 
 
 	void Start() {
@@ -80,15 +88,15 @@ public class PlayerStats : MonoBehaviour {
 		RecalculateStats();
 	}
 
+	/// <summary>
+	/// Continuosly counts up the current play time.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator CountPlayTime() {
-        while (true)
-        {
+        while (true) {
             yield return new WaitForSeconds(1);
-            playedSeconds.value ++;
-            _seconds = (playedSeconds.value % 60);
-            _minutes = (playedSeconds.value / 60) % 60;
-            _hours = (playedSeconds.value / 3600);
-			playTime.value = string.Format("{0} : {1:D2} : {2:D2}",_hours, _minutes, _seconds);
+            playedSeconds.value++;
+			playTime.value = Constants.PlayTimeFromInt(playedSeconds.value, true);
         }
 	}
 
@@ -111,8 +119,6 @@ public class PlayerStats : MonoBehaviour {
 	/// Recalculates the player's stats using the current equipment.
 	/// </summary>
 	public void RecalculateStats() {
-		Debug.Log("Recalculating stats!");
-		
 		ResetPlayerStats();
 
 		// Start by adding upp all base stats
@@ -187,45 +193,93 @@ public class PlayerStats : MonoBehaviour {
 	// SAVING AND LOADING
 
 	/// <summary>
+	/// Loads the player stats from the save class data.
+	/// </summary>
+	/// <param name="saveData"></param>
+	public void NewgameStats() {
+		//Overworld
+		currentChapterString.value = "Prologue";
+		currentChapterIndex.value = 0;
+		currentRoomNumber.value = 0;
+		currentArea.value = playerArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+		playerPosX.value = 0;
+		playerPosY.value = 0;
+
+		//Follower
+		playingAsAndroid.value = true;
+		useFollower.value = false;
+
+		//Exp
+		playerLevel.value = 1;
+		totalExp.value = 0;
+		totalMoney.value = 0;
+
+		//Inventory
+		invItemBag.Reset();
+		invItemEquip.Reset();
+		invModuleBag.Reset();
+		invModuleEquip.Reset();
+
+		//Time
+		ingameDay.value = 1;
+		playedSeconds.value = 0;
+
+		CalculateExp();
+		RecalculateStats();
+
+		Debug.Log("NEWGAME");
+	}
+
+	/// <summary>
 	/// Puts the data into a save class for saving.
 	/// </summary>
 	/// <returns></returns>
-	public PlayerStatsSaveClass SaveStats() {
-		PlayerStatsSaveClass saveData = new PlayerStatsSaveClass();
+	public void SaveStats() {
+		PlayerStatsSaveClass playerData = new PlayerStatsSaveClass();
 
 		//Overworld
-		saveData.currentChapter = currentChapter.value;
-		saveData.currentArea = currentArea.value;
-		saveData.playerArea = playerArea.value;
-		saveData.playerPosX = playerPosX.value;
-		saveData.playerPosY = playerPosY.value;
+		playerData.currentChapterString = currentChapterString.value;
+		playerData.currentChapterIndex = currentChapterIndex.value;
+		playerData.currentRoomNumber = currentRoomNumber.value;
+		playerData.playerArea = playerArea.value;
+		playerData.playerPosX = playerPosX.value;
+		playerData.playerPosY = playerPosY.value;
+
+		//Follower
+		playerData.playingAsAndroid = playingAsAndroid.value;
+		playerData.useFollower = useFollower.value;
 
 		//Exp
-		saveData.expTotal = totalExp.value;
+		playerData.expTotal = totalExp.value;
+		playerData.money = totalMoney.value;
 
 		//Inventory
-		saveData.money = totalMoney.value;
-		saveData.invItemBag = invItemBag.GenerateSaveData();
-		saveData.invItemEquip = invItemEquip.GenerateSaveData();
-		saveData.invModuleBag = invModuleBag.GenerateSaveData();
-		saveData.invModuleEquip = invModuleEquip.GenerateSaveData();
+		playerData.invItemBag = invItemBag.GenerateSaveData();
+		playerData.invItemEquip = invItemEquip.GenerateSaveData();
+		playerData.invModuleBag = invModuleBag.GenerateSaveData();
+		playerData.invModuleEquip = invModuleEquip.GenerateSaveData();
 
 		//Time
-		saveData.ingameDay = ingameDay.value;
-		saveData.playedSeconds = playedSeconds.value;
+		playerData.ingameDay = ingameDay.value;
+		playerData.playedSeconds = playedSeconds.value;
 
-		return saveData;
+		SaveController.instance.saveFiles.playerSave[currentSaveFileIndex.value] = playerData;
+		saveCheckEvent.Invoke();
+		Debug.Log("SAVED");
 	}
 
 	/// <summary>
 	/// Loads the player stats from the save class data.
 	/// </summary>
 	/// <param name="saveData"></param>
-	public void LoadStats(PlayerStatsSaveClass saveData) {
+	public void LoadStats() {
+		PlayerStatsSaveClass saveData = SaveController.instance.saveFiles.playerSave[currentSaveFileIndex.value];
 
 		//Overworld
-		currentArea.value = saveData.currentArea;
-		playerArea.value = saveData.playerArea;
+		currentChapterString.value = saveData.currentChapterString;
+		currentChapterIndex.value = saveData.currentChapterIndex;
+		currentRoomNumber.value = saveData.currentRoomNumber;
+		currentArea.value = playerArea.value = saveData.playerArea;
 		playerPosX.value = saveData.playerPosX;
 		playerPosY.value = saveData.playerPosY;
 
@@ -235,29 +289,38 @@ public class PlayerStats : MonoBehaviour {
 
 		//Exp
 		totalExp.value = saveData.expTotal;
+		CalculateExp();
 
 		//Inventory
 		totalMoney.value = saveData.money;
 		itemLibrary.GenerateDictionary();
+		moduleLibrary.GenerateDictionary();
 		invItemBag.LoadItemData(saveData.invItemBag, itemLibrary);
 		invItemEquip.LoadItemData(saveData.invItemEquip, itemLibrary);
-		invModuleBag.LoadItemData(saveData.invModuleBag, itemLibrary);
-		invModuleEquip.LoadItemData(saveData.invModuleEquip, itemLibrary);
+		invModuleBag.LoadItemData(saveData.invModuleBag, moduleLibrary);
+		invModuleEquip.LoadItemData(saveData.invModuleEquip, moduleLibrary);
 
 		//Time
 		ingameDay.value = saveData.ingameDay;
 		playedSeconds.value = saveData.playedSeconds;
+
+		RecalculateStats();
+
+		loadCheckEvent.Invoke();
+		Debug.Log("LOADED");
 	}
 }
 
 /// <summary>
 /// Save class for the player stats which extracts the ScrObj variables.
 /// </summary>
+[System.Serializable]
 public class PlayerStatsSaveClass {
 
 	[Header("Overworld values")]
-	public string currentChapter;
-	public int currentArea;
+	public string currentChapterString;
+	public int currentChapterIndex;
+	public int currentRoomNumber;
 	public int playerArea;
 	public float playerPosX;
 	public float playerPosY;
@@ -279,4 +342,12 @@ public class PlayerStatsSaveClass {
 	[Header("Time")]
 	public int ingameDay;
 	public int playedSeconds;
+
+
+	public PlayerStatsSaveClass() {
+		invItemEquip = new SaveListUuid(Constants.GEAR_EQUIP_SPACE);
+		invItemBag = new SaveListUuid(Constants.GEAR_BAG_SPACE);
+		invModuleEquip = new SaveListUuid(Constants.MODULE_EQUIP_SPACE);
+		invModuleBag = new SaveListUuid(Constants.MODULE_BAG_SPACE);
+	}
 }

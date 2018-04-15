@@ -6,12 +6,12 @@ using UnityEditor;
 [CustomEditor(typeof(AreaIntVariable))]
 public class AreaIntVariableEditor : Editor {
 
-    Constants.SCENE_INDEXES asdf;
+    Constants.SCENE_INDEXES newArea;
 
     public override void OnInspectorGUI () {
         AreaIntVariable areaInt = target as AreaIntVariable;
         GUILayout.Label("Value : " + areaInt.value.ToString());
-        asdf = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Area", (Constants.SCENE_INDEXES)areaInt.value);
-        areaInt.value = (int)asdf;
+        newArea = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Area", (Constants.SCENE_INDEXES)areaInt.value);
+        areaInt.value = (int)newArea;
     }
 }

@@ -83,7 +83,7 @@ public class WeaponSlot : MonoBehaviour {
 			shootCooldown -= time;
 		}
 
-		for (int i = 0; i < Constants.MAX_EQUIPPED_MODULE; i++) {
+		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
 			containerModules[i].LowerCooldown(time);
 		}
 	}
@@ -96,7 +96,7 @@ public class WeaponSlot : MonoBehaviour {
 	void SetEquippedModule(){
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
-		for (int i = 0; i < Constants.MAX_EQUIPPED_MODULE; i++) {
+		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
 			if (be.useSpecificModule) {
 				containerModules[i].module = be.equippedModule[i];
 			}
@@ -119,7 +119,7 @@ public class WeaponSlot : MonoBehaviour {
 		if (paused.value || removeBattleSide.value == 2)
 			return;
 
-		for (int i = 0; i < Constants.MAX_EQUIPPED_MODULE; i++) {
+		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
 
 			if (containerModules[i].module == null)
 				continue;

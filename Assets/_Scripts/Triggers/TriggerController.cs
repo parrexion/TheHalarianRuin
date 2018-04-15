@@ -20,11 +20,16 @@ public class TriggerController : MonoBehaviour {
 
 #endregion
 
+    public IntVariable currentSaveFileIndex;
+    public StringListVariable newgameTriggers;
+
     public BoolVariable paused;
-    public StringListVariable newgameUuid;
     public IntVariable currentScene;
     public IntVariable currentRoomNumber;
     public StringVariable currentChapter;
+
+    public UnityEvent saveCheckEvent;
+    public UnityEvent loadCheckEvent;
 
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
 
@@ -41,7 +46,6 @@ public class TriggerController : MonoBehaviour {
     }
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        // SetupTriggers();
         ReactivateTriggers();
     }
 
@@ -71,16 +75,9 @@ public class TriggerController : MonoBehaviour {
         if (triggerStates.ContainsKey(uuid))
             return triggerStates[uuid];
 
-        bool active = alwaysActive;
-        for (int i = 0; i < newgameUuid.values.Length; i++) {
-            if (uuid == newgameUuid.values[i]){
-                active = true;
-                break;
-            }
-        }
-        Debug.Log("Adding trigger: " + uuid + ", state: " + active);
-        triggerStates.Add(uuid, active);
-        return active;
+        Debug.Log("Adding trigger: " + uuid + ", state: " + alwaysActive);
+        triggerStates.Add(uuid, alwaysActive);
+        return alwaysActive;
     }
 
     /// <summary>
@@ -93,42 +90,66 @@ public class TriggerController : MonoBehaviour {
             triggerStates[uuid] = state;
         else
             triggerStates.Add(uuid, state);
+        
+        Debug.Log("Trigger: " + uuid + "  :  " + state);
     }
 
 
     // SAVING AND LOADING
 
+    public void NewgameTriggers() {
+        triggerStates = new Dictionary<string, bool>();
+        SetupTriggers();
+
+        for (int i = 0; i < newgameTriggers.values.Length; i++) {
+            triggerStates[newgameTriggers.values[i]] = true;
+            Debug.Log("Active trigger: " + newgameTriggers.values[i]);
+        }
+
+		Debug.Log("NEWGAME");
+    }
+
     /// <summary>
     /// Stores the data in a save class for saving into xml.
     /// </summary>
     /// <returns></returns>
-    public TriggerSaveClass SaveTriggers() {
-        TriggerSaveClass saveData = new TriggerSaveClass();
+    public void SaveTriggers() {
+		TriggerSaveClass triggerSave = new TriggerSaveClass();
 
         int size = triggerStates.Count;
-        saveData.uuids = new string[size];
-        saveData.states = new bool[size];
+        List<string> activeTriggers = new List<string>();
         int index = 0;
         foreach(KeyValuePair<string,bool> trigger in triggerStates) {
-            saveData.uuids[index] = trigger.Key;
-            saveData.states[index] = trigger.Value;
+            if (trigger.Value) {
+                activeTriggers.Add(trigger.Key);
+                Debug.Log("ACtive: " + trigger.Key);
+            }
             index++;
         }
+        triggerSave.uuids = activeTriggers.ToArray();
 
-        return saveData;
+        SaveController.instance.saveFiles.triggerSave[currentSaveFileIndex.value] = triggerSave;
+        saveCheckEvent.Invoke();
+		Debug.Log("SAVED");
     }
 
     /// <summary>
     /// Loads the trigger data from the save class.
     /// </summary>
     /// <param name="saveData"></param>
-    public void LoadTriggers(TriggerSaveClass saveData) {
-
+    public void LoadTriggers() {
+        TriggerSaveClass triggerSave = SaveController.instance.saveFiles.triggerSave[currentSaveFileIndex.value];
+		
         triggerStates = new Dictionary<string, bool>();
+        SetupTriggers();
 
-        for (int i = 0; i < saveData.states.Length; i++) {
-            triggerStates.Add(saveData.uuids[i],saveData.states[i]);
+        for (int i = 0; i < triggerSave.uuids.Length; i++) {
+            triggerStates[triggerSave.uuids[i]] = true;
+            Debug.Log("Active trigger: " + triggerSave.uuids[i]);
         }
+
+        loadCheckEvent.Invoke();
+		Debug.Log("LOADED");
     }
 }
 
@@ -136,7 +157,18 @@ public class TriggerController : MonoBehaviour {
 /// <summary>
 /// Save class for the trigger information list.
 /// </summary>
+[System.Serializable]
 public class TriggerSaveClass {
     public string[] uuids;
-    public bool[] states;
+
+    public TriggerSaveClass() {
+        uuids = new string[0];
+    }
+
+    public TriggerSaveClass(StringListVariable newgameTriggers) {
+        if (newgameTriggers == null)
+            uuids = new string[0];
+        else
+            uuids = newgameTriggers.values;
+    }
 }

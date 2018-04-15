@@ -8,8 +8,8 @@ public class MenuScreenController : MonoBehaviour {
 
 	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
 
-	public MenuScreen currentScreen = MenuScreen.STATUS;
-	public bool isEditor = false;
+	public IntVariable currentInventoryScreen;
+	bool isEditor;
 	bool menuLock = true;
 
 	[Header("Screens")]
@@ -32,7 +32,8 @@ public class MenuScreenController : MonoBehaviour {
 	public Button saveButton;
 
 	[Header("Other values")]
-	public IntVariable playerArea;
+	public AreaIntVariable playerArea;
+	public AreaIntVariable currentArea;
 	public FloatVariable fadeSpeed;
 
 	public UnityEvent buttonClickedEvent;
@@ -65,34 +66,37 @@ public class MenuScreenController : MonoBehaviour {
 			return;
 
 		buttonClickedEvent.Invoke();
-		MenuScreen screen = (MenuScreen)screenIndex;
-		if (currentScreen != screen) {
-			currentScreen = screen;
+		if (currentInventoryScreen.value != screenIndex) {
+			currentInventoryScreen.value = screenIndex;
 			UpdateCurrentScreen();
 		}
 	}
 
+	/// <summary>
+	/// Enables the currently selected screen, hiding the ones which aren't used atm.
+	/// </summary>
 	void UpdateCurrentScreen() {
+		MenuScreen screen = (MenuScreen)currentInventoryScreen.value;
 		//Set current screen
-		statusScreen.SetActive(currentScreen == MenuScreen.STATUS);
-		moduleScreen.SetActive(currentScreen == MenuScreen.MODULE);
-		equipScreen.SetActive(currentScreen == MenuScreen.EQUIP);
+		statusScreen.SetActive(screen == MenuScreen.STATUS);
+		moduleScreen.SetActive(screen == MenuScreen.MODULE);
+		equipScreen.SetActive(screen == MenuScreen.EQUIP);
 		if (isEditor) {
-			mapScreen.SetActive(currentScreen == MenuScreen.MAP);
-			messageScreen.SetActive(currentScreen == MenuScreen.MESSAGE);
-			journalScreen.SetActive(currentScreen == MenuScreen.JOURNAL);
-			saveScreen.SetActive(currentScreen == MenuScreen.SAVE);
+			mapScreen.SetActive(screen == MenuScreen.MAP);
+			messageScreen.SetActive(screen == MenuScreen.MESSAGE);
+			journalScreen.SetActive(screen == MenuScreen.JOURNAL);
+			saveScreen.SetActive(screen == MenuScreen.SAVE);
 		}
 
 		//Set current buttons
-		statusButton.interactable = (currentScreen != MenuScreen.STATUS);
-		moduleButton.interactable = (currentScreen != MenuScreen.MODULE);
-		equipButton.interactable = (currentScreen != MenuScreen.EQUIP);
+		statusButton.interactable = (screen != MenuScreen.STATUS);
+		moduleButton.interactable = (screen != MenuScreen.MODULE);
+		equipButton.interactable = (screen != MenuScreen.EQUIP);
 		if (isEditor) {
-			mapButton.interactable = (currentScreen != MenuScreen.MAP);
-			messageButton.interactable = (currentScreen != MenuScreen.MESSAGE);
-			journalButton.interactable = (currentScreen != MenuScreen.JOURNAL);
-			saveButton.interactable = (currentScreen != MenuScreen.SAVE);
+			mapButton.interactable = (screen != MenuScreen.MAP);
+			messageButton.interactable = (screen != MenuScreen.MESSAGE);
+			journalButton.interactable = (screen != MenuScreen.JOURNAL);
+			saveButton.interactable = (screen != MenuScreen.SAVE);
 		}
 	}
 
@@ -104,6 +108,7 @@ public class MenuScreenController : MonoBehaviour {
 			return;
 		
 		menuLock = true;
+		currentArea.value = playerArea.value;
 		buttonClickedEvent.Invoke();
 		changeMapEvent.Invoke();
 	}

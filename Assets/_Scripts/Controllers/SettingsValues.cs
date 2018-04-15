@@ -4,18 +4,10 @@ using System.IO;
 using UnityEngine;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine.Events;
 
 public class SettingsValues : MonoBehaviour {
-
-	[Header("Global values")]
-	public IntVariable bestTowerLevel;
-	public IntVariable currentTowerLevel;
-
-	[Header("Settings")]
-	public FloatVariable musicVolume;
-	public FloatVariable effectVolume;
-
-
+	
 #region Singleton
 	private static SettingsValues instance;
 
@@ -30,20 +22,48 @@ public class SettingsValues : MonoBehaviour {
 	}
 #endregion
 
-	public SettingsSaveClass SaveSettings() {
+	public IntVariable currentSaveFileIndex;
+
+	[Header("Global values")]
+	public IntVariable bestTowerLevel;
+	public IntVariable currentTowerLevel;
+
+	[Header("Settings")]
+	public FloatVariable musicVolume;
+	public FloatVariable effectVolume;
+
+	[Header("Events")]
+	public UnityEvent saveCheckEvent;
+	public UnityEvent loadCheckEvent;
+
+
+	/// <summary>
+	/// Saves the settings to the data in the SaveController for saving.
+	/// </summary>
+	public void SaveSettings() {
 		SettingsSaveClass settingsSave = new SettingsSaveClass();
 
 		settingsSave.bestLevel = Mathf.Max(settingsSave.bestLevel,currentTowerLevel.value);
 		settingsSave.musicVolume = musicVolume.value;
 		settingsSave.effectVolume = effectVolume.value;
 
-		return settingsSave;
+		SaveController.instance.saveFiles.settingsSave[currentSaveFileIndex.value] = settingsSave;
+		saveCheckEvent.Invoke();
+		Debug.Log("SAVED");
 	}
 
-	public void LoadSettings(SettingsSaveClass settingsSave) {
+	/// <summary>
+	/// Loads the settings from the data loaded by the SaveController.
+	/// </summary>
+	public void LoadSettings() {
+		SettingsSaveClass settingsSave = SaveController.instance.saveFiles.settingsSave[currentSaveFileIndex.value];
+		
 		bestTowerLevel.value = settingsSave.bestLevel;
 		musicVolume.value = settingsSave.musicVolume;
 		effectVolume.value = settingsSave.effectVolume;
+
+		loadCheckEvent.Invoke();
+		Debug.Log("LOADED");
 	}
 
 }

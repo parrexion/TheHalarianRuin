@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class MainMenuScript : MonoBehaviour {
 
 	public Canvas mainMenuCanvas;
+	public Canvas loadGameCanvas;
+	public Canvas levelSelectCanvas;
 
 	[Header("Areas")]
 	public StringVariable currentChapter;
@@ -25,10 +27,10 @@ public class MainMenuScript : MonoBehaviour {
 	public UnityEvent buttonClickEvent;
 	public UnityEvent mapChangeEvent;
 	public UnityEvent dialogueEvent;
+	public UnityEvent startNewgameEvent;
 
 	[Header("Battle tower stuff")]
 	public Text recordText;
-	public Canvas levelSelectCanvas;
 	public IntVariable bestTowerLevel;
 	public IntVariable currentTowerLevel;
 	public Button levelMaxButton;
@@ -37,7 +39,7 @@ public class MainMenuScript : MonoBehaviour {
 	public Text levelMinus5Text;
 
 
-	void Start(){
+	void Start() {
 		recordText.text = "Highest level: " + bestTowerLevel.value;
 		currentArea.value = (int)Constants.SCENE_INDEXES.MAINMENU;
 	}
@@ -52,26 +54,40 @@ public class MainMenuScript : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Story mode selection
+	/// Return to the main menu canvas.
 	/// </summary>
-	public void StoryClicked(){
+	public void ReturnToMainCanvas() {
+		mainMenuCanvas.enabled = true;
+		loadGameCanvas.enabled = false;
+		levelSelectCanvas.enabled = false;
+	}
+
+	/// <summary>
+	/// New game selected.
+	/// </summary>
+	public void NewgameClicked() {
 		buttonClickEvent.Invoke();
 		
-		playingAsAndroid.value = true;
-		useFollower.value = false;
-
 		dialogueUuid.value = dialogueUuidStr;
-		currentChapter.value = currentChapterStr;
 		currentRoomNumber.value = 0;
-		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 
+		startNewgameEvent.Invoke();
 		dialogueEvent.Invoke();
+	}
+
+	/// <summary>
+	/// Load game selected.
+	/// </summary>
+	public void LoadGameClicked() {
+		buttonClickEvent.Invoke();
+		mainMenuCanvas.enabled = false;
+		loadGameCanvas.enabled = true;
 	}
 
 	/// <summary>
 	/// Random battles clicked
 	/// </summary>
-	public void BattleClicked(){
+	public void BattleClicked() {
 		mainMenuCanvas.enabled = false;
 		levelSelectCanvas.enabled = true;
 		int bestLevel = bestTowerLevel.value;
@@ -89,7 +105,7 @@ public class MainMenuScript : MonoBehaviour {
 	/// Battle tower clicked
 	/// </summary>
 	/// <param name="levelPosition"></param>
-	public void LevelSelectClicked(int levelPosition){
+	public void LevelSelectClicked(int levelPosition) {
 		int bestLevel = bestTowerLevel.value;
 		if (levelPosition == 1) 
 			currentTowerLevel.value = 1;

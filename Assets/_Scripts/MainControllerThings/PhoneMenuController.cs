@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -6,21 +7,39 @@ using UnityEngine.UI;
 /// </summary>
 public class PhoneMenuController : MonoBehaviour {
 
-	public Text locationText;
+	public StringVariable dialogueUUID; // DEBUG
 
+	[Header("InventoryScreen stuff")]
+	public IntVariable inventoryScreenIndex;
+	public UnityEvent mapChangeEvent;
+
+	[Header("Clock")]
 	public Text clockText;
 	public Text dateText;
 	private System.DateTime currentDate;
 
-	public Button equipButton;
-	public BoolVariable equipButtonAvailable;
+	[Header("Location")]
+	public Text locationText;
+	public AreaIntVariable currentArea;
 
-	public IntVariable currentArea;
-	public StringVariable dialogueUUID;
+	[Header("Buttons")]
+	public Button statusButton;
+	public Button equipButton;
+	public Button moduleButton;
+	public Button saveButton;
+
+	[Header("Button enablers")]
+	public BoolVariable statusAvailable;
+	public BoolVariable equipAvailable;
+	public BoolVariable moduleAvailable;
+	public BoolVariable saveAvailable;
 
 
 	void Awake() {
-		equipButton.interactable = equipButtonAvailable.value;
+		statusButton.interactable = statusAvailable.value;
+		equipButton.interactable = equipAvailable.value;
+		moduleButton.interactable = moduleAvailable.value;
+		saveButton.interactable = saveAvailable.value;
 	}
 
 	/// <summary>
@@ -30,9 +49,16 @@ public class PhoneMenuController : MonoBehaviour {
 		SetCurrentLocationText();
 		currentDate = System.DateTime.Now;
 		SetCurrentTimeDate();
-		// if (Input.GetKeyDown(KeyCode.Escape)) {
-		// 	AppHelper.Quit();
-		// }
+	}
+
+	/// <summary>
+	/// Sets the selected inventory screen and moves to the sceen.
+	/// </summary>
+	/// <param name="screenIndex"></param>
+	public void GoToInventory(int screenIndex) {
+		inventoryScreenIndex.value = screenIndex;
+		currentArea.value = (int)Constants.SCENE_INDEXES.INVENTORY;
+		mapChangeEvent.Invoke();
 	}
 
 	/// <summary>

@@ -42,7 +42,7 @@ public class StatusController : MonoBehaviour {
 	void Update () {
 		
 		//Update time
-		playtimeText.text = playTime.value.ToString();
+		playtimeText.text = playTime.value;
 	}
 
 	void SetAllStats() {

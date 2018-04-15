@@ -13,7 +13,6 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	private Dictionary<string, ScrObjLibraryEntry> entries = new Dictionary<string, ScrObjLibraryEntry>();
 
 	public void GenerateDictionary() {
-		Debug.Log("Generating");
 		entries.Clear();
 		representations.Clear();
 		for (int i = 0; i < list.Count ; i++) {

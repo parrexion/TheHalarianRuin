@@ -111,7 +111,10 @@ public class DialogueTextHandler : MonoBehaviour {
 				return true;
 #endif
 			sfxClip.value = sfx.clip;
-			playSfx.Invoke();
+			if (sfxClip.value != null)
+				playSfx.Invoke();
+			else
+				Debug.LogWarning("SFX clip is null in the dialogue!");
 			return true;
 		}
 

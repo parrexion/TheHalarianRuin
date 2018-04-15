@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public abstract class OWTrigger : MonoBehaviour {
 
 	[Header("Is trigger always active?")]
-	public bool alwaysActive = true;
+	public bool alwaysActive = false;
 	[Header("Is trigger visible?")]
 	public bool visible = false;
 	

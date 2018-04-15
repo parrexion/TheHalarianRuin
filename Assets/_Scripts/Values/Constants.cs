@@ -30,16 +30,15 @@ public static class Constants {
 	public const int GRID_WIDTH = 7;
 
 	//Weapon container
-	public const int MAX_EQUIPPED_MODULE = 4;
 	public const int MODULE_SPRITE_SIZE = 64;
 	public const float MODULE_GUI_XPOS = 0.55f;
 	public const float MODULE_GUI_YPOS = 0.04f;
 
 	//Inventory
-	public const int gearEquipSpace = 4;
-	public const int gearBagSpace = 20;
-	public const int moduleEquipSpace = 4;
-	public const int moduleBagSpace = 20;
+	public const int GEAR_EQUIP_SPACE = 4;
+	public const int GEAR_BAG_SPACE = 20;
+	public const int MODULE_EQUIP_SPACE = 4;
+	public const int MODULE_BAG_SPACE = 20;
 
 	//Player stats
 	public const int PLAYER_HEALTH_BASE = 50;
@@ -97,6 +96,19 @@ public static class Constants {
 		CHAPTER4,
 		CHPATER5,
 		EPILOGUE
+	}
+
+
+	/// UTILITY FUNCTIONS
+
+	public static string PlayTimeFromInt(int playTime, bool useSeconds) {
+		int _seconds = (playTime % 60);
+		int _minutes = (playTime / 60) % 60;
+		int _hours = (playTime / 3600);
+		if (useSeconds)
+			return string.Format("{0} : {1:D2} : {2:D2}",_hours, _minutes, _seconds);
+		else
+			return string.Format("{0} : {1:D2}",_hours, _minutes);
 	}
 }
 

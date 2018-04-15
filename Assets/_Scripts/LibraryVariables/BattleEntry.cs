@@ -31,7 +31,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 	// Player stuff
 	public bool useSpecificModule = false;
-	public Module[] equippedModule = new Module[Constants.MAX_EQUIPPED_MODULE];
+	public Module[] equippedModule = new Module[Constants.MODULE_EQUIP_SPACE];
 
 	// After match values
 	public NextLocation nextLocation = NextLocation.OVERWORLD;
@@ -71,7 +71,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 		// Player stuff
 		useSpecificModule = true;
-		equippedModule = new Module[Constants.MAX_EQUIPPED_MODULE];
+		equippedModule = new Module[Constants.MODULE_EQUIP_SPACE];
 
 		// After match values
 		nextLocation = NextLocation.OVERWORLD;
@@ -115,7 +115,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 		// Player stuff
 		useSpecificModule = be.useSpecificModule;
-		equippedModule = new Module[Constants.MAX_EQUIPPED_MODULE];
+		equippedModule = new Module[Constants.MODULE_EQUIP_SPACE];
 		for (int i = 0; i < be.equippedModule.Length; i++) {
 			equippedModule[i] = be.equippedModule[i];
 		}

@@ -31,9 +31,7 @@ public class InvListVariable : ScriptableObject {
 	/// <param name="index"></param>
 	/// <returns></returns>
 	public ItemEntry GetItemByUuid(string uuid) {
-		Debug.Log("leangth:  " + values.Length);
 		for (int i = 0; i < values.Length; i++) {
-			Debug.Log(i + ": res:  " + values[i]);
 			if (values[i].uuid == uuid){
 				return values[i];
 			}
@@ -43,6 +41,14 @@ public class InvListVariable : ScriptableObject {
 		return null;
 	}
 
+	public void Reset() {
+		for (int i = 0; i < values.Length; i++) {
+			values[i] = null;
+		}
+		Debug.Log("Reset the inventory");
+	}
+
+
 	//Saving and loading
 
 	/// <summary>
@@ -50,10 +56,8 @@ public class InvListVariable : ScriptableObject {
 	/// </summary>
 	/// <returns></returns>
 	public SaveListUuid GenerateSaveData() {
-		SaveListUuid saveData = new SaveListUuid();
 		int length = values.Length;
-		saveData.size = length;
-		saveData.uuids = new string[length];
+		SaveListUuid saveData = new SaveListUuid(length);
 
 		for (int i = 0; i < length; i++) {
 			saveData.uuids[i] = (values[i] != null) ? values[i].uuid : "";
@@ -67,12 +71,10 @@ public class InvListVariable : ScriptableObject {
 	/// </summary>
 	/// <param name="saveData"></param>
 	public void LoadItemData(SaveListUuid saveData, ScrObjLibraryVariable itemLibrary) {
-
 		if (values.Length != saveData.size)
 			Debug.LogWarning("Something is wrong with the size of the module list.");
 		for (int i = 0; i < saveData.size; i++) {
 			values[i] = string.IsNullOrEmpty(saveData.uuids[i]) ? null : (ItemEntry)itemLibrary.GetEntry(saveData.uuids[i]);
 		}
-		Debug.Log("Loaded the module list.");
 	}
 }
