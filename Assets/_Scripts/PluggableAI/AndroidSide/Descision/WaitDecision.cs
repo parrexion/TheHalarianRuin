@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "PluggableAI/Decisions/WaitChase")]
-public class WaitChaseDecision : Decision {
+[CreateAssetMenu (menuName = "PluggableAI/Decisions/Wait")]
+public class WaitDecision : Decision {
+
+	public StateController.WaitStates waitAction;
 
 	public override bool Decide(StateController controller) {
 		controller.finishedWaiting = Wait(controller);
@@ -18,10 +20,11 @@ public class WaitChaseDecision : Decision {
 			controller.currentWaitState = controller.GetRandomWaitState();
 		}
 
-		if (controller.stateTimeElapsed >= controller.waitTime && controller.currentWaitState == StateController.WaitStates.CHASE) {
+		if (controller.stateTimeElapsed >= controller.waitTime && controller.currentWaitState == waitAction) {
 			return true;
 		}
 
 		return false;
 	}
+
 }

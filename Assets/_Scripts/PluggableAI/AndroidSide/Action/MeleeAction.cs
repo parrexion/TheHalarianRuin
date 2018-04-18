@@ -13,7 +13,6 @@ public class MeleeAction : Action {
 	private void Attack(StateController controller) {
 
 		if (!controller.hasAttacked) {
-//			Debug.Log("Attack");
 			controller.hasAttacked = true;
 			controller.attack.Attack(controller);
 		}
