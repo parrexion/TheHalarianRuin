@@ -24,7 +24,8 @@ public abstract class AnimationScript : MonoBehaviour {
 		Jump,
 		Dash,
 		WalkUp,
-		WalkDown
+		WalkDown,
+		Overheat
 	}
 
 	//Animations
@@ -37,6 +38,7 @@ public abstract class AnimationScript : MonoBehaviour {
 	protected const string kAttackAnim = "Attack";
 	protected const string kBlockAnim = "Block";
 	protected const string kHurtAnim = "Hurt";
+	protected const string kOverheatAnim = "Overheat";
 	protected const string kJumpAnim = "Jump";
 	protected const string kDashAnim = "Dash";
 

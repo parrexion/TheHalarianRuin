@@ -15,7 +15,7 @@ public class CharacterAnimationScript : AnimationScript {
 			animator.Play(kHurtAnim);
 		}
 		else if (info.overheat) {
-			animator.Play(kHurtAnim);
+			animator.Play(kOverheatAnim);
 		}
 		else if (info.blocking) {
 			animator.Play(kBlockAnim);
@@ -28,10 +28,9 @@ public class CharacterAnimationScript : AnimationScript {
 				Face(info.mouseDirection);
 		}
 		else if (info.jumping) {
-			if (info.mouseDirection == -1)
-				animator.Play(kWalkLAnim);
-			else
-				animator.Play(kWalkRAnim);
+			animator.Play(kJumpAnim);
+			if (info.mouseDirection != 0)
+				Face(info.mouseDirection);
 		}
 		else if (info.chasing) {
 			animator.Play(kChaseAnim);
@@ -43,11 +42,7 @@ public class CharacterAnimationScript : AnimationScript {
 			if (info.mouseDirection != 0)
 				Face(info.mouseDirection);
 		}
-		else if (info.mouseDirection == -1) {
-			animator.Play(kWalkLAnim);
-			Face(info.mouseDirection);
-		}
-		else if (info.mouseDirection == 1) {
+		else if (info.mouseDirection == -1 || info.mouseDirection == 1) {
 			animator.Play(kWalkRAnim);
 			Face(info.mouseDirection);
 		}

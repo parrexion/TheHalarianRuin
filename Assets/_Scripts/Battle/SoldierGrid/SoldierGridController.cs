@@ -168,7 +168,7 @@ public class SoldierGridController : MonoBehaviour {
 		animInfo.jumping = !moveJumping.grounded;
 
 		if (hurting > 0) {
-			hurting--;
+			hurting -= timeStep;
 			animInfo.hurt = true;
 		}
 		else
@@ -254,4 +254,11 @@ public class SoldierGridController : MonoBehaviour {
 		hurtScript.canBeHurt = false;
 	}
 
+	/// <summary>
+	/// Called when the soldier takes damage and shows the hurting animation.
+	/// </summary>
+	public void DamageTaken(float damageTime) {
+		if (hurting <= 0)
+			hurting = damageTime;
+	}
 }

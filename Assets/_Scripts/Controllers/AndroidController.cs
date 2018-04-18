@@ -148,4 +148,11 @@ public class AndroidController : MonoBehaviour {
 		animScript.UpdateState(animInfo, speed);
 	}
 
+	/// <summary>
+	/// Called when the android takes damage and shows the hurting animation.
+	/// </summary>
+	public void DamageTaken(float damageTime) {
+		if (hurting <= 0)
+			hurting = damageTime;
+	}
 }
