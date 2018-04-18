@@ -8,17 +8,13 @@ using UnityEngine;
 /// </summary>
 public class MainControllerScript : MonoBehaviour {
 
-	public static MainControllerScript instance { get; private set;}
+#region Singleton
+	public static MainControllerScript instance;
 
-	public bool initiated { get; private set; }
-	public BattleGUIController battleGUI { get; private set;}
-
-	
 	/// <summary>
 	/// Loads all the modules.
 	/// </summary>
 	void Awake () {
-
 		if (instance != null) {
 			Destroy(gameObject);
 			return;
@@ -29,6 +25,11 @@ public class MainControllerScript : MonoBehaviour {
 		battleGUI = GetComponent<BattleGUIController>();
 		StartCoroutine("WaitForInitiate");
 	}
+#endregion
+
+	public bool initiated;
+	public BattleGUIController battleGUI;
+	
 
 	/// <summary>
 	/// Waits to make sure that the necessary modules are loaded before the last modules are initiated.

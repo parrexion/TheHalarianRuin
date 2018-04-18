@@ -46,6 +46,7 @@ public class DrawScoreScreen : MonoBehaviour {
 	[Header("Events")]
 	public UnityEvent buttonClickEvent;
 	public UnityEvent changeMapEvent;
+	public UnityEvent playMusicEvent;
 
 
 	// Use this for initialization
@@ -58,6 +59,7 @@ public class DrawScoreScreen : MonoBehaviour {
 		totalExp.value += expGained.value;
 		totalMoney.value += moneyGained.value;
 		SetValues();
+		playMusicEvent.Invoke();
 	}
 
 	/// <summary>
