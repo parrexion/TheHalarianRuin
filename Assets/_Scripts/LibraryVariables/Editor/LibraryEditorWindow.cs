@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, MODULE = 5, SOUND = 6 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, MODULE = 5 }
 
 	// Header
 	Rect headerRect = new Rect();
@@ -39,13 +39,7 @@ public class LibraryEditorWindow : EditorWindow {
 	public ScrObjLibraryVariable moduleLibrary;
 	public Module moduleContainer;
 
-	public MusicEditorWindow musicEditor;
-	public ScrObjLibraryVariable musicLibrary;
-	public MusicEntry musicContainer;
-	public ScrObjLibraryVariable sfxLibrary;
-	public SfxEntry sfxContainer;
-
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Module", "Sound"};
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Module"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -88,9 +82,6 @@ public class LibraryEditorWindow : EditorWindow {
 			case State.MODULE:
 				moduleEditor.DrawWindow();
 				break;
-			case State.SOUND:
-				musicEditor.DrawWindow();
-				break;
 		}
 	}
 
@@ -115,7 +106,6 @@ public class LibraryEditorWindow : EditorWindow {
 		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
 		itemEditor = new ItemEditorWindow(itemLibrary, itemContainer);
 		moduleEditor = new ModuleEditorWindow(moduleLibrary, moduleContainer);
-		musicEditor = new MusicEditorWindow(musicLibrary, musicContainer, sfxLibrary, sfxContainer);
 
 		InitializeWindow();
 	}
@@ -134,7 +124,6 @@ public class LibraryEditorWindow : EditorWindow {
 		backgroundEditor.InitializeWindow();
 		itemEditor.InitializeWindow();
 		moduleEditor.InitializeWindow();
-		musicEditor.InitializeWindow();
 	}
 
 	/// <summary>

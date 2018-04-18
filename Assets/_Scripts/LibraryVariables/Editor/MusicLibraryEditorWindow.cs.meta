@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 955cf68c234efa84784194cf6779643e
+timeCreated: 1517078636
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - currentWindow: {fileID: 11400000, guid: 79203f0d75591ab4e86b5e9ec1eaa78f, type: 2}
+  - musicLibrary: {fileID: 11400000, guid: 3fadf3e8c88ef1440832f31cc781af3c, type: 2}
+  - musicContainer: {fileID: 11400000, guid: 9a34080fc0cc0b849af7f76ecc91a694, type: 2}
+  - sfxLibrary: {fileID: 11400000, guid: 0a2d8d62fa7255247a76c95085e079dc, type: 2}
+  - sfxContainer: {fileID: 11400000, guid: 1c3994dfa75a41d4580c56db3eeaa1b5, type: 2}
+  - musicListLibrary: {fileID: 11400000, guid: 639552086d6484e4e80084b768385f7a, type: 2}
+  - musicListContainer: {fileID: 11400000, guid: dbdb371164ca86d4a9318b6a45f1f06b,
+      type: 2}
+  - sfxListLibrary: {fileID: 11400000, guid: aa0c3c9632193984ab7b45d390d570cf, type: 2}
+  - sfxListContainer: {fileID: 11400000, guid: 78d2f3328647d8c4ea9f236708919d34, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
