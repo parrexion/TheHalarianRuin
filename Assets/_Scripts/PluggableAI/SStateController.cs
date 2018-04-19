@@ -47,15 +47,20 @@ public class SStateController : StateController {
 		animScript.UpdateState(animInfo, speed);
 	}
 
+	/// <summary>
+	/// Generates a random location on one of the sides around the soldier.
+	/// </summary>
+	/// <returns></returns>
 	public override Vector3 GetRandomLocation(){
 		leftSide = !leftSide;
 		float xpos = 0f;
 		float ypos = 0f;
 		if (leftSide)
-			xpos = Random.Range(Constants.SOLDIER_START_X-4f,Constants.SOLDIER_START_X-2f);
+			xpos = Random.Range(Constants.SOLDIER_START_X-Constants.ENEMY_OFFSET_XMAX_SOLDIER,Constants.SOLDIER_START_X-Constants.ENEMY_OFFSET_XMIN_SOLDIER);
 		else
-			xpos = Random.Range(Constants.SOLDIER_START_X+2f,Constants.SOLDIER_START_X+4f);
-		ypos = Random.Range(Constants.SOLDIER_START_Y-2f,Constants.SOLDIER_START_Y);
+			xpos = Random.Range(Constants.SOLDIER_START_X+Constants.ENEMY_OFFSET_XMIN_SOLDIER,Constants.SOLDIER_START_X+Constants.ENEMY_OFFSET_XMAX_SOLDIER);
+		ypos = Random.Range(Constants.SOLDIER_START_Y+Constants.ENEMY_OFFSET_YMIN_SOLDIER,Constants.SOLDIER_START_Y+Constants.ENEMY_OFFSET_YMAX_SOLDIER);
+		Debug.Log("Set position to : " + (xpos-Constants.SOLDIER_START_X) + " , " + ypos);
 		return new Vector3(xpos,ypos,0);
 	}
 }

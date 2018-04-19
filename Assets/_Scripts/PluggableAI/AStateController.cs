@@ -77,8 +77,13 @@ public class AStateController : StateController {
 		animScript.UpdateState(animInfo, speed);
 	}
 
+	/// <summary>
+	/// Generates a random location around the center of the battle.
+	/// </summary>
+	/// <returns></returns>
 	public override Vector3 GetRandomLocation() {
-		Vector2 dist = Random.rotation * new Vector2(3,0);
-		return new Vector3(Constants.ANDROID_START_X + dist.x, Constants.ANDROID_START_Y + dist.y,0);
+		float dist = Random.Range(Constants.ENEMY_OFFSET_MIN_ANDROID, Constants.ENEMY_OFFSET_MAX_ANDROID);
+		Vector2 offset = Random.insideUnitCircle.normalized * dist;
+		return new Vector3(Constants.ANDROID_START_X + offset.x, Constants.ANDROID_START_Y + offset.y,0);
 	}
 }

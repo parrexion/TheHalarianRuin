@@ -33,7 +33,7 @@ public class SoldierGridController : MonoBehaviour {
 	[Header("Animations")]
 	public AnimationScript animScript;
 	private AnimationInformation animInfo;
-	private int attacking = 0;
+	private float attacking = 0;
 	public HurtablePlayerScript hurtScript;
 	private float hurting = 0;
 
@@ -56,11 +56,15 @@ public class SoldierGridController : MonoBehaviour {
 		UpdateAnimation(time);
 	}
 
+	/// <summary>
+	/// Takes the input and updates the grid from that.
+	/// </summary>
+	/// <param name="timeStep"></param>
 	void UpdateInput(float timeStep) {
 		if (!gridUseable.value)
 			return;
 
-		if (attacking > 5)
+		if (attacking > 0.05f)
 			return;
 
 		if (blockTime != 0) {
@@ -150,11 +154,11 @@ public class SoldierGridController : MonoBehaviour {
 
 		if (endReached == 1) {
 			Attack();
-			attacking = 10;
+			attacking = 0.2f;
 		}
 		else if (endReached == 2) {
 			EndAttack();
-			attacking = 30;
+			attacking = 0.5f;
 		}
 		else if (endReached == 3) {
 			Block();
@@ -162,6 +166,10 @@ public class SoldierGridController : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Updates the animation information for the soldier.
+	/// </summary>
+	/// <param name="timeStep"></param>
 	public void UpdateAnimation(float timeStep) {
 
 		animInfo.blocking = (blockTime != 0);
@@ -178,7 +186,7 @@ public class SoldierGridController : MonoBehaviour {
 
 		if (attacking > 0) {
 			animInfo.attacking = true;
-			attacking--;
+			attacking -= timeStep;
 
 			if (grid.attackDirection == Constants.Direction.LEFT)
 				animInfo.mouseDirection = -1;
@@ -187,7 +195,6 @@ public class SoldierGridController : MonoBehaviour {
 			else {
 				animInfo.mouseDirection = 0;
 			}
-			
 		}
 		else {
 			animInfo.attacking = false;

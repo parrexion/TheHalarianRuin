@@ -17,10 +17,15 @@ public static class Constants {
 	public const float SOLDIER_BORDER_HEIGHT = 2.25f;
 	public const float SOLDIER_START_X = 13.0f;
 	public const float SOLDIER_START_Y = 0f;
-
-
 	public const float CAMERA_BORDER_WIDTH_ANDROID = 6.0f;
 	public const float CAMERA_BORDER_HEIGHT_ANDROID = 2.9f;
+	public const float ENEMY_OFFSET_MIN_ANDROID = 2f;
+	public const float ENEMY_OFFSET_MAX_ANDROID = 4f;
+	public const float ENEMY_OFFSET_XMIN_SOLDIER = 2f;
+	public const float ENEMY_OFFSET_XMAX_SOLDIER = 5f;
+	public const float ENEMY_OFFSET_YMIN_SOLDIER = -2f;
+	public const float ENEMY_OFFSET_YMAX_SOLDIER = 0.5f;
+	
 
 	//Dialogue
 	public const int DIALOGUE_PLAYERS_COUNT = 4;
