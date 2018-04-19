@@ -17,6 +17,13 @@ public class DialogueTextHandler : MonoBehaviour {
 	public AudioVariable sfxClip;
 	public UnityEvent playSfx;
 
+	[Header("Screen Flash")]
+	public UnityEvent screenFlashEvent;
+
+	[Header("Screen Shake")]
+	public FloatVariable shakeDuration;
+	public UnityEvent screenShakeEvent;
+
 	private string[] words = new string[0];
 	private bool textUpdating = false;
 
@@ -101,7 +108,7 @@ public class DialogueTextHandler : MonoBehaviour {
 
 	bool IsSpecialWord(string word) {
 
-		if (word[0] == '@'){
+		if (word[0] == '@') {
 			Debug.Log("Found an sfx!");
 			string sfxString = word.Substring(1);
 			Debug.Log(sfxString);
@@ -115,6 +122,18 @@ public class DialogueTextHandler : MonoBehaviour {
 				playSfx.Invoke();
 			else
 				Debug.LogWarning("SFX clip is null in the dialogue!");
+			return true;
+		}
+		else if (word[0] == '¤') {
+			Debug.Log("Found a screen flash!");
+			screenFlashEvent.Invoke();
+			return true;
+		}
+		else if (word[0] == '§') {
+			Debug.Log("Found a screen shake!");
+			string shakeString = word.Substring(1);
+			shakeDuration.value = float.Parse(shakeString);
+			screenShakeEvent.Invoke();
 			return true;
 		}
 

@@ -10,6 +10,7 @@ public class DialogueWindowHelpClass {
 	public Texture2D frameBackground;
 	public Texture2D nextBackground;
 	public Texture2D soundBackground;
+	public Texture2D effectsBackground;
 	public Texture2D rightBackground;
 
 	public Color headerColor = new Color(0.25f,0.5f,0.75f);
@@ -20,6 +21,7 @@ public class DialogueWindowHelpClass {
 	public Color frameColor = new Color(0.6f, 0.4f, 0.3f);
 	public Color nextColor = new Color(0.4f, 0.3f, 0.6f);
 	public Color soundColor = new Color(0.8f, 0.8f, 0.2f);
+	public Color effectsColor = new Color(0.15f, 0.8f, 0.8f);
 	public Color rightColor = new Color(0.4f, 0.6f, 0f);
 
 	public Rect headerRect = new Rect();
@@ -29,6 +31,7 @@ public class DialogueWindowHelpClass {
 	public Rect frameRect = new Rect();
 	public Rect nextRect = new Rect();
 	public Rect soundRect = new Rect();
+	public Rect effectsRect = new Rect();
 	public Rect rightRect = new Rect();
 
 
@@ -69,6 +72,10 @@ public class DialogueWindowHelpClass {
 		soundBackground.SetPixel(0, 0, soundColor);
 		soundBackground.Apply();
 
+		effectsBackground = new Texture2D(1, 1);
+		effectsBackground.SetPixel(0, 0, effectsColor);
+		effectsBackground.Apply();
+
 		rightBackground = new Texture2D(1, 1);
 		rightBackground.SetPixel(0, 0, rightColor);
 		rightBackground.Apply();
@@ -81,8 +88,9 @@ public class DialogueWindowHelpClass {
 		int talkingHeight = 44;
 		int dialoguePartWidth = 320;
 		int dialoguePartHeight = 140;
-		int bottomPartHeight = 168;
-		int soundPartHeight = 160;
+		int framePartHeight = 112;
+		int soundPartHeight = 160;//124;
+		int effectsPartHeight = 128;
 		int screenStep = characterWidth; //(Screen.width - rightPartWidth) / 5f;
 
 		headerRect.x = 0;
@@ -128,7 +136,12 @@ public class DialogueWindowHelpClass {
 		frameRect.x = 0;
 		frameRect.y = topPartHeight + characterHeight + talkingHeight + dialoguePartHeight;
 		frameRect.width = dialoguePartWidth;
-		frameRect.height = bottomPartHeight;
+		frameRect.height = framePartHeight;
+
+		effectsRect.x = 0;
+		effectsRect.y = topPartHeight + characterHeight + talkingHeight + dialoguePartHeight + framePartHeight;
+		effectsRect.width = dialoguePartWidth;
+		effectsRect.height = effectsPartHeight;
 
 		nextRect.x = dialoguePartWidth;
 		nextRect.y = topPartHeight + characterHeight + talkingHeight;
@@ -158,6 +171,7 @@ public class DialogueWindowHelpClass {
 		GUI.DrawTexture(frameRect, frameBackground);
 		GUI.DrawTexture(nextRect, nextBackground);
 		GUI.DrawTexture(soundRect, soundBackground);
+		GUI.DrawTexture(effectsRect, effectsBackground);
 		GUI.DrawTexture(rightRect, rightBackground);
 	}
 }

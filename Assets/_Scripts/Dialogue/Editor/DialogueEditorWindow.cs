@@ -43,6 +43,7 @@ public class DialogueEditorWindow : EditorWindow {
 	string filterString;
 	Constants.CHAPTER filter = Constants.CHAPTER.DEFAULT;
 	SfxEntry currentSfx = null;
+	float shakeDuration = 0.25f;
 
 	//Creation
 	string dialogueUuid = "";
@@ -78,6 +79,7 @@ public class DialogueEditorWindow : EditorWindow {
 			NextAreaStuff();
 			SoundStuff();
 			FrameStuff();
+			EffectsStuff();
 		}
 		RightStuff();
 	}
@@ -278,17 +280,15 @@ public class DialogueEditorWindow : EditorWindow {
 			InsertFrame();
 		}
 		GUILayout.EndHorizontal();
-
-		GUILayout.Space(4);
 		
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Delete\nFrame", GUILayout.Height(48))) {
+		if (GUILayout.Button("Delete\nFrame", GUILayout.Height(36))) {
 			DeleteFrame();
 		}
-		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
+		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(36))) {
 			ShaveoffBefore();
 		}
-		if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
+		if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(36))) {
 			ShaveoffAfter();
 		}
 		GUILayout.EndHorizontal();
@@ -353,7 +353,7 @@ public class DialogueEditorWindow : EditorWindow {
 		else
 			GUILayout.Label("Selected Music: NONE");
 
-		GUILayout.Space(20);
+		GUILayout.Space(5);
 
 		GUILayout.Label("Add SFX", EditorStyles.boldLabel);
 		currentSfx = (SfxEntry)EditorGUILayout.ObjectField("Selected SFX", currentSfx, typeof(SfxEntry), false);
@@ -361,7 +361,30 @@ public class DialogueEditorWindow : EditorWindow {
 		if (currentSfx != null) {
 			EditorGUILayout.SelectableLabel("@" + currentSfx.uuid);
 		}
-			
+
+		// TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+		// GUILayout.Label(string.Format("Selected text: {0}\nPos: {1}\nSelect pos: {2}",
+        //      editor.SelectedText,
+        //      editor.controlID,
+        //      editor.selectIndex));
+
+		GUILayout.EndArea();
+	}
+
+	/// <summary>
+	/// Renders the frame adjustment button.
+	/// </summary>
+	void EffectsStuff() {
+		GUILayout.BeginArea(d.effectsRect);
+		GUILayout.Label("Dialogue Effects", EditorStyles.boldLabel);
+
+		// Flashes
+		EditorGUILayout.SelectableLabel("Screen flash ID:  ¤0");
+		
+		// Shakes
+		shakeDuration = EditorGUILayout.FloatField("Shake duration (s)",shakeDuration);
+		EditorGUILayout.SelectableLabel("Screen shake ID:  §" + shakeDuration);
+
 		GUILayout.EndArea();
 	}
 
