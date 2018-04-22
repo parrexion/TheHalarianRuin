@@ -322,10 +322,10 @@ public class DialogueEditorWindow : EditorWindow {
 				}
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
-				dialogueValues.nextEntry = (DialogueEntry)EditorGUILayout.ObjectField("Next dialogue", dialogueValues.nextEntry, typeof(DialogueEntry),false);
+				dialogueValues.dialogueEntry = (DialogueEntry)EditorGUILayout.ObjectField("Next dialogue", dialogueValues.dialogueEntry, typeof(DialogueEntry),false);
 				break;
 			case BattleEntry.NextLocation.BATTLE:
-				dialogueValues.nextEntry = (BattleEntry)EditorGUILayout.ObjectField("Next battle", dialogueValues.nextEntry, typeof(BattleEntry),false);
+				dialogueValues.battleEntry = (BattleEntry)EditorGUILayout.ObjectField("Next battle", dialogueValues.battleEntry, typeof(BattleEntry),false);
 				break;
 		}
 		GUILayout.EndArea();
@@ -376,6 +376,7 @@ public class DialogueEditorWindow : EditorWindow {
 	/// </summary>
 	void EffectsStuff() {
 		GUILayout.BeginArea(d.effectsRect);
+		EditorGUIUtility.labelWidth = 150;
 		GUILayout.Label("Dialogue Effects", EditorStyles.boldLabel);
 
 		// Flashes
@@ -384,6 +385,7 @@ public class DialogueEditorWindow : EditorWindow {
 		// Shakes
 		shakeDuration = EditorGUILayout.FloatField("Shake duration (s)",shakeDuration);
 		EditorGUILayout.SelectableLabel("Screen shake ID:  §" + shakeDuration);
+		EditorGUIUtility.labelWidth = 100;
 
 		GUILayout.EndArea();
 	}
@@ -472,6 +474,7 @@ public class DialogueEditorWindow : EditorWindow {
 			int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 			selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 			talkName = dialogueValues.frames[selFrame].talkingName;
+			backupFrame.CopyValues(dialogueValues.frames[selFrame]);
 		}
 	}
 
@@ -504,12 +507,17 @@ public class DialogueEditorWindow : EditorWindow {
 		SaveSelectedDialogue();
 	}
 
+	/// <summary>
+	/// Reverts the changes made to the current frame.
+	/// </summary>
 	void RevertFrame() {
 		GUI.FocusControl(null);
 		dialogueValues.frames[selFrame].CopyValues(backupFrame);
 		int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 		selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 		talkName = dialogueValues.frames[selFrame].talkingName;
+
+		Debug.Log("AJSJASJASJ:  " + dialogueValues.nextLocation);
 	}
 
 	void ShaveoffAfter() {

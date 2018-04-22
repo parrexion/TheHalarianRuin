@@ -9,7 +9,7 @@ public class MenuScreenController : MonoBehaviour {
 	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
 
 	public IntVariable currentInventoryScreen;
-	bool isEditor;
+	bool isEditor = false;
 	bool menuLock = true;
 
 	[Header("Screens")]
@@ -46,6 +46,7 @@ public class MenuScreenController : MonoBehaviour {
 #if UNITY_EDITOR
 		isEditor = true;
 #else
+		isEditor = false;
 		statusButton.gameObject.SetActive(false);
 		moduleButton.gameObject.SetActive(false);
 		equipButton.gameObject.SetActive(false);

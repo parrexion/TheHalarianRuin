@@ -9,7 +9,8 @@ public class DialogueEntry : ScrObjLibraryEntry {
 	public List<Color> participantColors = new List<Color>();
 
 	public BattleEntry.NextLocation nextLocation = BattleEntry.NextLocation.OVERWORLD;
-	public ScrObjLibraryEntry nextEntry = null;
+	public DialogueEntry dialogueEntry = null;
+	public BattleEntry battleEntry = null;
 	public bool changePosition = false;
 	public Vector2 playerPosition = new Vector2();
 	public Constants.OverworldArea nextArea = Constants.OverworldArea.DEFAULT;
@@ -30,7 +31,8 @@ public class DialogueEntry : ScrObjLibraryEntry {
 
 		frames.Add(new Frame());
 		nextLocation = BattleEntry.NextLocation.OVERWORLD;
-		nextEntry = null;
+		dialogueEntry = null;
+		battleEntry = null;
 		changePosition = false;
 		playerPosition = new Vector2();
 		nextArea = Constants.OverworldArea.DEFAULT;
@@ -44,7 +46,8 @@ public class DialogueEntry : ScrObjLibraryEntry {
 		participantColors = de.participantColors;
 
 		nextLocation = de.nextLocation;
-		nextEntry = de.nextEntry;
+		dialogueEntry = de.dialogueEntry;
+		battleEntry = de.battleEntry;
 		changePosition = de.changePosition;
 		playerPosition = de.playerPosition;
 		nextArea = de.nextArea;

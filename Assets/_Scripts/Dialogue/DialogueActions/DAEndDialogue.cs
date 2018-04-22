@@ -23,12 +23,12 @@ public class DAEndDialogue : DialogueAction {
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				scene.currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
-				scene.dialogueUuid.value = de.nextEntry.uuid;
+				scene.dialogueUuid.value = de.dialogueEntry.uuid;
 				scene.mapChangeEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				scene.currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
-				scene.battleUuid.value = de.nextEntry.uuid;
+				scene.battleUuid.value = de.battleEntry.uuid;
 				scene.mapChangeEvent.Invoke();
 				break;
 		}

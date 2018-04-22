@@ -143,15 +143,15 @@ public class DialogueWindowHelpClass {
 		effectsRect.width = dialoguePartWidth;
 		effectsRect.height = effectsPartHeight;
 
-		nextRect.x = dialoguePartWidth;
-		nextRect.y = topPartHeight + characterHeight + talkingHeight;
-		nextRect.width = characterWidth * 5 - dialoguePartWidth;
-		nextRect.height = dialoguePartHeight;
-
 		soundRect.x = dialoguePartWidth;
-		soundRect.y = topPartHeight + characterHeight + talkingHeight + dialoguePartHeight;
+		soundRect.y = topPartHeight + characterHeight + talkingHeight;
 		soundRect.width = characterWidth * 5 - dialoguePartWidth;
 		soundRect.height = soundPartHeight;
+
+		nextRect.x = dialoguePartWidth;
+		nextRect.y = topPartHeight + characterHeight + talkingHeight + soundPartHeight;
+		nextRect.width = characterWidth * 5 - dialoguePartWidth;
+		nextRect.height = dialoguePartHeight;
 
 		rightRect.x = characterWidth * 5;
 		rightRect.y = 0;
