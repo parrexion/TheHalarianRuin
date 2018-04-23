@@ -20,7 +20,9 @@ public class SRangeAttackEffect : AttackEffect {
 		shotTransform.position = controller.thisTransform.position;
 		MouseInformation info = new MouseInformation();
 		info.position1 = controller.thisTransform.position;
-		info.setPosition2(controller.sPlayer.position);
+		Vector2 aimPosition = new Vector2(Constants.SOLDIER_START_X, Constants.SOLDIER_START_Y);
+		info.setPosition2(aimPosition);
+		// info.setPosition2(controller.sPlayer.position);
 		if (setRotation) {
 			shotTransform.localRotation = Quaternion.AngleAxis(info.rotationInternal, Vector3.forward);
 		}
