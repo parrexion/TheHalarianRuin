@@ -21,6 +21,8 @@ public class PhoneMenuController : MonoBehaviour {
 	[Header("Location")]
 	public Text locationText;
 	public AreaIntVariable currentArea;
+	public AreaInfoValues areaInfo;
+	public Image minimapImage;
 
 	[Header("Buttons")]
 	public Button statusButton;
@@ -65,11 +67,20 @@ public class PhoneMenuController : MonoBehaviour {
 	/// Updates the name of the current location.
 	/// </summary>
 	void SetCurrentLocationText(){
-		if (currentArea.value == (int)Constants.SCENE_INDEXES.DIALOGUE){
+		locationText.text = "";
+		minimapImage.enabled = false;
+#if UNITY_EDITOR
+		if (currentArea.value == (int)Constants.SCENE_INDEXES.DIALOGUE) {
 			locationText.text = dialogueUUID.value;
 		}
-		else {
+#endif
+		if (currentArea.value != (int)Constants.SCENE_INDEXES.DIALOGUE) {
 			locationText.text = ((Constants.SCENE_INDEXES)currentArea.value).ToString();
+			AreaValue values = areaInfo.GetArea(currentArea.value);
+			locationText.text = values.locationName;
+
+			minimapImage.sprite = values.minimap;
+			minimapImage.enabled = true;
 		}
 	}
 
