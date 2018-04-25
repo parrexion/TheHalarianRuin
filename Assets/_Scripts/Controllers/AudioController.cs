@@ -91,7 +91,6 @@ public class AudioController : MonoBehaviour {
 			playingBkg = true;
 		}
 		else {
-			Debug.Log("Nope");
 			if (!playingBkg)
 				PauseBackgroundMusic();
 		}

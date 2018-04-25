@@ -105,7 +105,7 @@ public class DrawScoreScreen : MonoBehaviour {
 		{
 			case BattleEntry.NextLocation.OVERWORLD:
 				paused.value = false;
-				if (be.playerArea == Constants.OverworldArea.TOWER){
+				if (be.playerArea == Constants.OverworldArea.BATTLETOWER){
 					currentArea.value++;
 					saveGame.Invoke();
 				}

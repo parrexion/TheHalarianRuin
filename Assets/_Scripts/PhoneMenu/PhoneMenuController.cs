@@ -42,15 +42,19 @@ public class PhoneMenuController : MonoBehaviour {
 		equipButton.interactable = equipAvailable.value;
 		moduleButton.interactable = moduleAvailable.value;
 		saveButton.interactable = saveAvailable.value;
+		UpdateMinimap();
 	}
 
 	/// <summary>
 	/// Updates the phone's clock to current time.
 	/// </summary>
 	void Update() {
-		SetCurrentLocationText();
 		currentDate = System.DateTime.Now;
 		SetCurrentTimeDate();
+	}
+
+	void UpdateMinimap() {
+		SetCurrentLocation();
 	}
 
 	/// <summary>
@@ -66,7 +70,7 @@ public class PhoneMenuController : MonoBehaviour {
 	/// <summary>
 	/// Updates the name of the current location.
 	/// </summary>
-	void SetCurrentLocationText(){
+	void SetCurrentLocation(){
 		locationText.text = "";
 		minimapImage.enabled = false;
 #if UNITY_EDITOR

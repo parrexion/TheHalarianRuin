@@ -11,6 +11,7 @@ using UnityEngine.Events;
 public class BasicGUIButtons : MonoBehaviour {
 
 	public bool useFadeOut = true;
+	public AreaInfoValues areaInfo;
 	public FloatVariable fadeOutTime;
 	public IntVariable currentScene;
 
@@ -58,7 +59,8 @@ public class BasicGUIButtons : MonoBehaviour {
 
 		fading = false;
 		// Debug.Log("Moving to index: " + currentScene.value);
-		SceneManager.LoadScene(currentScene.value);
+		AreaValue currentValue = areaInfo.GetArea(currentScene.value);
+		SceneManager.LoadScene(currentValue.sceneID);
 
 		yield break;
 	}

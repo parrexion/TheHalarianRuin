@@ -16,8 +16,7 @@ public class ChangeMapTrigger : OWTrigger {
 	public override void Trigger() {
 		Debug.Log("Moving to area: " + area + ", room: " + roomNumber);
 		paused.value = true;
-		currentArea.value = (int)area;
-		playerArea.value = (int)area;
+		playerArea.value = currentArea.value = (int)area;
 		playerRoomNumber.value = (int)roomNumber;
 		posx.value = position.x;
 		posy.value = position.y;

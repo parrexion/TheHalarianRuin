@@ -60,14 +60,15 @@ public static class Constants {
 		BATTLE = 4,
 		SCORE = 5,
 		INVENTORY = 6,
-		BATTLETOWER = 7,
 		OPTIONS = 8,
 		ANDROID_BAY = 9,
 		CORRIDORS = 10,
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,
-		SHIELD_GENERATOR = 15
+		SHIELD_GENERATOR = 15,
+
+		BATTLETOWER = 999
 	}
 
 	public enum RoomNumber {
@@ -83,13 +84,14 @@ public static class Constants {
 	public enum OverworldArea {
 		DEFAULT = 0,
 		MAINMENU = 1,
-		TOWER = 7,
 		ANDROID_BAY = 9,
 		CORRIDORS = 10,
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,
-		SHIELD_GENERATOR = 15
+		SHIELD_GENERATOR = 15,
+		
+		BATTLETOWER = 999
 	}
 
 	public enum CHAPTER {
