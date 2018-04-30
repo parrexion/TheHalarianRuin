@@ -14,6 +14,7 @@ public class BasicGUIButtons : MonoBehaviour {
 	public AreaInfoValues areaInfo;
 	public FloatVariable fadeOutTime;
 	public IntVariable currentScene;
+	public IntVariable currentRoom;
 
 	public UnityEvent buttonClickEvent;
 	public UnityEvent fadeOutEvent;
@@ -26,13 +27,13 @@ public class BasicGUIButtons : MonoBehaviour {
 	/// </summary>
 	/// <param name="scene">Scene.</param>
 	public void MoveToSceneButton(int sceneIndex) {
-		Debug.Log("ADDJASDLJASLDJAS");
 		if (fading)
 			return;
 		fading = true;
 
 		buttonClickEvent.Invoke();
 		currentScene.value = sceneIndex;
+		currentRoom.value = 0;
 		StartCoroutine(WaitForFadeOut());
 	}
 
@@ -59,7 +60,7 @@ public class BasicGUIButtons : MonoBehaviour {
 
 		fading = false;
 
-		AreaValue currentValue = areaInfo.GetArea(currentScene.value);
+		AreaValue currentValue = areaInfo.GetArea(currentScene.value, currentRoom.value);
 		SceneManager.LoadScene(currentValue.sceneID);
 
 		yield break;

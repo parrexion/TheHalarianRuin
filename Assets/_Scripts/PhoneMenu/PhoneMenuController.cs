@@ -21,6 +21,7 @@ public class PhoneMenuController : MonoBehaviour {
 	[Header("Location")]
 	public Text locationText;
 	public AreaIntVariable currentArea;
+	public IntVariable currentRoom;
 	public AreaInfoValues areaInfo;
 	public Image minimapImage;
 
@@ -80,7 +81,7 @@ public class PhoneMenuController : MonoBehaviour {
 #endif
 		if (currentArea.value != (int)Constants.SCENE_INDEXES.DIALOGUE) {
 			locationText.text = ((Constants.SCENE_INDEXES)currentArea.value).ToString();
-			AreaValue values = areaInfo.GetArea(currentArea.value);
+			AreaValue values = areaInfo.GetArea(currentArea.value, currentRoom.value);
 			locationText.text = values.locationName;
 
 			minimapImage.sprite = values.minimap;

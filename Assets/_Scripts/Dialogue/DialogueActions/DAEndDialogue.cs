@@ -19,6 +19,7 @@ public class DAEndDialogue : DialogueAction {
 					scene.playerPosY.value = de.playerPosition.y;
 				}
 				scene.currentArea.value = scene.playerArea.value;
+				Debug.Log("Current area is now: " + scene.currentArea.value);
 				scene.mapChangeEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:

@@ -234,7 +234,7 @@ public class BattleController : MonoBehaviour {
 		winText.text = "ESCAPED!";
 		yield return new WaitForSeconds(time);
 		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
-		SceneManager.LoadScene(areaInfo.GetArea(currentArea.value).sceneID);
+		SceneManager.LoadScene(areaInfo.GetArea(currentArea.value, 0).sceneID);
 		yield return 0;
 	}
 
