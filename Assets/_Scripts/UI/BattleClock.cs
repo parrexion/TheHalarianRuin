@@ -14,6 +14,10 @@ public class BattleClock : MonoBehaviour {
 	public Transform arrow;
 	private SpriteRenderer arrowRenderer;
 
+	[Header("Tint images")]
+	public GameObject androidTint;
+	public GameObject soldierTint;
+
 	SpriteRenderer sprite;
 	float currentTime;
 
@@ -27,6 +31,7 @@ public class BattleClock : MonoBehaviour {
 		if (currentTime >= changeTime.value)
 			currentTime -= changeTime.value;
 		sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
+		SetTints();
 	}
 	
 	// Update is called once per frame
@@ -45,6 +50,7 @@ public class BattleClock : MonoBehaviour {
 			currentTime -= changeTime.value;
 			leftSideSlow.value = !leftSideSlow.value;
 			sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
+			SetTints();
 		}
 
 		float rotation = 180*currentTime/changeTime.value;
@@ -52,5 +58,10 @@ public class BattleClock : MonoBehaviour {
 			rotation += 180;
 
 		arrow.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);
+	}
+
+	void SetTints() {
+		androidTint.SetActive(!leftSideSlow.value);
+		soldierTint.SetActive(leftSideSlow.value);
 	}
 }

@@ -18,8 +18,11 @@ public class InitiateBattleScript : MonoBehaviour {
 	public SfxEntry battleStartedSfx;
 	public AudioVariable musicClip;
 	public AudioVariable sfxClip;
+
+	[Header("Events")]
 	public UnityEvent playMusicEvent;
 	public UnityEvent playSfxEvent;
+	public UnityEvent changeMapEvent;
 	
 
 	/// <summary>
@@ -47,6 +50,6 @@ public class InitiateBattleScript : MonoBehaviour {
 
 		yield return new WaitForSeconds(time);
 		currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+		changeMapEvent.Invoke();
 	}
 }

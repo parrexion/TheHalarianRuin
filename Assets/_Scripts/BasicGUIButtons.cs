@@ -58,7 +58,7 @@ public class BasicGUIButtons : MonoBehaviour {
 		}
 
 		fading = false;
-		// Debug.Log("Moving to index: " + currentScene.value);
+
 		AreaValue currentValue = areaInfo.GetArea(currentScene.value);
 		SceneManager.LoadScene(currentValue.sceneID);
 

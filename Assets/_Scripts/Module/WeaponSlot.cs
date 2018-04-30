@@ -23,6 +23,7 @@ public class WeaponSlot : MonoBehaviour {
 
 	[Header("Module")]
 	public ContainerModule[] containerModules;
+	public UIModule[] uiModules;
 	private float size;
 	private float moduleWidth;
 	private float moduleHeight;
@@ -39,6 +40,7 @@ public class WeaponSlot : MonoBehaviour {
 		CalculateHeightDifference();
 		SetupTextures();
 		SetEquippedModule();
+		SetUIModules();
 	}
 
 	/// <summary>
@@ -86,6 +88,8 @@ public class WeaponSlot : MonoBehaviour {
 		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
 			containerModules[i].LowerCooldown(time);
 		}
+
+		SetUIModuleCharge();
 	}
 
 	/// <summary>
@@ -106,38 +110,49 @@ public class WeaponSlot : MonoBehaviour {
 			
 			containerModules[i].Initialize(i);
 
-			//slotName = new Rect(BattleConstants.moduleXPos+slot*80,BattleConstants.moduleYPos-16,400,100);
 			containerModules[i].slotPos = new Rect(Screen.width*moduleWidth+i*size*1.25f,Screen.height*moduleHeight,size,size);
 			containerModules[i].slotFilled = new Rect(Screen.width*moduleWidth+i*size*1.25f,Screen.height*moduleHeight,size,size);
 		}
 	}
-
+	
 	/// <summary>
-	/// Renders the current state of all the module in the weapon slot.
+	/// Sets the icons for the module's UI.
 	/// </summary>
-	void OnGUI(){
-		if (paused.value || removeBattleSide.value == 2)
-			return;
-
+	void SetUIModules() {
 		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
-
-			if (containerModules[i].module == null)
-				continue;
-
-			GUI.DrawTexture(containerModules[i].slotPos,emptySprite);
-			if (containerModules[i].active) {
-				containerModules[i].slotFilled.height = size*containerModules[i].GetCharge();
-				containerModules[i].slotFilled.y = Screen.height*moduleHeight+size-containerModules[i].slotFilled.height;
-				GUI.DrawTexture(containerModules[i].slotFilled,chargingSprite);
-			}
-			else {
-				containerModules[i].slotFilled.height = size*containerModules[i].GetCharge();
-				containerModules[i].slotFilled.y = Screen.height*moduleHeight+size-containerModules[i].slotFilled.height;
-				GUI.DrawTexture(containerModules[i].slotFilled,filledSprite);
-			}
-			GUI.DrawTexture(containerModules[i].slotPos,containerModules[i].module.icon.texture);
+			Module module = containerModules[i].module;
+			if (module == null)
+				uiModules[i].SetIcons(null,null);
+			else
+				uiModules[i].SetIcons(module.icon, module.chargingIcon);
 		}
 	}
+
+	/// <summary>
+	/// Sets the charges for the UI modules.
+	/// </summary>
+	void SetUIModuleCharge() {
+		for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
+			if (containerModules[i].module == null)
+				continue;
+			
+			float charge = containerModules[i].GetCharge();
+			bool active = containerModules[i].active;
+			uiModules[i].SetValue(charge, active);
+		}
+	}
+
+	// /// <summary>
+	// /// Shows the UI modules.
+	// /// </summary>
+	// public void ShowUIModules() {
+	// 	for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
+	// 		if (containerModules[i].module == null)
+	// 			continue;
+			
+	// 		uiModules[i].SetVisible(!paused.value);
+	// 	}
+	// }
 
 	/// <summary>
 	/// Returns if the player is currently attacking.

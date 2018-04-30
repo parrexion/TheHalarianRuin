@@ -14,6 +14,7 @@ public class BattleController : MonoBehaviour {
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	public IntVariable currentArea;
+	public AreaInfoValues areaInfo;
 	private BattleEntry be;
 	private BackgroundChanger backchange;
 
@@ -23,8 +24,6 @@ public class BattleController : MonoBehaviour {
 	public IntVariable removeBattleSide;
 	public BoolVariable alwaysEscapable;
 	public BoolVariable useSlowTime;
-	public UnityEvent pauseEvent;
-	public UnityEvent saveGameEvent;
 
 	public Text winText;
 	public EnemyController enemyController;
@@ -39,6 +38,10 @@ public class BattleController : MonoBehaviour {
 	public bool tutorial = false;
 	public bool escape = false;
 	public float currentTime = 0f;
+
+	[Header("Events")]
+	public UnityEvent pauseEvent;
+	public UnityEvent saveGameEvent;
 
 
 	// Use this for initialization
@@ -231,7 +234,7 @@ public class BattleController : MonoBehaviour {
 		winText.text = "ESCAPED!";
 		yield return new WaitForSeconds(time);
 		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
-		SceneManager.LoadScene(currentArea.value);
+		SceneManager.LoadScene(areaInfo.GetArea(currentArea.value).sceneID);
 		yield return 0;
 	}
 

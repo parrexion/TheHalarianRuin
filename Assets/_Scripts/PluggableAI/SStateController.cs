@@ -60,7 +60,7 @@ public class SStateController : StateController {
 		else
 			xpos = Random.Range(Constants.SOLDIER_START_X+Constants.ENEMY_OFFSET_XMIN_SOLDIER,Constants.SOLDIER_START_X+Constants.ENEMY_OFFSET_XMAX_SOLDIER);
 		ypos = Random.Range(Constants.SOLDIER_START_Y+Constants.ENEMY_OFFSET_YMIN_SOLDIER,Constants.SOLDIER_START_Y+Constants.ENEMY_OFFSET_YMAX_SOLDIER);
-		Debug.Log("Set position to : " + (xpos-Constants.SOLDIER_START_X) + " , " + ypos);
+
 		return new Vector3(xpos,ypos,0);
 	}
 }

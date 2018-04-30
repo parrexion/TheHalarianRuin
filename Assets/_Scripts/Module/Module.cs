@@ -9,6 +9,7 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "LibraryEntries/Module")]
 public class Module : ItemEntry {
 
+	public Sprite chargingIcon;
 	public List<ModuleActivation> activations = new List<ModuleActivation>();
 	public List<ModuleEffect> effects = new List<ModuleEffect>();
 	public ModuleValues values;
@@ -72,6 +73,8 @@ public class Module : ItemEntry {
 	public override void CopyValues(ScrObjLibraryEntry other) {
 		base.CopyValues(other);
 		Module module = (Module)other;
+
+		chargingIcon = module.chargingIcon;
 
 		activations = new List<ModuleActivation>();
 		for (int i = 0; i < module.activations.Count; i++) {

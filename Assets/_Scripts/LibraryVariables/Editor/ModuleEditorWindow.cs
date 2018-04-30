@@ -153,7 +153,13 @@ public class ModuleEditorWindow {
 		GUILayout.Label("Selected Module", EditorStyles.boldLabel);
 		EditorGUILayout.SelectableLabel("UUID: " + moduleBase.uuid);
 		moduleBase.entryName = EditorGUILayout.TextField("Name", moduleBase.entryName);
-		moduleBase.icon = (Sprite)EditorGUILayout.ObjectField("Module Icon", moduleBase.icon, typeof(Sprite),false);
+
+		GUILayout.BeginHorizontal();
+		moduleBase.icon = (Sprite)EditorGUILayout.ObjectField("Icon Active", moduleBase.icon, typeof(Sprite),false);
+		moduleBase.chargingIcon = (Sprite)EditorGUILayout.ObjectField("Icon Charging", moduleBase.chargingIcon, typeof(Sprite),false);
+		GUILayout.EndHorizontal();
+
+		GUILayout.Space(10);
 
 		GUILayout.Label("Module values", EditorStyles.boldLabel);
 		valuePage = GUILayout.Toolbar(valuePage, pageStrings);

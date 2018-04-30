@@ -13,7 +13,7 @@ public class BattleTrigger : OWTrigger {
 		Debug.Log("Start battle: "+ battle.entryName);
 		paused.value = true;
 		battleUuid.value = battle.uuid;
-		// currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
+
 		Deactivate();
 		TriggerOtherTriggers();
 		startEvent.Invoke();

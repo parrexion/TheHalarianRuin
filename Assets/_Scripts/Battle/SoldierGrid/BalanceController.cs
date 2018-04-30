@@ -42,18 +42,10 @@ public class BalanceController : MonoBehaviour {
 
 		valueBkg.enabled = false;
 		valueImage.enabled = false;
-	}
 
-	/// <summary>
-	/// Draws the UI for the sprit character.
-	/// </summary>
-	void OnGUI() {
-
-		//Not active
-		if (paused.value || removeBattleSide.value == 1)
-			return;
-
-		DrawBalanceMeter();
+		if (removeBattleSide.value == 1) {
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>
@@ -63,8 +55,8 @@ public class BalanceController : MonoBehaviour {
 		float filled = balanceValue.value / maxBalanceValue.value;
 		valueImage.fillAmount = filled;
 		
-		valueBkg.enabled = true;
-		valueImage.enabled = true;
+		valueBkg.enabled = !paused.value;
+		valueImage.enabled = !paused.value;
 	}
 
 	void Update() {
@@ -75,8 +67,12 @@ public class BalanceController : MonoBehaviour {
 			balanceValue.value = Mathf.Max(0, balanceValue.value - cooldownValue);
 			currentCooldownWait -= 0.25f;
 		}
+		DrawBalanceMeter();
 	}
 
+	/// <summary>
+	/// Triggered with every normal step in the grid.
+	/// </summary>
 	public void TriggerNormal() {
 		balanceValue.value++;
 		currentCooldownWait = 0;
@@ -108,6 +104,10 @@ public class BalanceController : MonoBehaviour {
 		return bo;
     }
 
+	/// <summary>
+	/// Generates the end attack's damage and hits depending on the current heat value.
+	/// </summary>
+	/// <returns></returns>
 	public SoldierEndAttack GetEndAttack() {
 		float heatValue = balanceValue.value / maxBalanceValue.value;
 		SoldierEndAttack attack = new SoldierEndAttack();
