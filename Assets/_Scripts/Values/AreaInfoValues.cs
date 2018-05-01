@@ -10,7 +10,7 @@ public class AreaInfoValues : ScriptableObject {
 
 	public AreaValue GetArea(int id, int roomID) {
 		for (int i = 0; i < areas.Length; i++) {
-			if (areas[i].id == id && areas[i].roomID == roomID)
+			if (areas[i].id == id && (areas[i].roomID == roomID || areas[i].roomID == -1))
 				return areas[i];
 		}
 		Debug.LogWarning("Could not find an area with the id:  " + id);
@@ -22,7 +22,7 @@ public class AreaInfoValues : ScriptableObject {
 [System.Serializable]
 public class AreaValue {
 	public int id;
-	public int roomID;
+	public int roomID = -1;
 	public int sceneID;
 	public string locationName;
 	public Sprite minimap;

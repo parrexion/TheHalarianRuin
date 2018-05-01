@@ -7,7 +7,9 @@ using UnityEngine.UI;
 /// </summary>
 public class PhoneMenuController : MonoBehaviour {
 
+	[Header("DEBUG")]
 	public StringVariable dialogueUUID; // DEBUG
+	public Text DialogueUUIDText;
 
 	[Header("InventoryScreen stuff")]
 	public IntVariable inventoryScreenIndex;
@@ -39,10 +41,12 @@ public class PhoneMenuController : MonoBehaviour {
 
 
 	void Awake() {
-		statusButton.interactable = statusAvailable.value;
-		equipButton.interactable = equipAvailable.value;
-		moduleButton.interactable = moduleAvailable.value;
-		saveButton.interactable = saveAvailable.value;
+		bool isNotDialogue = currentArea.value != (int)Constants.SCENE_INDEXES.DIALOGUE;
+		statusButton.interactable = isNotDialogue && statusAvailable.value;
+		equipButton.interactable = isNotDialogue && equipAvailable.value;
+		moduleButton.interactable = isNotDialogue && moduleAvailable.value;
+		saveButton.interactable = isNotDialogue && saveAvailable.value;
+		DialogueUUIDText.text = "";
 		UpdateMinimap();
 	}
 
@@ -76,7 +80,7 @@ public class PhoneMenuController : MonoBehaviour {
 		minimapImage.enabled = false;
 #if UNITY_EDITOR
 		if (currentArea.value == (int)Constants.SCENE_INDEXES.DIALOGUE) {
-			locationText.text = dialogueUUID.value;
+			DialogueUUIDText.text = dialogueUUID.value;
 		}
 #endif
 		if (currentArea.value != (int)Constants.SCENE_INDEXES.DIALOGUE) {

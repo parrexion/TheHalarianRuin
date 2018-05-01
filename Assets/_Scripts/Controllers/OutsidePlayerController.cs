@@ -59,7 +59,6 @@ public class OutsidePlayerController : MonoBehaviour {
 	void SetPlayerPosition() {
 		transform.position = new Vector3(posx.value,posy.value,0);
 		moveToPosition.moveToPosition = transform.position;
-		Debug.Log("Position is now: " + posx.value + ", " + posy.value);
 	}
 
 	/// <summary>

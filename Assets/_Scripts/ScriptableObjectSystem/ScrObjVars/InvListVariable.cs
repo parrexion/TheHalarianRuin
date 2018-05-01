@@ -10,6 +10,24 @@ public class InvListVariable : ScriptableObject {
 
 	
 	/// <summary>
+	/// Looks through and adds the item to the first available slot in the 
+	/// inventory list. Returns a bool indicating if there was room for the item.
+	/// </summary>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	public bool AddItem(ItemEntry item) {
+		for (int i = 0; i < values.Length; i++) {
+			if (values[i] == null){
+				values[i] = item;
+				Debug.Log("Added the item to index " + i);
+				return true;
+			}
+		}
+		Debug.LogWarning("Failed to add the item. No more room!");
+		return false;
+	}
+
+	/// <summary>
 	/// Returns the module representation with activations, projectiles and values etc...
 	/// Takes the index for the position in the module list.
 	/// </summary>

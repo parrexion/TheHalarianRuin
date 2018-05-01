@@ -22,7 +22,6 @@ public class InitiateBattleScript : MonoBehaviour {
 	[Header("Events")]
 	public UnityEvent playMusicEvent;
 	public UnityEvent playSfxEvent;
-	public UnityEvent changeMapEvent;
 	
 
 	/// <summary>
@@ -30,16 +29,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	public void StartBattle(float time) {
-		StartCoroutine(BattleDelay(time));
-	}
-
-	/// <summary>
-	/// Show the fight text and move on to the battle screen after a while.
-	/// </summary>
-	/// <param name="time"></param>
-	/// <returns></returns>
-	private IEnumerator BattleDelay(float time){
+	public void StartBattle() {
 		screenText.text = "FIGHT!";
 		paused.value = true;
 
@@ -47,9 +37,5 @@ public class InitiateBattleScript : MonoBehaviour {
 		playMusicEvent.Invoke();
 		sfxClip.value = (battleStartedSfx != null) ? battleStartedSfx.clip : null;
 		playSfxEvent.Invoke();
-
-		yield return new WaitForSeconds(time);
-		currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
-		changeMapEvent.Invoke();
 	}
 }

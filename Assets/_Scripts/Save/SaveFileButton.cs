@@ -17,8 +17,8 @@ public class SaveFileButton : MonoBehaviour, IPointerClickHandler {
 	public Text currentArea;
 	public Text level;
 	public Text playTime;
-	public Image[] equipments;
 	public Image[] modules;
+	public Image[] equipments;
 	
 	private Image buttonImage;
 

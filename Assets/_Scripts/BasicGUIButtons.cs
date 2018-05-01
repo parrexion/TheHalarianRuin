@@ -13,6 +13,7 @@ public class BasicGUIButtons : MonoBehaviour {
 	public bool useFadeOut = true;
 	public AreaInfoValues areaInfo;
 	public FloatVariable fadeOutTime;
+	public FloatVariable battleDelay;
 	public IntVariable currentScene;
 	public IntVariable currentRoom;
 
@@ -61,8 +62,27 @@ public class BasicGUIButtons : MonoBehaviour {
 		fading = false;
 
 		AreaValue currentValue = areaInfo.GetArea(currentScene.value, currentRoom.value);
+		Debug.Log("Changed to area:  " + currentValue.locationName);
 		SceneManager.LoadScene(currentValue.sceneID);
 
 		yield break;
+	}
+
+	public void StartBattle() {
+		StartCoroutine(BattleDelay(battleDelay.value));
+	}
+
+	/// <summary>
+	/// Wait for a while then move on to the battle screen.
+	/// </summary>
+	/// <param name="time"></param>
+	/// <returns></returns>
+	private IEnumerator BattleDelay(float time){
+		yield return new WaitForSeconds(time);
+
+		currentScene.value = (int)Constants.SCENE_INDEXES.BATTLE;
+		AreaValue currentValue = areaInfo.GetArea(currentScene.value, currentRoom.value);
+		Debug.Log("Changed to area:  " + currentValue.locationName);
+		SceneManager.LoadScene(currentValue.sceneID);
 	}
 }
