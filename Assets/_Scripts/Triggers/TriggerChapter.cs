@@ -28,10 +28,10 @@ public class TriggerChapter : MonoBehaviour {
 		Transform child;
 		for (int i = 0; i < transform.childCount; i++) {
 			child = transform.GetChild(i);
-			chapterIDs.Add(child.name);
+			chapterIDs.Add(child.name.ToLower());
 			containers.Add(child);
 		}
-		if (chapterIDs.Count > 0 && chapterIDs[0] != "ChangeMap")
+		if (chapterIDs.Count > 0 && chapterIDs[0] != "changemap")
 			Debug.LogError("This section does not contain a ChangeMap object at the top!");
 
 		return true;
@@ -41,8 +41,8 @@ public class TriggerChapter : MonoBehaviour {
 	/// Activates the chapter with the given id and deactivates the rest.
 	/// </summary>
 	/// <param name="chapterID"></param>
-	public void ActivateSection(string chapterID, Constants.OverworldArea sceneIndex, Constants.RoomNumber number) {
-
+	public void ActivateSection(Constants.CHAPTER chapter, Constants.OverworldArea sceneIndex, Constants.RoomNumber number) {
+		string chapterID = chapter.ToString().ToLower();
 		if (containers.Count == 0){
 			Debug.LogWarning("Empty area");
 			return;

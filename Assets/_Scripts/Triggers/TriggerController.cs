@@ -24,9 +24,9 @@ public class TriggerController : MonoBehaviour {
     public StringListVariable newgameTriggers;
 
     public BoolVariable paused;
+    public IntVariable currentChapter;
     public IntVariable currentScene;
     public IntVariable currentRoomNumber;
-    public StringVariable currentChapter;
 
     public UnityEvent saveCheckEvent;
     public UnityEvent loadCheckEvent;
@@ -59,10 +59,11 @@ public class TriggerController : MonoBehaviour {
     /// Goes through all sections and activates the current section.
     /// </summary>
     public void ReactivateTriggers() {
+        Constants.CHAPTER chapter = (Constants.CHAPTER)currentChapter.value;
         Constants.OverworldArea index = (Constants.OverworldArea)currentScene.value;
         Constants.RoomNumber roomNumber = (Constants.RoomNumber)currentRoomNumber.value;
         for (int i = 0; i < sectionList.Length; i++) {
-            sectionList[i].ActivateSection(currentChapter.value, index, roomNumber);
+            sectionList[i].ActivateSection(chapter, index, roomNumber);
         }
     }
 

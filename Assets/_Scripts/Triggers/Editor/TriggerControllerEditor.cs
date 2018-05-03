@@ -3,11 +3,10 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(TriggerController))]
 public class TriggerControllerEditor : Editor {
-
-    string chapter;
 
     public override void OnInspectorGUI () {
         TriggerController controller = target as TriggerController;
@@ -20,8 +19,10 @@ public class TriggerControllerEditor : Editor {
 
         GUILayout.Space(20);
 
-        GUILayout.Label("Current chapter: " + controller.currentChapter.value);
-        chapter = EditorGUILayout.TextField("Current Chapter", chapter);
+        Constants.CHAPTER cChapter = (Constants.CHAPTER)controller.currentChapter.value;
+        cChapter = (Constants.CHAPTER)EditorGUILayout.EnumPopup("Current Chapter", (Constants.CHAPTER)cChapter);
+        controller.currentChapter.value = (int)cChapter;
+
         Constants.SCENE_INDEXES cArea = (Constants.SCENE_INDEXES)controller.currentScene.value;
         cArea = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Current Area", (Constants.SCENE_INDEXES)cArea);
         controller.currentScene.value = (int)cArea;
@@ -33,11 +34,14 @@ public class TriggerControllerEditor : Editor {
         GUILayout.Space(20);
 
         if (GUILayout.Button("Reactivate", GUILayout.Height(50))){
-
-            controller.currentChapter.value = chapter;
             ReactivateTriggers(controller);
         }
+        if (GUILayout.Button("Verify trigger IDs")){
+            VerifyTriggers(controller);
+        }
+        
     }
+
 
     void UpdateTriggers(TriggerController con) {
         Debug.Log("Updating triggers");
@@ -63,5 +67,28 @@ public class TriggerControllerEditor : Editor {
         con.ReactivateTriggers();
         EditorUtility.SetDirty(con);
         EditorSceneManager.MarkSceneDirty(con.gameObject.scene);
+    }
+
+    void VerifyTriggers(TriggerController con) {
+        Debug.Log("Verify triggers");
+        Dictionary<string,string> foundIDs = new Dictionary<string, string>();
+        Transform triggerParent = con.transform.GetChild(0);
+
+        int size = triggerParent.childCount;
+        for (int i = 0; i < size; i++) {
+            Transform child = triggerParent.GetChild(i);
+            Debug.Log("Checking child " + child.name);
+            UUID[] uuids = child.GetComponentsInChildren<UUID>();
+            for (int j = 0; j < uuids.Length; j++) {
+                if (foundIDs.ContainsKey(uuids[j].uuid)) {
+                    Debug.LogError(string.Format("Duplicate key found in child {0} and child {1}. Key: {2}", 
+                                child.name, foundIDs[uuids[j].uuid], uuids[j].uuid));
+                }
+                else
+                    foundIDs.Add(uuids[j].uuid, child.name);
+            }
+        }
+
+        Debug.Log("Verify triggers  -  DONE");
     }
 }
