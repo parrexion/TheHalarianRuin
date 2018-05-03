@@ -5,10 +5,6 @@ using UnityEngine.Events;
 
 public class OptionsController : MonoBehaviour {
 
-	[Header("Tower")]
-	public IntVariable bestTowerLevel;
-	public IntVariable currentTowerLevel;
-
 	[Header("Settings")]
 	public UnityEvent saveGameEvent;
 	public UnityEvent changeMapEvent;
@@ -26,12 +22,4 @@ public class OptionsController : MonoBehaviour {
 		changeMapEvent.Invoke();
 	}
 
-	/// <summary>
-	/// Resets the best tower level high score.
-	/// </summary>
-	public void ResetHighscoreClick() {
-		bestTowerLevel.value = 0;
-		currentTowerLevel.value = 0;
-		saveGameEvent.Invoke();
-	}
 }

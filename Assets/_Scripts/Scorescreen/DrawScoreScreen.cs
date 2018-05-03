@@ -39,10 +39,6 @@ public class DrawScoreScreen : MonoBehaviour {
 	public Text expText;
 	public Text moneyText;
 
-	[Header("Battle Tower")]
-	public IntVariable currentTowerLevel;
-	public UnityEvent saveGame;
-
 	[Header("Events")]
 	public UnityEvent buttonClickEvent;
 	public UnityEvent changeMapEvent;
@@ -105,10 +101,6 @@ public class DrawScoreScreen : MonoBehaviour {
 		{
 			case BattleEntry.NextLocation.OVERWORLD:
 				paused.value = false;
-				if (be.playerArea == Constants.OverworldArea.BATTLETOWER){
-					currentArea.value++;
-					saveGame.Invoke();
-				}
 				if (be.changePosition) {
 					if (be.playerArea != Constants.OverworldArea.DEFAULT)
 						playerArea.value = (int)be.playerArea;

@@ -66,9 +66,7 @@ public static class Constants {
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,
-		SHIELD_GENERATOR = 15,
-
-		BATTLETOWER = 999
+		SHIELD_GENERATOR = 15
 	}
 
 	public enum RoomNumber {
@@ -89,9 +87,7 @@ public static class Constants {
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,
-		SHIELD_GENERATOR = 15,
-		
-		BATTLETOWER = 999
+		SHIELD_GENERATOR = 15
 	}
 
 	public enum CHAPTER {

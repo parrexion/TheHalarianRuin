@@ -24,10 +24,6 @@ public class SettingsValues : MonoBehaviour {
 
 	public IntVariable currentSaveFileIndex;
 
-	[Header("Global values")]
-	public IntVariable bestTowerLevel;
-	public IntVariable currentTowerLevel;
-
 	[Header("Settings")]
 	public FloatVariable musicVolume;
 	public FloatVariable effectVolume;
@@ -43,7 +39,6 @@ public class SettingsValues : MonoBehaviour {
 	public void SaveSettings() {
 		SettingsSaveClass settingsSave = new SettingsSaveClass();
 
-		settingsSave.bestLevel = Mathf.Max(settingsSave.bestLevel,currentTowerLevel.value);
 		settingsSave.musicVolume = musicVolume.value;
 		settingsSave.effectVolume = effectVolume.value;
 
@@ -58,7 +53,6 @@ public class SettingsValues : MonoBehaviour {
 	public void LoadSettings() {
 		SettingsSaveClass settingsSave = SaveController.instance.saveFiles.settingsSave[currentSaveFileIndex.value];
 		
-		bestTowerLevel.value = settingsSave.bestLevel;
 		musicVolume.value = settingsSave.musicVolume;
 		effectVolume.value = settingsSave.effectVolume;
 
@@ -74,7 +68,6 @@ public class SettingsValues : MonoBehaviour {
 /// Class containing most of the save data.
 /// </summary>
 public class SettingsSaveClass {
-	public int bestLevel = 0;
 	public float musicVolume = 0;
 	public float effectVolume = 0;
 }
