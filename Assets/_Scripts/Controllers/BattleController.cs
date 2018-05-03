@@ -35,9 +35,17 @@ public class BattleController : MonoBehaviour {
 	public FloatVariable startupTime;
 	public FloatVariable battleEndDelay;
 
+	[Header("Audio")]
+	public SfxEntry diedClip;
+	public AudioVariable currentMusic;
+	public AudioVariable currentSfx;
+	public UnityEvent playMusicEvent;
+	public UnityEvent playSfxEvent;
+
 	[Header("Events")]
 	public IntVariable currentArea;
 	public UnityEvent pauseEvent;
+	public UnityEvent buttonClickedEvent;
 	public UnityEvent changeMapEvent;
 
 	private BattleEntry be;
@@ -215,6 +223,7 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	public void EscapeBattleButton(){
 		paused.value = true;
+		buttonClickedEvent.Invoke();
 		winText.text = "ESCAPED!";
 
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
@@ -232,6 +241,11 @@ public class BattleController : MonoBehaviour {
 		paused.value = true;
 		winText.text = "YOU DIED";
 
+		currentMusic.value = null;
+		playMusicEvent.Invoke();
+		currentSfx.value = diedClip.clip;
+		playSfxEvent.Invoke();
+
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
 		values.wonBattleState.value = "lose";
 		values.time.value = currentTime;
@@ -245,11 +259,9 @@ public class BattleController : MonoBehaviour {
 	/// <param name="time"></param>
 	/// <returns></returns>
 	IEnumerator GoToScoreScreen(float time) {
-		Debug.Log("YOYOYOYO");
 		yield return new WaitForSeconds(time);
 		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
 		changeMapEvent.Invoke();
-		Debug.Log("YOYOYOYO");
 		yield break;
 	}
 
