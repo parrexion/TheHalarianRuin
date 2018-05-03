@@ -13,6 +13,7 @@ public class PhoneMenuController : MonoBehaviour {
 
 	[Header("InventoryScreen stuff")]
 	public IntVariable inventoryScreenIndex;
+	public UnityEvent buttonClickedEvent;
 	public UnityEvent mapChangeEvent;
 
 	[Header("Clock")]
@@ -32,6 +33,8 @@ public class PhoneMenuController : MonoBehaviour {
 	public Button equipButton;
 	public Button moduleButton;
 	public Button saveButton;
+	public Button bigSaveButton;
+	public GameObject allButtons;
 
 	[Header("Button enablers")]
 	public BoolVariable statusAvailable;
@@ -42,10 +45,18 @@ public class PhoneMenuController : MonoBehaviour {
 
 	void Awake() {
 		bool isNotDialogue = currentArea.value != (int)Constants.SCENE_INDEXES.DIALOGUE;
+#if DEMO_PROLOGUE
+		bigSaveButton.interactable = isNotDialogue && saveAvailable.value;
+		bigSaveButton.gameObject.SetActive(true);
+		allButtons.gameObject.SetActive(false);
+#else
 		statusButton.interactable = isNotDialogue && statusAvailable.value;
 		equipButton.interactable = isNotDialogue && equipAvailable.value;
 		moduleButton.interactable = isNotDialogue && moduleAvailable.value;
 		saveButton.interactable = isNotDialogue && saveAvailable.value;
+		bigSaveButton.gameObject.SetActive(false);
+		allButtons.gameObject.SetActive(true);
+#endif
 		DialogueUUIDText.text = "";
 		UpdateMinimap();
 	}
@@ -67,6 +78,7 @@ public class PhoneMenuController : MonoBehaviour {
 	/// </summary>
 	/// <param name="screenIndex"></param>
 	public void GoToInventory(int screenIndex) {
+		buttonClickedEvent.Invoke();
 		inventoryScreenIndex.value = screenIndex;
 		currentArea.value = (int)Constants.SCENE_INDEXES.INVENTORY;
 		mapChangeEvent.Invoke();
@@ -78,7 +90,7 @@ public class PhoneMenuController : MonoBehaviour {
 	void SetCurrentLocation(){
 		locationText.text = "";
 		minimapImage.enabled = false;
-#if UNITY_EDITOR
+#if !DEMO_PROLOGUE
 		if (currentArea.value == (int)Constants.SCENE_INDEXES.DIALOGUE) {
 			DialogueUUIDText.text = dialogueUUID.value;
 		}

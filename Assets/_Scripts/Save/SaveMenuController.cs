@@ -11,14 +11,15 @@ public class SaveMenuController : MonoBehaviour {
 	public SaveFileCurrentProgress progress;
 	public BoolVariable isCurrentlySaving;
 
-	[Header("Events")]
-	public AreaIntVariable currentArea;
-	public UnityEvent changeMapEvent;
-
 	[Header("Screens")]
 	public GameObject buttonScreen;
 	public GameObject saveLoadScreen;
 	public GameObject quitPopup;
+
+	[Header("Events")]
+	public AreaIntVariable currentArea;
+	public UnityEvent changeMapEvent;
+	public UnityEvent buttonClickedEvent;
 
 
 	private void OnEnable() {
@@ -39,6 +40,7 @@ public class SaveMenuController : MonoBehaviour {
 	/// </summary>
 	public void ShowSaveLoadScreen(bool isSaving) {
 		isCurrentlySaving.value = isSaving;
+		buttonClickedEvent.Invoke();
 		buttonScreen.SetActive(false);
 		saveLoadScreen.SetActive(true);
 		quitPopup.SetActive(false);
@@ -58,6 +60,7 @@ public class SaveMenuController : MonoBehaviour {
 	/// </summary>
 	public void QuitToMain() {
 		currentArea.value = (int)(Constants.SCENE_INDEXES.MAINMENU);
+		buttonClickedEvent.Invoke();
 		changeMapEvent.Invoke();
 	}
 }

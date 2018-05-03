@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 /// <summary>
@@ -11,37 +10,42 @@ using UnityEngine.Events;
 /// </summary>
 public class BattleController : MonoBehaviour {
 
+	[Header("Controllers")]
+	public BackgroundChanger backchange;
+	public EnemyController enemyController;
+	public AndroidController playerController;
+	public SoldierGridController soldierController;
+	public CharacterHealthGUI characterHealth;
+	public BattleClock battleClock;
+	public Text winText;
+
+	[Header("Battle information")]
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
-	public IntVariable currentArea;
 	public AreaInfoValues areaInfo;
-	private BattleEntry be;
-	private BackgroundChanger backchange;
 
-	private bool initiated = false;
+	[Header("Variables")]
 	public BoolVariable paused;
 	public BoolVariable invincible;
 	public IntVariable removeBattleSide;
 	public BoolVariable alwaysEscapable;
 	public BoolVariable useSlowTime;
 
-	public Text winText;
-	public EnemyController enemyController;
-	public AndroidController playerController;
-	public SoldierGridController soldierController;
-	public CharacterHealthGUI characterHealth;
-	public BattleClock battleClock;
-	public AudioClip pauseClip;
-
-	public float startupTime = 3.0f;
-	public int state = 0;
-	public bool tutorial = false;
-	public bool escape = false;
-	public float currentTime = 0f;
+	[Header("Delay Times")]
+	public FloatVariable startupTime;
+	public FloatVariable battleEndDelay;
 
 	[Header("Events")]
+	public IntVariable currentArea;
 	public UnityEvent pauseEvent;
-	public UnityEvent saveGameEvent;
+	public UnityEvent changeMapEvent;
+
+	private BattleEntry be;
+	private int state = 0;
+	private bool tutorial = false;
+	private bool escape = false;
+	private float currentTime = 0f;
+	private bool initiated = false;
 
 
 	// Use this for initialization
@@ -55,7 +59,6 @@ public class BattleController : MonoBehaviour {
 		useSlowTime.value = be.useSlowTime;
 		battleClock.gameObject.SetActive(useSlowTime.value && !tutorial);
 
-		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
 		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled;
 #if UNITY_EDITOR
 		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled || alwaysEscapable.value;
@@ -67,7 +70,6 @@ public class BattleController : MonoBehaviour {
 		SetupBackgrounds();
 		paused.value = true;
 		StartCoroutine(CreateEnemies());
-		// Debug.Log("Start");
 	}
 
 	/// <summary>
@@ -81,12 +83,10 @@ public class BattleController : MonoBehaviour {
 		}
 		enemyController.CreateEnemies(be.removeSide != BattleEntry.RemoveSide.RIGHT, be.removeSide != BattleEntry.RemoveSide.LEFT);
 		initiated = true;
-		// Debug.Log("Initiated");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (!initiated)
 			return;
 
@@ -94,22 +94,20 @@ public class BattleController : MonoBehaviour {
 			currentTime += Time.deltaTime;
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			// Debug.Log("Press escape");
 			if (escape) {
 				escape = false;
 				StartBattle();
-				// Debug.Log("ESCAPED");
 			}
 			else if (state == 2) {
 				PauseGame();
 			}
 		}
 
-		if (state == 0 && currentTime >= startupTime-1.0f) {
+		if (state == 0 && currentTime >= startupTime.value-1.0f) {
 			AlmostStart();
 			state = 1;
 		}
-		else if (state == 1 && currentTime >= startupTime) {
+		else if (state == 1 && currentTime >= startupTime.value) {
 			BattleStart();
 			state = 2;
 			currentTime = 0;
@@ -117,9 +115,8 @@ public class BattleController : MonoBehaviour {
 
 		if (state == 2 && enemyController.CheckAllEnemiesDead()) {
 			state = 3;
-			winText.text = "YOU WIN!";
-			EndBattle();
-			StartCoroutine(WonBattle(3f));
+			soldierController.grid.CancelGrid();
+			WonBattle();
 		}
 	}
 
@@ -194,16 +191,13 @@ public class BattleController : MonoBehaviour {
 		paused.value = false;
 	}
 
-	public void EndBattle(){
+	/// <summary>
+	/// Called when the battle is won.
+	/// </summary>
+	public void WonBattle(){
 		paused.value = true;
-		soldierController.grid.CancelGrid();
-	}
+		winText.text = "YOU WIN";
 
-	public void EscapeBattleButton(float time){
-		StartCoroutine(EscapedBattle(time));
-	}
-
-	public IEnumerator WonBattle(float time){
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
 		values.wonBattleState.value = "win";
 		values.time.value = currentTime;
@@ -213,52 +207,50 @@ public class BattleController : MonoBehaviour {
 		values.money.value = enemyController.GetTotalMoney();
 		// values.treasures = enemyController.GetTreasures();
 
-		if (be.playerArea == Constants.OverworldArea.BATTLETOWER)
-			saveGameEvent.Invoke();
-
-		Debug.Log("Won");
-
-		yield return new WaitForSeconds(time);
-		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
-		SceneManager.LoadScene(currentArea.value);
+		StartCoroutine(GoToScoreScreen(battleEndDelay.value));
 	}
 
-	public IEnumerator EscapedBattle(float time){
+	/// <summary>
+	/// Called when the player escapes the battle.
+	/// </summary>
+	public void EscapeBattleButton(){
+		paused.value = true;
+		winText.text = "ESCAPED!";
+
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
 		values.wonBattleState.value = "escape";
 		values.time.value = currentTime;
 		values.noEnemies.value = enemyController.numberOfEnemies;
 
-		Debug.Log("Escaped battle");
-
-		winText.text = "ESCAPED!";
-		yield return new WaitForSeconds(time);
-		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
-		SceneManager.LoadScene(areaInfo.GetArea(currentArea.value, 0).sceneID);
-		yield return 0;
+		StartCoroutine(GoToScoreScreen(battleEndDelay.value));
 	}
 
+	/// <summary>
+	/// Called when it's game over.
+	/// </summary>
 	public void GameOverTrigger() {
-		StartCoroutine(LostBattle(3f));
 		paused.value = true;
-	}
-
-	public IEnumerator LostBattle(float time) {
 		winText.text = "YOU DIED";
 
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
 		values.wonBattleState.value = "lose";
 		values.time.value = currentTime;
 
+		StartCoroutine(GoToScoreScreen(battleEndDelay.value));
+	}
+
+	/// <summary>
+	/// Enumerator which waits a while and then moves on to the score screen.
+	/// </summary>
+	/// <param name="time"></param>
+	/// <returns></returns>
+	IEnumerator GoToScoreScreen(float time) {
+		Debug.Log("YOYOYOYO");
 		yield return new WaitForSeconds(time);
 		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
-		SceneManager.LoadScene(currentArea.value);
-		yield return 0;
+		changeMapEvent.Invoke();
+		Debug.Log("YOYOYOYO");
+		yield break;
 	}
 
-
-	public static IEnumerator EndGame(float time){
-		yield return new WaitForSeconds(time);
-		AppHelper.Quit();
-	}
 }

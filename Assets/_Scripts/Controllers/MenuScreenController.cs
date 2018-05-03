@@ -9,7 +9,6 @@ public class MenuScreenController : MonoBehaviour {
 	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
 
 	public IntVariable currentInventoryScreen;
-	bool isEditor = false;
 	bool menuLock = true;
 
 	[Header("Screens")]
@@ -43,10 +42,7 @@ public class MenuScreenController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(WaitForFadeIn());
-#if UNITY_EDITOR
-		isEditor = true;
-#else
-		isEditor = false;
+#if DEMO_PROLOGUE
 		statusButton.gameObject.SetActive(false);
 		moduleButton.gameObject.SetActive(false);
 		equipButton.gameObject.SetActive(false);
@@ -82,23 +78,19 @@ public class MenuScreenController : MonoBehaviour {
 		statusScreen.SetActive(screen == MenuScreen.STATUS);
 		moduleScreen.SetActive(screen == MenuScreen.MODULE);
 		equipScreen.SetActive(screen == MenuScreen.EQUIP);
-		if (isEditor) {
-			mapScreen.SetActive(screen == MenuScreen.MAP);
-			messageScreen.SetActive(screen == MenuScreen.MESSAGE);
-			journalScreen.SetActive(screen == MenuScreen.JOURNAL);
-			saveScreen.SetActive(screen == MenuScreen.SAVE);
-		}
+		mapScreen.SetActive(screen == MenuScreen.MAP);
+		messageScreen.SetActive(screen == MenuScreen.MESSAGE);
+		journalScreen.SetActive(screen == MenuScreen.JOURNAL);
+		saveScreen.SetActive(screen == MenuScreen.SAVE);
 
 		//Set current buttons
 		statusButton.interactable = (screen != MenuScreen.STATUS);
 		moduleButton.interactable = (screen != MenuScreen.MODULE);
 		equipButton.interactable = (screen != MenuScreen.EQUIP);
-		if (isEditor) {
-			mapButton.interactable = (screen != MenuScreen.MAP);
-			messageButton.interactable = (screen != MenuScreen.MESSAGE);
-			journalButton.interactable = (screen != MenuScreen.JOURNAL);
-			saveButton.interactable = (screen != MenuScreen.SAVE);
-		}
+		saveButton.interactable = (screen != MenuScreen.SAVE);
+		mapButton.interactable = (screen != MenuScreen.MAP);
+		messageButton.interactable = (screen != MenuScreen.MESSAGE);
+		journalButton.interactable = (screen != MenuScreen.JOURNAL);
 	}
 
 	/// <summary>

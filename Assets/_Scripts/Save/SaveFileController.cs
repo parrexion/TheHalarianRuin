@@ -33,6 +33,7 @@ public class SaveFileController : MonoBehaviour {
 
 	[Header("Events")]
 	public IntVariable currentSaveFileIndex;
+	public UnityEvent buttonClickedEvent;
 	public UnityEvent changeMapEvent;
 	public UnityEvent saveGameEvent;
 	public UnityEvent loadGameEvent;
@@ -159,6 +160,7 @@ public class SaveFileController : MonoBehaviour {
 	/// <param name="message"></param>
 	/// <returns></returns>
 	IEnumerator FilePopup(string message, bool isSaving) {
+		buttonClickedEvent.Invoke();
 		popupMessage.text = message;
 		filePopup.SetActive(true);
 		yield return new WaitForSecondsRealtime(1f);
