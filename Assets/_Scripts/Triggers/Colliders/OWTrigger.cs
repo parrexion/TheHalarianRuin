@@ -102,7 +102,7 @@ public abstract class OWTrigger : MonoBehaviour {
 	/// </summary>
 	protected void TriggerOtherTriggers() {
 		for (int i = 0; i < deactivateTriggers.Count; i++) {
-			if (activateTriggers[i] == null){
+			if (deactivateTriggers[i] == null){
 				Debug.LogError("Trigger is null in deactivation triggers");
 				continue;
 			}

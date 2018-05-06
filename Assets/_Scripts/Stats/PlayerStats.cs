@@ -41,7 +41,6 @@ public class PlayerStats : MonoBehaviour {
 	public FloatVariable soldierDamageTaken;
 
 	[Header("Overworld values")]
-	public StringVariable currentChapterString;
 	public IntVariable currentChapterIndex;
 	public IntVariable currentArea;
 	public IntVariable currentRoomNumber;
@@ -198,7 +197,6 @@ public class PlayerStats : MonoBehaviour {
 	/// <param name="saveData"></param>
 	public void NewgameStats() {
 		//Overworld
-		currentChapterString.value = "Prologue";
 		currentChapterIndex.value = 0;
 		currentRoomNumber.value = 0;
 		currentArea.value = playerArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
@@ -238,7 +236,6 @@ public class PlayerStats : MonoBehaviour {
 		PlayerStatsSaveClass playerData = new PlayerStatsSaveClass();
 
 		//Overworld
-		playerData.currentChapterString = currentChapterString.value;
 		playerData.currentChapterIndex = currentChapterIndex.value;
 		playerData.currentRoomNumber = currentRoomNumber.value;
 		playerData.playerArea = playerArea.value;
@@ -276,7 +273,6 @@ public class PlayerStats : MonoBehaviour {
 		PlayerStatsSaveClass saveData = SaveController.instance.saveFiles.playerSave[currentSaveFileIndex.value];
 
 		//Overworld
-		currentChapterString.value = saveData.currentChapterString;
 		currentChapterIndex.value = saveData.currentChapterIndex;
 		currentRoomNumber.value = saveData.currentRoomNumber;
 		currentArea.value = playerArea.value = saveData.playerArea;

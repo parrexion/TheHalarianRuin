@@ -16,7 +16,7 @@ public class MoveJumpingScript : MoveScript {
 	bool jumping = false;
 
 
-    public override void setSpeed(Vector2 baseSpeed, float rotation) {
+    public override void SetSpeed(Vector2 baseSpeed, float rotation) {
 
 		if (!grounded)
 			return;

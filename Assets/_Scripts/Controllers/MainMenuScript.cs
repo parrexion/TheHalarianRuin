@@ -10,14 +10,14 @@ public class MainMenuScript : MonoBehaviour {
 	public Canvas loadGameCanvas;
 
 	[Header("Areas")]
-	public StringVariable currentChapter;
+	public IntVariable currentChapter;
 	public IntVariable currentArea;
 	public IntVariable currentRoomNumber;
 	public IntVariable playerArea;
 
 	[Header("Story stuff")]
-	public string dialogueUuidStr = "WakeUpAndroid";
-	public string currentChapterStr = "Prologue";
+	public DialogueEntry startDialogue;
+	public Constants.CHAPTER startChapter;
 	public StringVariable dialogueUuid;
 	public BoolVariable playingAsAndroid;
 	public BoolVariable useFollower;
@@ -30,7 +30,7 @@ public class MainMenuScript : MonoBehaviour {
 
 
 	void Start() {
-		currentArea.value = (int)Constants.SCENE_INDEXES.MAINMENU;
+		startNewgameEvent.Invoke();
 	}
 
 	/// <summary>
@@ -57,10 +57,12 @@ public class MainMenuScript : MonoBehaviour {
 	public void NewgameClicked() {
 		buttonClickEvent.Invoke();
 		
-		dialogueUuid.value = dialogueUuidStr;
+		dialogueUuid.value = startDialogue.uuid;
+		currentChapter.value = (int)startChapter;
 		currentRoomNumber.value = 0;
 
-		startNewgameEvent.Invoke();
+		Debug.Log("adasdfas:   " + currentChapter.value);
+
 		dialogueEvent.Invoke();
 	}
 

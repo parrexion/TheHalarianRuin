@@ -16,7 +16,7 @@ public static class Constants {
 	public const float SOLDIER_BORDER_WIDTH = 3.5f;
 	public const float SOLDIER_BORDER_HEIGHT = 2.25f;
 	public const float SOLDIER_START_X = 13.0f;
-	public const float SOLDIER_START_Y = 0f;
+	public const float SOLDIER_START_Y = -1f;
 	public const float CAMERA_BORDER_WIDTH_ANDROID = 6.0f;
 	public const float CAMERA_BORDER_HEIGHT_ANDROID = 2.9f;
 	public const float ENEMY_OFFSET_MIN_ANDROID = 2f;

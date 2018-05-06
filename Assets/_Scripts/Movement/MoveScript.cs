@@ -61,6 +61,6 @@ public abstract class MoveScript : MonoBehaviour {
     /// </summary>
     /// <param name="baseSpeed"></param>
     /// <param name="rotation"></param>
-    public abstract void setSpeed(Vector2 baseSpeed, float rotation);
+    public abstract void SetSpeed(Vector2 baseSpeed, float rotation);
 
 }

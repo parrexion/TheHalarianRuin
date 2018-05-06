@@ -8,7 +8,7 @@ public class SaveFileCurrentProgress : MonoBehaviour {
 	public SaveFileButton saveButton;
 	
 	[Header("Current Progress")]
-	public StringVariable currentChapter;
+	public IntVariable currentChapter;
 	public AreaIntVariable playerArea;
 	public IntVariable playerLevel;
 	public IntVariable playTime;

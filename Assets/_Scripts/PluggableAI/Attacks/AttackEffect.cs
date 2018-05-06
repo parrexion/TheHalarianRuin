@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class AttackEffect : ScriptableObject {
 
 	public bool setRotation = true;
-
+	public bool targeting = false;
 
 	/// <summary>
 	/// Trigger the module effect.

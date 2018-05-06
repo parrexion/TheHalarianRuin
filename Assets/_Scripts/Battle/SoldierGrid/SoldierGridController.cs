@@ -90,7 +90,7 @@ public class SoldierGridController : MonoBehaviour {
 		int endReached = 0;
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			if (moveJumping.grounded) {
-				moveJumping.setSpeed(new Vector2(0f,jumpForce), 0);
+				moveJumping.SetSpeed(new Vector2(0f,jumpForce), 0);
 				grid.CancelGrid();
 			}
 		}

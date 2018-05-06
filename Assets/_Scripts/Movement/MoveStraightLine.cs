@@ -24,7 +24,7 @@ public class MoveStraightLine : MoveScript {
     /// </summary>
     /// <param name="baseSpeed"></param>
     /// <param name="rotation"></param>
-    public override void setSpeed(Vector2 baseSpeed, float rotation) {
+    public override void SetSpeed(Vector2 baseSpeed, float rotation) {
         speed = baseSpeed;
         direction = new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation));
     }

@@ -36,6 +36,8 @@ public class WeaponSlot : MonoBehaviour {
 
 	void Start () {
 		shootCooldown = 0f;
+		if (removeBattleSide.value == 2)
+			Destroy(gameObject);
 		
 		CalculateHeightDifference();
 		SetupTextures();
@@ -76,7 +78,7 @@ public class WeaponSlot : MonoBehaviour {
 	/// Reduces the shotcooldown and checks if the module should be activated.
 	/// </summary>
 	void Update() {
-		if (paused.value || removeBattleSide.value == 2)
+		if (paused.value)
 			return;
 
 		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;

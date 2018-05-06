@@ -43,7 +43,7 @@ public class Effect : MonoBehaviour {
 	public void SetMovement(Vector2 baseSpeed, float rotation){
 		move = GetComponent<MoveScript>();
 		if (move != null) {
-			move.setSpeed(baseSpeed, rotation);
+			move.SetSpeed(baseSpeed, rotation);
 		}
 	}
 }
