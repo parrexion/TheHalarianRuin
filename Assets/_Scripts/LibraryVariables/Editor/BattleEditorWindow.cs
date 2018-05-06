@@ -195,11 +195,13 @@ public class BattleEditorWindow {
 		}
 
 		// Enemies 
+		GUILayout.Label("Enemy types", EditorStyles.boldLabel);
 		battleValues.randomizeEnemies = EditorGUILayout.Toggle("Randomize enemies", battleValues.randomizeEnemies);
 		if (battleValues.randomizeEnemies)
 			battleValues.numberOfEnemies = EditorGUILayout.IntField("Number of Enemies", battleValues.numberOfEnemies);
 		
-		GUILayout.Label("Enemy types", EditorStyles.boldLabel);
+		GUILayout.Space(5);
+		
 		var serializedObject = new SerializedObject(battleValues);
         var property = serializedObject.FindProperty("enemyTypes");
         serializedObject.Update();

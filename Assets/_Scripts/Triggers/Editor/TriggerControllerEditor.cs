@@ -73,22 +73,28 @@ public class TriggerControllerEditor : Editor {
         Debug.Log("Verify triggers");
         Dictionary<string,string> foundIDs = new Dictionary<string, string>();
         Transform triggerParent = con.transform.GetChild(0);
+        bool changed = false;
 
         int size = triggerParent.childCount;
         for (int i = 0; i < size; i++) {
             Transform child = triggerParent.GetChild(i);
             Debug.Log("Checking child " + child.name);
-            UUID[] uuids = child.GetComponentsInChildren<UUID>();
+            UUID[] uuids = child.GetComponentsInChildren<UUID>(true);
             for (int j = 0; j < uuids.Length; j++) {
                 if (foundIDs.ContainsKey(uuids[j].uuid)) {
-                    Debug.LogError(string.Format("Duplicate key found in child {0} and child {1}. Key: {2}", 
-                                child.name, foundIDs[uuids[j].uuid], uuids[j].uuid));
+                    Debug.LogWarning(string.Format("Duplicate key: {0}", uuids[j].uuid));
+                    uuids[i].uuid = System.Guid.NewGuid().ToString();
+                    changed = true;
                 }
                 else
                     foundIDs.Add(uuids[j].uuid, child.name);
             }
         }
 
+        if (changed) {
+            EditorUtility.SetDirty(con);
+            EditorSceneManager.MarkSceneDirty(con.gameObject.scene);
+        }
         Debug.Log("Verify triggers  -  DONE");
     }
 }

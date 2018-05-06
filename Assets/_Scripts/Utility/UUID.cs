@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class which scales the transform of the object so that it tries to keep the same 
-/// size and position as was intended with the original screen size.
+/// UUID class for triggers and other objects placed in the OW.
 /// </summary>
 public class UUID : MonoBehaviour {
 
