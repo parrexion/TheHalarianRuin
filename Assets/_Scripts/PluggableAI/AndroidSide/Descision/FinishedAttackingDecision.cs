@@ -7,7 +7,7 @@ public class FinishedAttackingDecision : Decision {
 
 	public override bool Decide(StateController controller) {
 
-		if (controller.stateTimeElapsed >= controller.values.meleeTimeAnimation) {
+		if (controller.stateTimeElapsed >= controller.values.meleeTimeStartup) {
 			return true;
 		}
 

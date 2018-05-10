@@ -16,5 +16,5 @@ public abstract class ModuleEffect : ScriptableObject {
 	/// <param name="values"></param>
 	/// <param name="info"></param>
 	/// <returns></returns>
-	abstract public bool Use(ModuleValues values, int attackValue, MouseInformation info);
+	abstract public bool Use(Module values, int attackValue, MouseInformation info);
 }

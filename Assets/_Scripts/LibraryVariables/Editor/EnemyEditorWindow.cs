@@ -167,7 +167,6 @@ public class EnemyEditorWindow {
         enemyValues.attackRate = EditorGUILayout.FloatField("Attack rate", enemyValues.attackRate);
         enemyValues.attacks = EditorGUILayout.IntField("Attacks", enemyValues.attacks);
         enemyValues.meleeTimeStartup = EditorGUILayout.FloatField("Melee time startup", enemyValues.meleeTimeStartup);
-        enemyValues.meleeTimeAnimation = EditorGUILayout.FloatField("Melee time animation", enemyValues.meleeTimeAnimation);
 
         GUILayout.Label("Reward", EditorStyles.boldLabel);
         enemyValues.exp = EditorGUILayout.IntField("Exp yield", enemyValues.exp);

@@ -144,18 +144,6 @@ public class WeaponSlot : MonoBehaviour {
 		}
 	}
 
-	// /// <summary>
-	// /// Shows the UI modules.
-	// /// </summary>
-	// public void ShowUIModules() {
-	// 	for (int i = 0; i < Constants.MODULE_EQUIP_SPACE; i++) {
-	// 		if (containerModules[i].module == null)
-	// 			continue;
-			
-	// 		uiModules[i].SetVisible(!paused.value);
-	// 	}
-	// }
-
 	/// <summary>
 	/// Returns if the player is currently attacking.
 	/// </summary>
@@ -176,7 +164,7 @@ public class WeaponSlot : MonoBehaviour {
 
 		for (int i = 0; i < 4; i++) {
 			if (containerModules[i].CanActivate(mouseInfo)) {
-				shootCooldown = containerModules[i].GetValues().delay;
+				shootCooldown = containerModules[i].module.delay;
 				containerModules[i].reduceCharge();
 				containerModules[i].CreateEffect(mouseInfo, playerAttack.value);
 				return true;

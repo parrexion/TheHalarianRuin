@@ -8,7 +8,6 @@ public class AttackScript : MonoBehaviour {
 	public AttackEffect[] projectileEffect;
 	public Transform projectile;
 	public int damage;
-	public float lifeTime;
 	public Vector2 speed;
 	public bool multihit = true;
 

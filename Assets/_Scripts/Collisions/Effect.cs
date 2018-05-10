@@ -17,23 +17,57 @@ public class Effect : MonoBehaviour {
 	public FloatVariable slowAmount;
 	public bool leftSideEffect;
 
-	[HideInInspector] public float lifeTime = 1f;
-	protected float currentTime = 0f;
+	[Header("Effect Steps")]
+	public EffectStep[] steps;
+	protected int currentStep = 0;
+	private float currentTime = 0f;
+	private float deactivateTime;
+	private SpriteRenderer rend;
 
+
+	void Start () {
+		rend = GetComponent<SpriteRenderer>();
+		currentStep = 0;
+
+		AdditionalSetup();
+		SetupCurrentStep();
+	}
+
+	protected virtual void AdditionalSetup() { }
 
 	/// <summary>
 	/// Update the current lifetime of the effect.
 	/// </summary>
-	protected virtual void Update() {
+	void Update() {
 		if (paused.value)
 			return;
 
 		currentTime += (canBeSlowed.value && slowLeftSide.value == leftSideEffect) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 
-		if (currentTime >= lifeTime){
+		if (currentTime >= deactivateTime) {
+			TriggerNextStep();
+		}
+	}
+
+	protected void TriggerNextStep() {
+		currentStep++;
+		if (currentStep < steps.Length)
+			SetupCurrentStep();
+		else {
 			Destroy(gameObject);
 		}
 	}
+
+	void SetupCurrentStep() {
+		EffectStep step = steps[currentStep];
+		rend.sprite = step.sprite;
+		transform.localScale = new Vector3(step.size.x, step.size.y, 1);
+		deactivateTime = step.duration;
+		currentTime = 0;
+		AdditionalCurrentStepSetup();
+	}
+
+	protected virtual void AdditionalCurrentStepSetup() { }
 
 	/// <summary>
 	/// Sets the movement of the effect by giving speed and rotation to it

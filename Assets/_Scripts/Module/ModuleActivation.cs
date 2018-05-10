@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class ModuleActivation : ScriptableObject {
 
 
-	abstract public  bool CanActivate(ModuleValues values, MouseInformation info);
+	abstract public  bool CanActivate(Module values, MouseInformation info);
 }

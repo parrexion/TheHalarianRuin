@@ -9,7 +9,7 @@ public class ActivateDrawLine : ModuleActivation {
 	public float highAngle;
 	public bool bothDirections = false;
 
-    public override bool CanActivate(ModuleValues values, MouseInformation info) {
+    public override bool CanActivate(Module values, MouseInformation info) {
         
 		if (info.holding || info.holdDuration > 0.5f)
 			return false;

@@ -30,7 +30,6 @@ public class SMeleeAttackEffect : AttackEffect {
 		projectile.isEnemy = true;
 		projectile.multiHit = false;
 		projectile.multiHit = attackScript.multihit;
-		projectile.lifeTime = attackScript.lifeTime;
 		projectile.SetDamage(attackScript.damage, 0, 1);
 		projectile.SetMovement(attackScript.speed, info.rotationInternal);
 

@@ -7,59 +7,33 @@ using System.Collections.Generic;
 /// </summary>
 public class Projectile : Effect {
 
+	[Space(10)]
 	public bool isEnemy = false;
-
-	[Header("Activation")]
-	public float activateDelay = 0f;
-	public float activeDuration = 0f;
-	public bool destroyOnHit = false;
-	private int activeState = 0;
-	private float deactivateTime;
-
-    [HideInInspector] public int damage = 0;
+    public int damage = 0;
+    private int tempDamage = 0;
 	[HideInInspector] public bool multiHit = true;
 	private List<int> hitEnemies = new List<int>();
 	private Collider2D coll2D;
 
 
-	void Start () {
+	protected override void AdditionalSetup() {
 		coll2D = GetComponent<Collider2D>();
-		coll2D.enabled = (activateDelay == 0);
-		activeState = (activateDelay == 0) ? 1 : 0;
-		deactivateTime = activateDelay + activeDuration;
 	}
 
-    protected override void Update() {
-        base.Update();
-
-		if (activeState > 1) {
-			return;
-		}
-
-        if (activeState == 1) {
-			if (currentTime > deactivateTime) {
-				coll2D.enabled = false;
-				activeState = 2;
-				return;
-			}
-		}
-		else {
-			if (currentTime >= activateDelay) {
-				currentTime = 0f;
-				activeState = 1;
-				coll2D.enabled = true;
-			}
-		}
-    }
-
+	protected override void AdditionalCurrentStepSetup() {
+		EffectStep step = steps[currentStep];
+		damage = (step.damage) ? tempDamage : 0;
+		coll2D.enabled = (damage != 0);
+		transform.Translate(new Vector3(0,0,0.001f));
+		hitEnemies.Clear();
+	}
 	
 	/// <summary>
 	/// Set the damage for the projectile.
 	/// </summary>
 	/// <param name="attackValue"></param>
 	public void SetDamage(int baseDamage, int attackValue, float damageScale){
-		// Debug.Log("Added some damage: " + (int)(damageScale*attackValue));
-		damage = baseDamage + (int)(damageScale*attackValue);
+		tempDamage = baseDamage + (int)(damageScale*attackValue);
 	}
 
 	/// <summary>
@@ -68,14 +42,12 @@ public class Projectile : Effect {
 	/// <param name="id"></param>
 	/// <returns></returns>
 	public bool AddHitID(int id) {
-		if (hitEnemies.Contains(id) && activeState != 1)
+		if (hitEnemies.Contains(id) || damage == 0)
 			return false;
 
 		hitEnemies.Add(id);
 		if (!multiHit) {
-			activeState = 2;
-			if (destroyOnHit)
-				Destroy(gameObject);
+			TriggerNextStep();
 		}
 			
 		return true;

@@ -9,10 +9,41 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "LibraryEntries/Module")]
 public class Module : ItemEntry {
 
+	public enum ModuleType {
+		CLICK,SLASH,RISE,HOLD,DOWN,OTHER
+	}
+
 	public Sprite chargingIcon;
 	public List<ModuleActivation> activations = new List<ModuleActivation>();
 	public List<ModuleEffect> effects = new List<ModuleEffect>();
-	public ModuleValues values;
+
+	[Header("Usage values")]
+	public float startCooldownTime = 0f;
+	public int maxCharges = 10;
+	public float delay = 0.1f;
+	public float cooldown = 5.0f;
+
+	[Space(10)]
+
+	[Header("Activation requirements")]
+	public ModuleType moduleType;
+	public float area = 1.0f; 
+	public float holdMin = -1f;
+	public float holdMax = 0.5f;
+
+	[Space(10)]
+
+	[Header("Projectile")]
+	public Transform projectile;
+	public Vector2 projectileSpeed;
+	public EffectStep[] effectSteps;
+
+	[Space(10)]
+
+	[Header("Damage")]
+	public int damage = 0;
+	public float baseDamageScale = 1.0f;
+	public bool multihit = true;
 
 
 	/// <summary>
@@ -23,7 +54,7 @@ public class Module : ItemEntry {
 	public bool CanActivate(MouseInformation info) {
 
 		for (int i = 0; i < activations.Count; i++) {
-			if (!activations[i].CanActivate(values, info))
+			if (!activations[i].CanActivate(this, info))
 				return false;
 		}
 
@@ -37,7 +68,7 @@ public class Module : ItemEntry {
 	/// <param name="attackValue"></param>
 	public void CreateEffects(MouseInformation info, int attackValue){
 		for (int i = 0; i < effects.Count; i++) {
-			effects[i].Use(values, attackValue, info);
+			effects[i].Use(this, attackValue, info);
 		}
 	}
 
@@ -63,7 +94,23 @@ public class Module : ItemEntry {
 
 		activations = new List<ModuleActivation>();
 		effects = new List<ModuleEffect>();
-		values.ResetValues();
+		startCooldownTime = 0;
+		maxCharges = 10;
+		delay = 0.1f;
+		cooldown = 5f;
+
+		moduleType = ModuleType.OTHER;
+		area = 1.0f;
+		holdMin = -1f;
+		holdMax = 0.5f;
+
+		projectile = null;
+		projectileSpeed = Vector2.zero;
+		effectSteps = new EffectStep[0];
+
+		damage = 0;
+		baseDamageScale = 1f;
+		multihit = true;
 	}
 
 	/// <summary>
@@ -84,6 +131,23 @@ public class Module : ItemEntry {
 		for (int i = 0; i < module.effects.Count; i++) {
 			effects.Add(module.effects[i]);
 		}
-		values.CopyValues(module.values);
+
+		startCooldownTime = module.startCooldownTime;
+		maxCharges = module.maxCharges;
+		delay = module.delay;
+		cooldown = module.cooldown;
+
+		moduleType = module.moduleType;
+		area = module.area;
+		holdMin = module.holdMin;
+		holdMax = module.holdMax;
+
+		projectile = module.projectile;
+		projectileSpeed = module.projectileSpeed;
+		effectSteps = module.effectSteps;
+
+		damage = module.damage;
+		baseDamageScale = module.baseDamageScale;
+		multihit = module.multihit;
 	}
 }

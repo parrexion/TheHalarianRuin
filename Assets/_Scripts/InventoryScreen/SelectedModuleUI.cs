@@ -54,10 +54,10 @@ public class SelectedModuleUI : MonoBehaviour {
 			itemName.text = currentModule.entryName;
 			itemIcon.sprite = currentModule.icon;
 			itemIcon.enabled = true;
-			values[0].text = currentModule.values.moduleType.ToString();
-			values[1].text = currentModule.values.damage.ToString();
-			values[2].text = currentModule.values.maxCharges.ToString();
-			values[3].text = (currentModule.values.cooldown != -1) ? currentModule.values.cooldown.ToString() + " s" : "-";
+			values[0].text = currentModule.moduleType.ToString();
+			values[1].text = currentModule.damage.ToString();
+			values[2].text = currentModule.maxCharges.ToString();
+			values[3].text = (currentModule.cooldown != -1) ? currentModule.cooldown.ToString() + " s" : "-";
 		}
 		else {
 			itemName.text = "";

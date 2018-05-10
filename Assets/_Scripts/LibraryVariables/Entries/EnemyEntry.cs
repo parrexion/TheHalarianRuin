@@ -35,7 +35,6 @@ public class EnemyEntry : ScrObjLibraryEntry {
 	public float attackRate = 1f;
 	public int attacks = 1;
 	public float meleeTimeStartup = 0.5f;
-	public float meleeTimeAnimation = 0.5f;
 
 	[Space(5)]
 
@@ -66,7 +65,6 @@ public class EnemyEntry : ScrObjLibraryEntry {
         attackRate = 1f;
         attacks = 1;
         meleeTimeStartup = 0.5f;
-        meleeTimeAnimation = 0.5f;
 
         // Reward
         exp = 0;
@@ -99,7 +97,6 @@ public class EnemyEntry : ScrObjLibraryEntry {
         attackRate = ee.attackRate;
         attacks = ee.attacks;
         meleeTimeStartup = ee.meleeTimeStartup;
-        meleeTimeAnimation = ee.meleeTimeAnimation;
 
         // Reward
         exp = ee.exp;

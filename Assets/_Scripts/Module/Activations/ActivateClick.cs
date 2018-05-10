@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Module/Activations/Click")]
 public class ActivateClick : ModuleActivation {
 
-    public override bool CanActivate(ModuleValues values, MouseInformation info) {
+    public override bool CanActivate(Module values, MouseInformation info) {
         
 		if (info.holding || info.holdDuration > values.holdMax)
 			return false;

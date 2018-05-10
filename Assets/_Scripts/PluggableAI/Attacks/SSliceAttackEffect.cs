@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "AiAttacks/Project/SRangeAttack")]
-public class SRangeAttackEffect : AttackEffect {
+[CreateAssetMenu(menuName = "AiAttacks/Project/SSliceAttack")]
+public class SSliceAttackEffect : AttackEffect {
 
 
 	public override void Attack(StateController controller, AttackScript attackScript){
@@ -17,25 +17,15 @@ public class SRangeAttackEffect : AttackEffect {
 		var shotTransform = Instantiate(attackScript.projectile) as Transform;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
 
-		shotTransform.position = controller.thisTransform.position;
-		MouseInformation info = new MouseInformation();
-		info.position1 = controller.thisTransform.position;
-		//Aim position
-		if (targeting) {
-			info.setPosition2(controller.sPlayer.position);
-		}
-		else {
-			Vector2 aimPosition = new Vector2(Constants.SOLDIER_START_X, Constants.SOLDIER_START_Y);
-			info.setPosition2(aimPosition);
-		}
+		shotTransform.position = controller.sPlayer.position;
+
 		if (setRotation) {
-			shotTransform.localRotation = Quaternion.AngleAxis(info.rotationInternal, Vector3.forward);
+			shotTransform.localRotation = Quaternion.AngleAxis(90, Vector3.forward);
 		}
 
 		projectile.isEnemy = true;
 		projectile.multiHit = attackScript.multihit;
 		projectile.SetDamage(attackScript.damage, 0, 1);
-		projectile.SetMovement(attackScript.speed, info.rotationInternal);
 
 		attackScript.bgui.effectList.Add(projectile);
 	}

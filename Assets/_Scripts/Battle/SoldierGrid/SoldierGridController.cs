@@ -225,7 +225,7 @@ public class SoldierGridController : MonoBehaviour {
 			Projectile projectile = shotTransform.GetComponent<Projectile>();
 			projectile.damage = dv.GetDamage();
 			projectile.multiHit = true;
-			shotTransform.position = dv.entityHit.position;
+			shotTransform.position = dv.entityHit.position + new Vector3(Random.Range(-0.25f,0.25f),Random.Range(-0.25f,0.25f),0);
 			balanceController.TriggerNormal();
 		}
 	}
@@ -255,8 +255,6 @@ public class SoldierGridController : MonoBehaviour {
 		var barrierTransform = Instantiate(barrier) as Transform;
 		barrierTransform.SetParent(transform.parent);
 		barrierTransform.localPosition = transform.localPosition;
-		Effect effect = barrierTransform.GetComponent<Effect>();
-		blockTime = effect.lifeTime;
 		currentBlockTime = 0;
 		hurtScript.canBeHurt = false;
 	}

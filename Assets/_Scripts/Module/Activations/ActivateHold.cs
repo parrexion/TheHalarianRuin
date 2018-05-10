@@ -7,7 +7,7 @@ public class ActivateHold : ModuleActivation {
 
 	public bool continuous = false;
 
-    public override bool CanActivate(ModuleValues values, MouseInformation info) {
+    public override bool CanActivate(Module values, MouseInformation info) {
         
 		if (info.holdDuration < values.holdMin || !info.holding)
 			return false;

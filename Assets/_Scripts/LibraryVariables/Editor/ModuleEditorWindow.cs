@@ -8,7 +8,6 @@ public class ModuleEditorWindow {
 
 	public ScrObjLibraryVariable moduleLibrary;
 	public Module moduleBase;
-	private ModuleValues kv;
 	private GUIContent[] currentEntryList;
 
 	// Selection screen
@@ -143,7 +142,6 @@ public class ModuleEditorWindow {
 	}
 
 	void DrawDisplayWindow() {
-		kv = moduleBase.values;
 		GUILayout.BeginArea(dispRect);
 		dispScrollPos = GUILayout.BeginScrollView(dispScrollPos, GUILayout.Width(dispRect.width), 
 							GUILayout.Height(dispRect.height-25));
@@ -182,10 +180,18 @@ EditorGUIUtility.labelWidth = 100;
 	void DrawUsagePart() {
 		//Usage values
 		GUILayout.Label("Usage Values", EditorStyles.boldLabel);
-		kv.startCooldownTime = EditorGUILayout.FloatField("Start Cooldown Delay", kv.startCooldownTime);
-		kv.maxCharges = EditorGUILayout.IntField("Max Charges", kv.maxCharges);
-		kv.delay = EditorGUILayout.FloatField("Usage Delay", kv.delay);
-		kv.cooldown = EditorGUILayout.FloatField("Recharge Cooldown", kv.cooldown);
+		moduleBase.startCooldownTime = EditorGUILayout.FloatField("Start Cooldown Delay", moduleBase.startCooldownTime);
+		moduleBase.maxCharges = EditorGUILayout.IntField("Max Charges", moduleBase.maxCharges);
+		moduleBase.delay = EditorGUILayout.FloatField("Usage Delay", moduleBase.delay);
+		moduleBase.cooldown = EditorGUILayout.FloatField("Recharge Cooldown", moduleBase.cooldown);
+
+		GUILayout.Space(10);
+
+		//Damage
+		GUILayout.Label("Damage", EditorStyles.boldLabel);
+		moduleBase.damage = EditorGUILayout.IntField("Base Damage", moduleBase.damage);
+		moduleBase.baseDamageScale = EditorGUILayout.FloatField("Additional Damage Scale", moduleBase.baseDamageScale);
+		moduleBase.multihit = EditorGUILayout.Toggle("Multi Hit", moduleBase.multihit);
 
 		GUILayout.Space(10);
 
@@ -197,10 +203,10 @@ EditorGUIUtility.labelWidth = 100;
 	void DrawActivationPart() {
 		//Activation values
 		GUILayout.Label("Activation values", EditorStyles.boldLabel);
-		kv.moduleType = (ModuleValues.ModuleType)EditorGUILayout.EnumPopup("Module Type",kv.moduleType);
-		kv.area = EditorGUILayout.FloatField("Activate Area", kv.area);
-		kv.holdMin = EditorGUILayout.FloatField("Minimum Hold Duration", kv.holdMin);
-		kv.holdMax = EditorGUILayout.FloatField("Maximum Hold Duration", kv.holdMax);
+		moduleBase.moduleType = (Module.ModuleType)EditorGUILayout.EnumPopup("Module Type",moduleBase.moduleType);
+		moduleBase.area = EditorGUILayout.FloatField("Activate Area", moduleBase.area);
+		moduleBase.holdMin = EditorGUILayout.FloatField("Minimum Hold Duration", moduleBase.holdMin);
+		moduleBase.holdMax = EditorGUILayout.FloatField("Maximum Hold Duration", moduleBase.holdMax);
 
 		GUILayout.Space(10);
 
@@ -223,22 +229,6 @@ EditorGUIUtility.labelWidth = 100;
 	}
 
 	void DrawEffectPart() {
-		//Damage
-		GUILayout.Label("Damage", EditorStyles.boldLabel);
-		kv.damage = EditorGUILayout.IntField("Base Damage", kv.damage);
-		kv.baseDamageScale = EditorGUILayout.FloatField("Additional Damage Scale", kv.baseDamageScale);
-		kv.multihit = EditorGUILayout.Toggle("Multi Hit", kv.multihit);
-
-		GUILayout.Space(10);
-
-		//Projectile
-		GUILayout.Label("Projectile", EditorStyles.boldLabel);
-		kv.projectile = (Transform)EditorGUILayout.ObjectField("Projectile Object", kv.projectile, typeof(Transform),false);
-		kv.projectileSpeed = EditorGUILayout.Vector2Field("Projectile Speed", kv.projectileSpeed);
-		kv.projectileLifetime = EditorGUILayout.FloatField("Projectile Lifetime", kv.projectileLifetime);
-
-		GUILayout.Space(10);
-
 		// Effect creators
 		GUILayout.Label("Module Effects", EditorStyles.boldLabel);
 		if (GUILayout.Button("Add Effect")) {
@@ -254,6 +244,19 @@ EditorGUIUtility.labelWidth = 100;
 			moduleBase.effects[i] = (ModuleEffect)EditorGUILayout.ObjectField(moduleBase.effects[i], typeof(ModuleEffect), false);
 			GUILayout.EndHorizontal();
 		}
+
+		GUILayout.Space(10);
+
+		//Projectile
+		GUILayout.Label("Projectile", EditorStyles.boldLabel);
+		moduleBase.projectile = (Transform)EditorGUILayout.ObjectField("Projectile Object", moduleBase.projectile, typeof(Transform),false);
+		moduleBase.projectileSpeed = EditorGUILayout.Vector2Field("Projectile Speed", moduleBase.projectileSpeed);
+		//Projectile steps
+		var serializedObject = new SerializedObject(moduleBase);
+        var property = serializedObject.FindProperty("effectSteps");
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(property, true);
+        serializedObject.ApplyModifiedProperties();
 	}
 
 	void SelectModule() {

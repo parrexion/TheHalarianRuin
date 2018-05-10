@@ -25,7 +25,6 @@ public class HurtablePlayerScript : HurtableBaseScript {
 	/// </summary>
 	/// <param name="otherCollider"></param>
 	void OnTriggerEnter2D(Collider2D otherCollider){
-
 		Projectile projectile = otherCollider.gameObject.GetComponent<Projectile>();
 		if (projectile == null) {
 			return;

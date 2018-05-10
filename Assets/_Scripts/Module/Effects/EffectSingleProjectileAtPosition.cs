@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Module/Effect/Projectile/SingleAtPosition")]
 public class EffectSingleProjectileAtPosition : ModuleEffect {
 
-    public override bool Use(ModuleValues values, int attackValue, MouseInformation info) {
+    public override bool Use(Module values, int attackValue, MouseInformation info) {
 		
 		var shotTransform = Instantiate(values.projectile) as Transform;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
@@ -22,7 +22,8 @@ public class EffectSingleProjectileAtPosition : ModuleEffect {
 			shotTransform.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);
 		}
 
-		projectile.lifeTime = values.projectileLifetime;
+		projectile.isEnemy = false;
+		projectile.steps = values.effectSteps;
 		projectile.multiHit = values.multihit;
 		projectile.SetDamage(values.damage, attackValue, values.baseDamageScale);
 		projectile.SetMovement(values.projectileSpeed, info.rotationInternal);

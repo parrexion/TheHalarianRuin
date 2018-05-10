@@ -20,11 +20,11 @@ public class ContainerModule : MonoBehaviour {
 			return;
 		}
 		
-		currentCharge = module.values.maxCharges;
-		currentCooldown = maxCooldown = module.values.cooldown;
-		if (module.values.startCooldownTime > 0){
+		currentCharge = module.maxCharges;
+		currentCooldown = maxCooldown = module.cooldown;
+		if (module.startCooldownTime > 0){
 			currentCharge = 0;
-			currentCooldown = maxCooldown = module.values.startCooldownTime;
+			currentCooldown = maxCooldown = module.startCooldownTime;
 		}
 
 		if (currentCharge == 0) {
@@ -41,7 +41,7 @@ public class ContainerModule : MonoBehaviour {
 			if (currentCooldown <= 0f) {
 				active = true;
 				currentCooldown = 0f;
-				currentCharge = maxCooldown = module.values.maxCharges;
+				currentCharge = maxCooldown = module.maxCharges;
 			}
 		}
 	}
@@ -63,10 +63,6 @@ public class ContainerModule : MonoBehaviour {
 		module.CreateEffects(info, attackValue);
 	}
 
-	public ModuleValues GetValues(){
-		return module.values;
-	}
-
 	/// <summary>
 	/// Reduces the amount of charges left in the module.
 	/// If cooldown is negative then it means there is no rechages.
@@ -74,14 +70,14 @@ public class ContainerModule : MonoBehaviour {
 	/// </summary>
 	/// <param name="amount"></param>
 	public void reduceCharge(float amount = 1) {
-		if (module.values.cooldown == 0)
+		if (module.cooldown == 0)
 			return;
 
 		currentCharge -= amount;
 
-		if (currentCharge <= 0 && module.values.cooldown > 0) {
+		if (currentCharge <= 0 && module.cooldown > 0) {
 			active = false;
-			currentCooldown = maxCooldown = module.values.cooldown;
+			currentCooldown = maxCooldown = module.cooldown;
 		}
 	}
 
@@ -90,7 +86,7 @@ public class ContainerModule : MonoBehaviour {
 			return 0;
 		}
 		if (active)
-			return (float)currentCharge/(float)module.values.maxCharges;
+			return (float)currentCharge/(float)module.maxCharges;
 		else
 			return (float)(maxCooldown-currentCooldown)/(float)maxCooldown;
 	}
