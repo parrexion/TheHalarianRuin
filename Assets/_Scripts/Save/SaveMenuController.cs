@@ -50,6 +50,7 @@ public class SaveMenuController : MonoBehaviour {
 	/// Shows the quit without saving popup.
 	/// </summary>
 	public void ShowQuitPopup() {
+		buttonClickedEvent.Invoke();
 		buttonScreen.SetActive(false);
 		saveLoadScreen.SetActive(false);
 		quitPopup.SetActive(true);

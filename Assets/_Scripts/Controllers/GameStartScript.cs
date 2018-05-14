@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -9,9 +10,13 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameStartScript : MonoBehaviour {
 
+	public AreaIntVariable currentArea;
+	public UnityEvent mapChangeEvent;
+
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log("Area:   " + currentArea.value);
 		StartCoroutine(LoadEverything());
 	}
 
@@ -30,7 +35,8 @@ public class GameStartScript : MonoBehaviour {
 
 		Debug.Log("Maincontroller now initiated");
 
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
+		currentArea.value = (int)Constants.SCENE_INDEXES.MAINMENU;
+		mapChangeEvent.Invoke();
 
 		yield return null;
 	}

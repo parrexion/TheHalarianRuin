@@ -17,6 +17,7 @@ public class AudioController : MonoBehaviour {
 		else {
 			DontDestroyOnLoad(gameObject);
 			instance = this;
+			Startup();
 		}
 	}
 #endregion
@@ -46,7 +47,7 @@ public class AudioController : MonoBehaviour {
 	private bool playingBkg = false;
 
 
-	public void OnEnable() {
+	void Startup() {
 		lastPlayedArea.value = -1;
 		UpdateVolume();
 	}
@@ -91,8 +92,9 @@ public class AudioController : MonoBehaviour {
 			playingBkg = true;
 		}
 		else {
-			if (!playingBkg)
+			if (!playingBkg) {
 				PauseBackgroundMusic();
+			}
 		}
 		lastPlayedArea.value = areaType;
 	}
@@ -112,6 +114,7 @@ public class AudioController : MonoBehaviour {
 			case Constants.SCENE_INDEXES.INVENTORY:
 				return inventoryMusic.value;
 			case Constants.SCENE_INDEXES.MAINMENU:
+			case Constants.SCENE_INDEXES.STARTUP:
 				return mainMenuMusic.value;
 			
 			default:

@@ -61,8 +61,6 @@ public class MainMenuScript : MonoBehaviour {
 		currentChapter.value = (int)startChapter;
 		currentRoomNumber.value = 0;
 
-		Debug.Log("adasdfas:   " + currentChapter.value);
-
 		dialogueEvent.Invoke();
 	}
 

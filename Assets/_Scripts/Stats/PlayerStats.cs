@@ -199,7 +199,7 @@ public class PlayerStats : MonoBehaviour {
 		//Overworld
 		currentChapterIndex.value = 0;
 		currentRoomNumber.value = 0;
-		currentArea.value = playerArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+		currentArea.value = playerArea.value = (int)Constants.SCENE_INDEXES.MAINMENU;
 		playerPosX.value = 0;
 		playerPosY.value = 0;
 
