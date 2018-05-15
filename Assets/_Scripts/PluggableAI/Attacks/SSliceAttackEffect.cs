@@ -17,7 +17,10 @@ public class SSliceAttackEffect : AttackEffect {
 		var shotTransform = Instantiate(attackScript.projectile) as Transform;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
 
-		shotTransform.position = controller.sPlayer.position;
+		if (targeting)
+			shotTransform.position = controller.sPlayer.position;
+		else
+			shotTransform.position = new Vector3(Constants.SOLDIER_START_X, Constants.SOLDIER_START_Y, 0);
 
 		if (setRotation) {
 			shotTransform.localRotation = Quaternion.AngleAxis(90, Vector3.forward);

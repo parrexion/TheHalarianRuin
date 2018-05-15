@@ -82,7 +82,7 @@ public class SaveController : MonoBehaviour {
 			if (loadedData == null) {
 				Debug.LogWarning("Could not open the file: " + savePath);
 				saveFiles = new SaveFiles(3);
-				Debug.Log("SAVE WS NULL");
+				Debug.Log("SAVE WAS NULL");
 				Save();
 			}
 			else {
@@ -99,6 +99,10 @@ public class SaveController : MonoBehaviour {
 	}
 
 #endregion
+
+	public void NewGameState() {
+		currentSaveFile.value = -1;
+	}
 
 	/// <summary>
 	/// Loads the given save file into the current game values.
@@ -168,7 +172,7 @@ public class SaveController : MonoBehaviour {
 public class SaveFiles {
 
 	public int saveCount;
-	public SettingsSaveClass[] settingsSave;
+	public SettingsSaveClass settingsSave;
 	public PlayerStatsSaveClass[] playerSave;
 	public TriggerSaveClass[] triggerSave;
 
@@ -182,11 +186,10 @@ public class SaveFiles {
 
 	void CreateInfo(int saveCount) {
 		this.saveCount = saveCount;
-		settingsSave = new SettingsSaveClass[saveCount];
+		settingsSave = new SettingsSaveClass();
 		playerSave = new PlayerStatsSaveClass[saveCount];
 		triggerSave = new TriggerSaveClass[saveCount];
 		for (int i = 0; i < saveCount; i++) {
-			settingsSave[i] = new SettingsSaveClass();
 			playerSave[i] = new PlayerStatsSaveClass();
 			triggerSave[i] = new TriggerSaveClass();
 		}

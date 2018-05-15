@@ -42,7 +42,7 @@ public class SettingsValues : MonoBehaviour {
 		settingsSave.musicVolume = musicVolume.value;
 		settingsSave.effectVolume = effectVolume.value;
 
-		SaveController.instance.saveFiles.settingsSave[currentSaveFileIndex.value] = settingsSave;
+		SaveController.instance.saveFiles.settingsSave = settingsSave;
 		saveCheckEvent.Invoke();
 		Debug.Log("SAVED");
 	}
@@ -51,7 +51,7 @@ public class SettingsValues : MonoBehaviour {
 	/// Loads the settings from the data loaded by the SaveController.
 	/// </summary>
 	public void LoadSettings() {
-		SettingsSaveClass settingsSave = SaveController.instance.saveFiles.settingsSave[currentSaveFileIndex.value];
+		SettingsSaveClass settingsSave = SaveController.instance.saveFiles.settingsSave;
 		
 		musicVolume.value = settingsSave.musicVolume;
 		effectVolume.value = settingsSave.effectVolume;

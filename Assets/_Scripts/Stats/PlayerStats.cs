@@ -233,6 +233,10 @@ public class PlayerStats : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	public void SaveStats() {
+		if (currentSaveFileIndex.value == -1) {
+			Debug.Log("New game. Nothing to save.");
+			return;
+		}
 		PlayerStatsSaveClass playerData = new PlayerStatsSaveClass();
 
 		//Overworld
@@ -270,6 +274,10 @@ public class PlayerStats : MonoBehaviour {
 	/// </summary>
 	/// <param name="saveData"></param>
 	public void LoadStats() {
+		if (currentSaveFileIndex.value == -1) {
+			Debug.Log("New game. Nothing to load.");
+			return;
+		}
 		PlayerStatsSaveClass saveData = SaveController.instance.saveFiles.playerSave[currentSaveFileIndex.value];
 
 		//Overworld

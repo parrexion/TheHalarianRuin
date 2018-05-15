@@ -115,6 +115,11 @@ public class TriggerController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public void SaveTriggers() {
+        if (currentSaveFileIndex.value == -1) {
+            Debug.Log("New game - No triggers to save");
+            return;
+        }
+
 		TriggerSaveClass triggerSave = new TriggerSaveClass();
 
         int size = triggerStates.Count;
@@ -139,6 +144,11 @@ public class TriggerController : MonoBehaviour {
     /// </summary>
     /// <param name="saveData"></param>
     public void LoadTriggers() {
+        if (currentSaveFileIndex.value == -1) {
+            Debug.Log("New game - No triggers to load");
+            return;
+        }
+        
         TriggerSaveClass triggerSave = SaveController.instance.saveFiles.triggerSave[currentSaveFileIndex.value];
 		
         triggerStates = new Dictionary<string, bool>();
