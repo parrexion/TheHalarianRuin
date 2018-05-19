@@ -6,6 +6,7 @@ public class SaveFileCurrentProgress : MonoBehaviour {
 
 	public Sprite emptyEquipSlot;
 	public SaveFileButton saveButton;
+	public AreaInfoValues areaInfo;
 	
 	[Header("Current Progress")]
 	public IntVariable currentChapter;
@@ -25,7 +26,8 @@ public class SaveFileCurrentProgress : MonoBehaviour {
 	/// </summary>
 	public void ShowCurrentProgress() {
 		saveButton.currentChapter.text = "Ch. " + currentChapter.value;
-		saveButton.currentArea.text = playerArea.AreaName();
+		AreaValue value = areaInfo.GetArea(playerArea.value, 0);
+		saveButton.currentArea.text = value.locationName;
 		saveButton.level.text = "Level " + playerLevel.value;
 		saveButton.playTime.text = "Time: " + Constants.PlayTimeFromInt(playTime.value, false);
 		for (int i = 0; i < Constants.GEAR_EQUIP_SPACE; i++) {
