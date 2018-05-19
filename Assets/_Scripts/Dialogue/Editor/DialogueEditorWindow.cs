@@ -490,6 +490,7 @@ public class DialogueEditorWindow : EditorWindow {
 		Frame frame = new Frame();
 		frame.CopyValues(dialogueValues.frames[selFrame]);
 		frame.dialogueText = "";
+		backupFrame.CopyValues(frame);
 		dialogueValues.InsertFrame(selFrame+1,frame);
 		selFrame++;
 
@@ -516,8 +517,6 @@ public class DialogueEditorWindow : EditorWindow {
 		int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 		selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 		talkName = dialogueValues.frames[selFrame].talkingName;
-
-		Debug.Log("AJSJASJASJ:  " + dialogueValues.nextLocation);
 	}
 
 	void ShaveoffAfter() {

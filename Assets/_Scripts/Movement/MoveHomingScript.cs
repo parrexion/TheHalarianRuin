@@ -39,7 +39,7 @@ public class MoveHomingScript : MonoBehaviour {
 	/// <summary>
 	/// Lets the player dash if not currently dashing.
 	/// </summary>
-	public void startDash() {
+	public void StartDash() {
 		if (dashing)
 			return;
 		dashing = true;

@@ -79,6 +79,7 @@ public class AndroidController : MonoBehaviour {
 		float deltaTime = (useSlowTime.value && !slowSoldierSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 
 		if (Input.GetMouseButtonDown(0)) {
+			mouseInfo.allowClick = true;
 			mouseInfo.holding = true;
 			mouseInfo.holdDuration = 0;
 			mouseInfo.position1 = screenCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -90,20 +91,28 @@ public class AndroidController : MonoBehaviour {
 		}
 	
 		if (Input.GetMouseButtonUp(0)) {
+			if (mouseInfo.allowClick)
+				mouseInfo.clicked = true;
 			mouseInfo.holding = false;
+			mouseInfo.holdDuration = 0;
 			mouseInfo.setPosition2(pos);
-			mouseInfo.clicked = true;
 		}
 
 		weapon.Activate(mouseInfo);
 
-		if (Input.GetMouseButtonDown(1) && !mouseInfo.holding) {
-			if (Input.GetKey(KeyCode.LeftShift)) {
-				moveToPosition.moveToPosition = pos;
-				moveToPosition.startDash();
-			}
-			else if (!moveToPosition.dashing)
-				moveToPosition.moveToPosition = pos;
+		if (Input.GetMouseButton(1) && !mouseInfo.holding) {
+				if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.LeftShift)) {
+					moveToPosition.moveToPosition = pos;
+					moveToPosition.StartDash();
+				}
+				else if (!moveToPosition.dashing)
+					moveToPosition.moveToPosition = pos;
+		}
+
+		// Stops the android if it's currently charging
+		if (mouseInfo.holdDuration > delayUntilCharging) {
+			moveToPosition.moveToPosition = transform.position;
+			mouseInfo.allowClick = false;
 		}
 
 		UpdateAnimation(deltaTime);

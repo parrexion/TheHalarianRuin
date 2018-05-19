@@ -74,8 +74,6 @@ public class DialogueLines : MonoBehaviour {
 			}
 		}
 		if (changed) {
-
-			Debug.Log("current: ");	
 			characterChanged.Invoke();
 		}
 

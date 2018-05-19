@@ -18,6 +18,7 @@ public class BattleController : MonoBehaviour {
 	public CharacterHealthGUI characterHealth;
 	public BattleClock battleClock;
 	public Text winText;
+	public Text escapeText;
 
 	[Header("Battle information")]
 	public ScrObjLibraryVariable battleLibrary;
@@ -153,14 +154,14 @@ public class BattleController : MonoBehaviour {
 		else {
 			backchange.tutorialAndroid.enabled = false;
 			backchange.cameraAndroid.enabled = true;
-			backchange.transformAndroid.sprite = be.backgroundRight;
+			backchange.backgroundAndroid.sprite = be.backgroundRight;
 		}
 		if (be.removeSide == BattleEntry.RemoveSide.LEFT)
 			backchange.tutorialSoldier.sprite = be.backgroundLeft;
 		else {
 			backchange.tutorialSoldier.enabled = false;
 			backchange.cameraSoldier.enabled = true;
-			backchange.transformSoldier.sprite = be.backgroundLeft;
+			backchange.backgroundSoldier.sprite = be.backgroundLeft;
 			backchange.gridController.enabled = true;
 		}
 		
@@ -224,7 +225,7 @@ public class BattleController : MonoBehaviour {
 	public void EscapeBattleButton(){
 		paused.value = true;
 		buttonClickedEvent.Invoke();
-		winText.text = "ESCAPED!";
+		escapeText.gameObject.SetActive(true);
 
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
 		values.wonBattleState.value = "escape";

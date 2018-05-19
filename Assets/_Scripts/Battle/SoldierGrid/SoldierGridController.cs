@@ -21,12 +21,14 @@ public class SoldierGridController : MonoBehaviour {
 	public float jumpForce = 10f;
 
 	[Header("Attack/Defend")]
+	public IntVariable soldierAttack;
 	public Transform starProjectile;
 	public Transform lightningProjectile;
 	public float AttackTimeLimit = 2.0f;
 	private float currentAttackTimeLimit;
 
 	public Transform barrier;
+	private float activeBlockTime;
 	private float blockTime;
 	private float currentBlockTime;
 
@@ -43,6 +45,7 @@ public class SoldierGridController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		animInfo = new AnimationInformation();
+		activeBlockTime = 0f;
 		blockTime = 0f;
 		gridUseable.value = true;
 	}
@@ -69,10 +72,11 @@ public class SoldierGridController : MonoBehaviour {
 
 		if (blockTime != 0) {
 			currentBlockTime += timeStep;
-			if (currentBlockTime >= blockTime) {
-				blockTime = 0;
+			if (currentBlockTime >= activeBlockTime) {
 				hurtScript.canBeHurt = true;
 			}
+			if (currentBlockTime >= blockTime)
+				blockTime = 0;
 			return;
 		}
 
@@ -223,7 +227,7 @@ public class SoldierGridController : MonoBehaviour {
 
 			Transform shotTransform = Instantiate(starProjectile) as Transform;
 			Projectile projectile = shotTransform.GetComponent<Projectile>();
-			projectile.damage = dv.GetDamage();
+			projectile.SetDamage(dv.GetDamage(),soldierAttack.value,1);
 			projectile.multiHit = true;
 			shotTransform.position = dv.entityHit.position + new Vector3(Random.Range(-0.25f,0.25f),Random.Range(-0.25f,0.25f),0);
 			balanceController.TriggerNormal();
@@ -245,16 +249,20 @@ public class SoldierGridController : MonoBehaviour {
 			Transform enemy = dv.entityHit;
 
 			var shotTransform = Instantiate(lightningProjectile) as Transform;
-			shotTransform.GetComponent<Projectile>().damage = dv.GetDamage();
+			shotTransform.GetComponent<Projectile>().SetDamage(dv.GetDamage(),soldierAttack.value,1);
 			shotTransform.position = enemy.position;
 		}
 	}
 
 	//Blocks all attacks for a moment
 	public void Block(){
+		if (!moveJumping.grounded)
+			return;
 		var barrierTransform = Instantiate(barrier) as Transform;
 		barrierTransform.SetParent(transform.parent);
 		barrierTransform.localPosition = transform.localPosition;
+		blockTime = 1.2f;
+		activeBlockTime = 0.75f;
 		currentBlockTime = 0;
 		hurtScript.canBeHurt = false;
 	}

@@ -9,8 +9,9 @@ public class MoveJumpingScript : MoveScript {
 	[Header("Movement values")]
 	public bool grounded = false;
 	public float groundLevel;
-	public float gravityIntensity = -10f;
-	public float fallMultiplier = 2.5f;
+	public float gravityIntensity = -30f;
+	public float riseMultiplier = 1.5f;
+	public float fallMultiplier = 3.5f;
 
 	Vector2 unscaledSpeed = new Vector2();
 	bool jumping = false;
@@ -36,7 +37,7 @@ public class MoveJumpingScript : MoveScript {
 		}
 		
 		if (unscaledSpeed.y >= 0) {
-			unscaledSpeed.y += gravityIntensity * getCurrentSlowAmount();
+			unscaledSpeed.y += riseMultiplier * gravityIntensity * getCurrentSlowAmount();
 		}
 		else {
 			unscaledSpeed.y += fallMultiplier * gravityIntensity * getCurrentSlowAmount();

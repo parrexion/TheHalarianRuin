@@ -79,7 +79,6 @@ public class DamageNumberDisplay : MonoBehaviour {
 	}
 
 	void OnGUI() {
-
 		if (paused.value)
 			return;
 

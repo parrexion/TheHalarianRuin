@@ -25,6 +25,7 @@ public class MouseInformation {
 	public float holdDuration;
 	public bool holding;
 	public bool clicked;
+	public bool allowClick;
 
     public Vector2 playerPosition;
     

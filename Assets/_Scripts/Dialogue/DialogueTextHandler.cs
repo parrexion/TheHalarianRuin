@@ -67,6 +67,7 @@ public class DialogueTextHandler : MonoBehaviour {
 		currentDialogue = "";
 
 		words = dialogueText.value.Split(' ');
+
 		StartCoroutine(TextUpdate());
 	}
 
@@ -78,6 +79,8 @@ public class DialogueTextHandler : MonoBehaviour {
 		float timeInSeconds = .02f;
 		textUpdating = true;
 		for (int j = 0; j < words.Length; j++) {
+			if (words[j].Length == 0)
+				continue;
 			if (IsSpecialWord(words[j]))
 				continue;
 			if (FitNextWord(words[j]+" "))
@@ -107,7 +110,6 @@ public class DialogueTextHandler : MonoBehaviour {
 	}
 
 	bool IsSpecialWord(string word) {
-
 		if (word[0] == '@') {
 			Debug.Log("Found an sfx!");
 			string sfxString = word.Substring(1);
