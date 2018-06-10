@@ -109,6 +109,7 @@ public class InventoryHandler : MonoBehaviour {
 	/// Equipped items use negative indexing starting at -1
 	/// </summary>
 	/// <param name="index"></param>
+	/// <param name="item"></param>
 	/// <returns></returns>
 	private void SetItem(int index, ItemEntry item) {
 
