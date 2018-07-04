@@ -39,11 +39,24 @@ public class SlotHandler : MonoBehaviour, IDropHandler {
 	/// <param name="eventData"></param>
 	public void OnDrop(PointerEventData eventData) {
 		if (DragHandler.itemBeingDragged != null) {
-			SlotID start_id = DragHandler.itemBeingDragged.GetComponent<DragHandler>().start_id;
-			if (slot.slotID.type == SlotID.SlotType.DESTROY)
+			SlotID startID = DragHandler.itemBeingDragged.GetComponent<DragHandler>().start_id;
+			Debug.Log("Dropped in slottype:  " + slot.slotID.type);
+			if (slot.slotID.type == SlotType.DESTROY) {
 				selectedItem.reference = null;
-
-			invContainer.Swap(start_id,slot.slotID);
+				invContainer.DestroyItem(startID);
+			}
+			else if (slot.slotID.type == SlotType.SHOP) {
+				selectedItem.reference = null;
+			}
+			else if (slot.slotID.type == SlotType.SELL) {
+				invContainer.SellItem(startID);
+			}
+			else if (startID.type == SlotType.SHOP) {
+				invContainer.BuyItem(startID, slot.slotID);
+			}
+			else {
+				invContainer.Swap(startID,slot.slotID);
+			}
 		}
 	}
 

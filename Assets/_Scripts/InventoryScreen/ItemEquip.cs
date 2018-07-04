@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EquipType { WILD, WEAPON, HEAD, BODY, VISION }
+
 [CreateAssetMenu (menuName = "LibraryEntries/ItemEquip")]
 public class ItemEquip : ItemEntry {
 
 	public int healthModifier;
-
-	public int attackModifier;      // Increase/decrease in damage
-	public int defenseModifier;		// Increase/decrease in defense
-
+	public int attackModifier;
+	public int defenseModifier;
 	public int sAttackModifier;
 	public int sDefenseModifier;
 
@@ -37,6 +37,8 @@ public class ItemEquip : ItemEntry {
 	public override void CopyValues(ScrObjLibraryEntry other) {
 		base.CopyValues(other);
 		ItemEquip item = (ItemEquip)other;
+		equipType = item.equipType;
+
 		healthModifier = item.healthModifier;
 		attackModifier = item.attackModifier;
 		defenseModifier = item.defenseModifier;

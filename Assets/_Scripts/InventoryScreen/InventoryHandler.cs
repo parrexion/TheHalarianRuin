@@ -8,10 +8,12 @@ using UnityEngine.Events;
 /// </summary>
 public class InventoryHandler : MonoBehaviour {
 
-	public UnityEvent itemsChanged;
-
 	public InvListVariable equippedItems;
 	public InvListVariable bagItems;
+	public InvListVariable shopItems;
+	public IntVariable currentMoney;
+
+	public UnityEvent itemsChanged;
 
 
 	/// <summary>
@@ -53,23 +55,67 @@ public class InventoryHandler : MonoBehaviour {
 	/// <summary>
 	/// Swaps the content of two inventory slots with the given ids.
 	/// </summary>
-	/// <param name="slotA"></param>
-	/// <param name="slotB"></param>
-	public void Swap(SlotID slotA, SlotID slotB) {
+	/// <param name="start"></param>
+	/// <param name="drop"></param>
+	public void Swap(SlotID start, SlotID drop) {
+		if (start.type != SlotType.EQUIP && start.type != SlotType.BAG)
+			return;
 
-		int posA = slotA.id;
-		int posB = slotB.id;
-
-		if (slotA.type == SlotID.SlotType.DESTROY)
-			Remove(posB);
-		else if (slotB.type == SlotID.SlotType.DESTROY)
-			Remove(posA);
 
 		// Debug.Log(string.Format("Swappy: {0} <> {1}", posA, posB));
-		ItemEntry temp = GetItem(posA);
-		SetItem(posA,GetItem(posB));
-		SetItem(posB,temp);
+		ItemEntry temp = GetItem(start);
+		if (!drop.CanUse(temp))
+			return;
 
+		SetItem(start,GetItem(drop));
+		SetItem(drop,temp);
+
+		itemsChanged.Invoke();
+	}
+
+	/// <summary>
+	/// Destroys the dropped item if applicable.
+	/// </summary>
+	/// <param name="start"></param>//
+	public void DestroyItem(SlotID start) {
+		if (start.type != SlotType.EQUIP && start.type != SlotType.BAG)
+			return;
+
+		Remove(start);
+		Debug.Log("Destroyed the item");
+		itemsChanged.Invoke();
+	}
+
+	/// <summary>
+	/// Buys the dropped item if applicable.
+	/// </summary>
+	/// <param name="start"></param>
+	public void BuyItem(SlotID start, SlotID dropped) {
+		if (dropped.type != SlotType.EQUIP && dropped.type != SlotType.BAG)
+			return;
+		
+		ItemEntry item = GetItem(start);
+		if (currentMoney.value >= item.cost && !GetItem(dropped) && dropped.CanUse(item)) {
+			currentMoney.value -= item.cost;
+			Debug.Log("Bought the item");
+			SetItem(dropped,item);
+			// AddBag(item);
+			itemsChanged.Invoke();
+		}
+	}
+
+	/// <summary>
+	/// Sells the dropped item if applicable.
+	/// </summary>
+	/// <param name="start"></param>
+	public void SellItem(SlotID start) {
+		if (start.type != SlotType.EQUIP && start.type != SlotType.BAG)
+			return;
+		
+		ItemEntry item = GetItem(start);
+		currentMoney.value += item.cost / 2;
+		Remove(start);
+		Debug.Log("Sold the item");
 		itemsChanged.Invoke();
 	}
 
@@ -78,50 +124,58 @@ public class InventoryHandler : MonoBehaviour {
 	/// Equipped items use negative indexing starting at -1
 	/// </summary>
 	/// <param name="index"></param>
-	private void Remove(int index){
-		if (index < 0) {
-			index = -(index+1);
-			equippedItems.values[index] = null;
+	private void Remove(SlotID index){
+		if (index.type == SlotType.EQUIP) {
+			equippedItems.values[index.id] = null;
+		}
+		else if (index.type == SlotType.SHOP) {
+			shopItems.values[index.id] = null;
 		}
 		else {
-			bagItems.values[index] = null;
+			bagItems.values[index.id] = null;
 		}
 	}
 
 	/// <summary>
 	/// Retrieves the item at the current index.
-	/// Equipped items use negative indexing starting at -1
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
-	private ItemEntry GetItem(int index) {
-		if (index < 0) {
-			index = -(index+1);
-			return (index < equippedItems.values.Length) ? equippedItems.values[index] : null;
+	private ItemEntry GetItem(SlotID index) {
+		if (index.type == SlotType.EQUIP) {
+			return (index.id < equippedItems.values.Length) ? equippedItems.values[index.id] : null;
 		}
-		else {
-			return (index < bagItems.values.Length) ? bagItems.values[index] : null;
+		else if (index.type == SlotType.SHOP) {
+			return (index.id < shopItems.values.Length) ? shopItems.values[index.id] : null;
 		}
+		else if (index.type == SlotType.BAG) {
+			return (index.id < bagItems.values.Length) ? bagItems.values[index.id] : null;
+		}
+
+		return null;
 	}
 
 	/// <summary>
 	/// Sets the given item in the slot at the index.
-	/// Equipped items use negative indexing starting at -1
 	/// </summary>
 	/// <param name="index"></param>
 	/// <param name="item"></param>
 	/// <returns></returns>
-	private void SetItem(int index, ItemEntry item) {
+	private void SetItem(SlotID index, ItemEntry item) {
 
-		if (index < 0) {
-			index = -(index+1);
-			if (index < equippedItems.values.Length) {
-				equippedItems.values[index] = item;
+		if (index.type == SlotType.EQUIP) {
+			if (index.id < equippedItems.values.Length) {
+				equippedItems.values[index.id] = item;
 			}
 		}
-		else {
-			if (index < bagItems.values.Length) {
-				bagItems.values[index] = item;
+		else if (index.type == SlotType.SHOP) {
+			if (index.id < shopItems.values.Length) {
+				shopItems.values[index.id] = item;
+			}
+		}
+		else if (index.type == SlotType.BAG) {
+			if (index.id < bagItems.values.Length) {
+				bagItems.values[index.id] = item;
 			}
 		}
 	}

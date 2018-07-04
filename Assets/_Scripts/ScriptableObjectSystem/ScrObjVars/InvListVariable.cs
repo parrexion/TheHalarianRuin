@@ -29,7 +29,7 @@ public class InvListVariable : ScriptableObject {
 
 	/// <summary>
 	/// Returns the module representation with activations, projectiles and values etc...
-	/// Takes the index for the position in the module list.
+	/// Takes the index for the position in the item list.
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
@@ -44,18 +44,34 @@ public class InvListVariable : ScriptableObject {
 	
 	/// <summary>
 	/// Returns the module representation with activations, projectiles and values etc...
-	/// Searches on the name of the module.
+	/// Searches on the uuid of the item.
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
 	public ItemEntry GetItemByUuid(string uuid) {
 		for (int i = 0; i < values.Length; i++) {
-			if (values[i].uuid == uuid){
+			if (values[i] != null && values[i].uuid == uuid){
 				return values[i];
 			}
 		}
 
 		Debug.Log("Failed to find itemEntry with uuid: " + uuid);
+		return null;
+	}
+	
+	/// <summary>
+	/// Returns the module representation with activations, projectiles and values etc...
+	/// Searches on the type of the item.
+	/// </summary>
+	/// <param name="index"></param>
+	/// <returns></returns>
+	public ItemEntry GetItemByType(EquipType type) {
+		for (int i = 0; i < values.Length; i++) {
+			if (values[i] != null && values[i].equipType == type){
+				return values[i];
+			}
+		}
+		
 		return null;
 	}
 

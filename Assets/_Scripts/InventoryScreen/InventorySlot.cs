@@ -4,11 +4,22 @@ using UnityEngine.UI;
 /// <summary>
 /// ID used to identify which inventory the inventory slot belongs to.
 /// </summary>
-public class SlotID {
-	public enum SlotType { MODULE, EQUIP, DESTROY }
+public enum SlotType { EQUIP, BAG, DESTROY, SHOP, SELL }
 
+/// <summary>
+/// ID class for identifying each slot in the inventories.
+/// </summary>
+public class SlotID {
 	public SlotType type;
 	public int id;
+	public EquipType equipType;
+
+	public bool CanUse(ItemEntry item) {
+		return (!item || equipType == EquipType.WILD || equipType == item.equipType);
+	}
+	public static bool SameType(EquipType item, EquipType item2) {
+		return (item == EquipType.WILD || item2 == EquipType.WILD || item == item2);
+	}
 }
 
 /// <summary>
@@ -27,7 +38,7 @@ public class InventorySlot : MonoBehaviour {
 	/// </summary>
 	/// <param name="type"></param>
 	/// <param name="id"></param>
-	public void SetID(SlotID.SlotType type, int id) {
+	public void SetID(SlotType type, int id) {
 		slotID = new SlotID();
 		slotID.type = type;
 		slotID.id = id;

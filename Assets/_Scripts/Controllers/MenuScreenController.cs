@@ -9,7 +9,7 @@ public class MenuScreenController : MonoBehaviour {
 	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
 
 	public IntVariable currentInventoryScreen;
-	bool menuLock = true;
+	public BoolVariable menuLock;
 
 	[Header("Screens")]
 	public GameObject statusScreen;
@@ -59,7 +59,7 @@ public class MenuScreenController : MonoBehaviour {
 	/// </summary>
 	/// <param name="screenIndex"></param>
 	public void SetCurrentScreen(int screenIndex) {
-		if (menuLock)
+		if (menuLock.value)
 			return;
 
 		buttonClickedEvent.Invoke();
@@ -97,10 +97,10 @@ public class MenuScreenController : MonoBehaviour {
 	/// Returns the player to the game again.
 	/// </summary>
 	public void ReturnToGame() {
-		if (menuLock)
+		if (menuLock.value)
 			return;
 		
-		menuLock = true;
+		menuLock.value = true;
 		currentArea.value = playerArea.value;
 		buttonClickedEvent.Invoke();
 		changeMapEvent.Invoke();
@@ -111,8 +111,9 @@ public class MenuScreenController : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator WaitForFadeIn() {
+		menuLock.value = true;
 		yield return new WaitForSeconds(fadeSpeed.value);
-		menuLock = false;
+		menuLock.value = false;
 		yield break;
 	}
 }

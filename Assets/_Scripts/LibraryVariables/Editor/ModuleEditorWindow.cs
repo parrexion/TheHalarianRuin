@@ -197,7 +197,7 @@ EditorGUIUtility.labelWidth = 100;
 
 		//Other values
 		GUILayout.Label("Other Values", EditorStyles.boldLabel);
-		moduleBase.moneyValue = EditorGUILayout.IntField("Money Value", moduleBase.moneyValue);
+		moduleBase.cost = EditorGUILayout.IntField("Money Value", moduleBase.cost);
 	}
 
 	void DrawActivationPart() {

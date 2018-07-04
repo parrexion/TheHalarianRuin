@@ -11,13 +11,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public InventorySlot slot;
 	public SlotID start_id;
 	public ItemEntryReference selectedItem;
+	public Transform invParent;
 
 	private Image image;
-	private Transform invParent;
 
 	void Start() {
 		image = GetComponent<Image>();
-		invParent = transform.parent.transform.parent.transform.parent.transform;
 	}
 
 	#region IBeginDragHandler implementation
@@ -61,7 +60,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	#region IPointerDownHandler implementation
 
 	public void OnPointerDown(PointerEventData eventData) {
-		if (slot.slotID.type != SlotID.SlotType.DESTROY)
+		if (slot.slotID.type != SlotType.DESTROY && slot.slotID.type != SlotType.SELL)
 			selectedItem.reference = slot.item;
 	}
 

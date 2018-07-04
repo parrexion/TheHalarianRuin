@@ -157,7 +157,8 @@ public class ItemEditorWindow {
 
 		GUILayout.Space(5);
 
-		itemValues.moneyValue = EditorGUILayout.IntField("Money Value", itemValues.moneyValue);
+		itemValues.equipType = (EquipType)EditorGUILayout.EnumPopup("Item Type",itemValues.equipType);
+		itemValues.cost = EditorGUILayout.IntField("Money Value", itemValues.cost);
 
 		GUILayout.Space(20);
 

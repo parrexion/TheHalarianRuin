@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ItemEntry : ScrObjLibraryEntry {
 
-	public enum ItemType {MODULE,EQUIP,MISC,DESTROY,SHOP}
-	public ItemType item_type = ItemType.EQUIP;
+	public EquipType equipType;
 	public Sprite icon = null;
 	public Color tintColor = Color.white;
-	public int moneyValue = 0;
+	public int cost = 0;
 
 
 	/// <summary>
@@ -17,10 +16,10 @@ public class ItemEntry : ScrObjLibraryEntry {
 	public override void ResetValues() {
 		base.ResetValues();
 
-		item_type = ItemType.EQUIP;
+		equipType = EquipType.WILD;
 		icon = null;
 		tintColor = Color.white;
-		moneyValue = 0;
+		cost = 0;
 	}
 
 	/// <summary>
@@ -31,9 +30,9 @@ public class ItemEntry : ScrObjLibraryEntry {
 		base.CopyValues(other);
 		ItemEntry item = (ItemEntry)other;
 
-		item_type = item.item_type;
+		equipType = item.equipType;
 		icon = item.icon;
 		tintColor = item.tintColor;
-		moneyValue = item.moneyValue;
+		cost = item.cost;
 	}
 }

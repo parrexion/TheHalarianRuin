@@ -11,7 +11,7 @@ public class SelectedItemUI : MonoBehaviour {
 	public Transform[] statsTextList;
 	public Transform[] modifierTextList;
 
-	//Player stats
+	[Header("Player stats")]
 	public IntVariable playerHealth;
 	public IntVariable playerAttack;
 	public IntVariable playerDefense;
@@ -21,12 +21,13 @@ public class SelectedItemUI : MonoBehaviour {
 	private Text[] names;
 	private Text[] values;
 
-	//Selected item
+	[Header("Selected item")]
 	public ItemEntryReference selectedItem;
-	private ItemEquip currentItem;
 	public Text itemName;
-	private Text[] changes;
 	public Image itemIcon;
+	
+	private ItemEquip currentItem;
+	private Text[] changes;
 	private Text[] modifiers;
 	private int effectSize;
 
