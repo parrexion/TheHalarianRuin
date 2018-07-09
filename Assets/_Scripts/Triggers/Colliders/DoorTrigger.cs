@@ -5,20 +5,27 @@ using UnityEngine.Events;
 
 public class DoorTrigger : OWTrigger {
 
+	[Header("Door Sign")]
 	public SpriteRenderer arrowSprite;
 	public DoorArrowTrigger arrow;
+
+	[Header("Next Area")]
 	public Constants.OverworldArea area;
 	public Vector2 position;
 	public IntVariable playerArea;
 	public FloatVariable posx, posy;
 
 
+	private void Start() {
+		arrowSprite.enabled = false;
+	}
+
 	public override void Trigger() {
 		arrow.active = true;
 		arrowSprite.enabled = true;
 	}
 
-	void OnTriggerExit2D(Collider2D otherCollider){
+	private void OnTriggerExit2D(Collider2D otherCollider){
 		if (!active)
 			return;
 

@@ -5,11 +5,41 @@ using UnityEngine.Events;
 
 public class ShopTrigger : OWTrigger {
 
-	public string shopName;
+	[Header("Shop Lists")]
+	public InvListVariable currentShopList;
+	public InvListVariable shopContentList;
 
+	[Header("Shop Sign")]
+	public SpriteRenderer signSprite;
+	public ShopSignTrigger shopSignTrigger;
+
+
+	private void Start() {
+		signSprite.enabled = false;
+	}
 
 	public override void Trigger() {
-		Debug.Log("Visiting shop: "+ shopName);
+		shopSignTrigger.active = true;
+		signSprite.enabled = true;
+	}
+
+	private void OnTriggerExit2D(Collider2D otherCollider){
+		if (!active)
+			return;
+
+		shopSignTrigger.active = false;
+		signSprite.enabled = false;
+	}
+
+	public void EnterShop() {
+		Debug.Log("Entering shop...");
+		paused.value = true;
+		currentArea.value = (int)Constants.SCENE_INDEXES.SHOP;
+		currentShopList.values = new ItemEntry[shopContentList.values.Length];
+		for (int i = 0; i < currentShopList.values.Length; i++) {
+			currentShopList.values[i] = shopContentList.values[i];
+		}
+
 		startEvent.Invoke();
 	}
 }

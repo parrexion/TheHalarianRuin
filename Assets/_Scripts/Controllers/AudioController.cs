@@ -112,6 +112,7 @@ public class AudioController : MonoBehaviour {
 			case Constants.SCENE_INDEXES.DIALOGUE:
 				return dialogueMusic.value;
 			case Constants.SCENE_INDEXES.INVENTORY:
+			case Constants.SCENE_INDEXES.SHOP:
 				return inventoryMusic.value;
 			case Constants.SCENE_INDEXES.MAINMENU:
 			case Constants.SCENE_INDEXES.STARTUP:

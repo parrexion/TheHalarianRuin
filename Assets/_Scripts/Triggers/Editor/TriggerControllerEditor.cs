@@ -26,6 +26,7 @@ public class TriggerControllerEditor : Editor {
         Constants.SCENE_INDEXES cArea = (Constants.SCENE_INDEXES)controller.currentScene.value;
         cArea = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Current Area", (Constants.SCENE_INDEXES)cArea);
         controller.currentScene.value = (int)cArea;
+        controller.currentPlayerArea.value = controller.currentScene.value;
         
         Constants.RoomNumber cRoom = (Constants.RoomNumber)controller.currentRoomNumber.value;
         cRoom = (Constants.RoomNumber)EditorGUILayout.EnumPopup("Room Number", (Constants.RoomNumber)cRoom);

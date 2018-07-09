@@ -34,6 +34,7 @@ public class MainControllerScript : MonoBehaviour {
 	public AreaInfoValues areaInfo;
 	public IntVariable currentScene;
 	public IntVariable currentRoom;
+	public InvListVariable currentShopList;
 
 	[Header("Fade Out")]
 	public bool useFadeOut = true;

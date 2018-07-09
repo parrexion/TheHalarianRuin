@@ -27,6 +27,7 @@ public class TriggerController : MonoBehaviour {
     public IntVariable currentChapter;
     public IntVariable currentScene;
     public IntVariable currentRoomNumber;
+    public IntVariable currentPlayerArea;
 
     public UnityEvent saveCheckEvent;
     public UnityEvent loadCheckEvent;

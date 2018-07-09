@@ -6,18 +6,20 @@ using System.Collections.Generic;
 
 public class TriggerSpawnerEditorWindow : EditorWindow {
 
+	[Header("Trigger Prefabs")]
 	public GameObject battleTrigger;
 	public GameObject blockTrigger;
 	public GameObject changeMapTrigger;
 	public GameObject dialogueTrigger;
 	public GameObject doorTrigger;
 	public GameObject talkTrigger;
+	public GameObject shopTrigger;
 
-	Transform triggerParent;
-	GUIContent[] buttonList;
+	private Transform triggerParent;
+	private GUIContent[] buttonList;
 
 	//Selections
-	string triggerToSpawn = "";
+	private string triggerToSpawn = "";
 
 
 	[MenuItem("Window/TriggerSpawner")]
@@ -72,7 +74,7 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 
 		guic = new GUIContent();
 		guic.text = "Shop";
-		guic.image = GenerateImage(Color.grey);
+		guic.image = GenerateImage(Color.green);
 		contentList.Add(guic);
 
 		guic = new GUIContent();
@@ -110,9 +112,9 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 			triggerToSpawn = "door";
 		}
 
-		// if (GUILayout.Button(buttonList[4])) {
-		// 	triggerToSpawn = "shop";
-		// }
+		if (GUILayout.Button(buttonList[6])) {
+			triggerToSpawn = "shop";
+		}
 
 		// if (GUILayout.Button(buttonList[5])) {
 		// 	triggerToSpawn = "unlock";
@@ -177,6 +179,9 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 				break;
 			case "door":
 				trigger = Instantiate(doorTrigger);
+				break;
+			case "shop":
+				trigger = Instantiate(shopTrigger);
 				break;
 			case "talk":
 				trigger = Instantiate(talkTrigger);

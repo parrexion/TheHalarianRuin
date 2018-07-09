@@ -6,6 +6,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
   - battleTrigger: {fileID: 1928346730299862, guid: 0baf105372f03714193f9ba1748f7580,
       type: 2}
   - blockTrigger: {fileID: 1504663358518356, guid: ff59dda9b80e49e4697f4c5bece854c2,
@@ -17,6 +18,8 @@ MonoImporter:
   - doorTrigger: {fileID: 1777509266080606, guid: e5f9987a220f9494d8776d0ece025952,
       type: 2}
   - talkTrigger: {fileID: 1050244903242864, guid: c76a22f58a520ef4dacd44ead7fc5e4a,
+      type: 2}
+  - shopTrigger: {fileID: 1777509266080606, guid: 785812a34be32d64e90d4902d78f0b69,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
