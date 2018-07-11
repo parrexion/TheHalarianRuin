@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class ChangeMapTrigger : OWTrigger {
 
 	public Constants.OverworldArea area;
-	public Constants.RoomNumber roomNumber;
+	public Constants.ROOMNUMBER roomNumber;
 	public Vector2 position;
 	public IntVariable playerArea;
 	public IntVariable playerRoomNumber;

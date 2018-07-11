@@ -28,8 +28,8 @@ public class TriggerControllerEditor : Editor {
         controller.currentScene.value = (int)cArea;
         controller.currentPlayerArea.value = controller.currentScene.value;
         
-        Constants.RoomNumber cRoom = (Constants.RoomNumber)controller.currentRoomNumber.value;
-        cRoom = (Constants.RoomNumber)EditorGUILayout.EnumPopup("Room Number", (Constants.RoomNumber)cRoom);
+        Constants.ROOMNUMBER cRoom = (Constants.ROOMNUMBER)controller.currentRoomNumber.value;
+        cRoom = (Constants.ROOMNUMBER)EditorGUILayout.EnumPopup("Room Number", (Constants.ROOMNUMBER)cRoom);
         controller.currentRoomNumber.value = (int)cRoom;
 
         GUILayout.Space(20);

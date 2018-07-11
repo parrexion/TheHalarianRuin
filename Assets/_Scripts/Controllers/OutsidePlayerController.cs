@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class OutsidePlayerController : MonoBehaviour {
 
 	public BoolVariable paused;
+	public BoolVariable forcePosition;
 	private MoveHomingNoLimit moveToPosition;
 	public FloatVariable posx, posy;
 	public FloatVariable speedHack;
@@ -25,7 +26,16 @@ public class OutsidePlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
-		SetPlayerPosition();
+
+		if (forcePosition.value) {
+			forcePosition.value = false;
+			posx.value = transform.position.x;
+			posy.value = transform.position.y;
+		}
+
+		transform.position = new Vector3(posx.value,posy.value,0);
+		moveToPosition.moveToPosition = transform.position;
+
 #if UNITY_EDITOR
 		moveToPosition.speed *= speedHack.value;
 #endif
@@ -56,10 +66,6 @@ public class OutsidePlayerController : MonoBehaviour {
 		GetComponent<Animator>().runtimeAnimatorController = (playingAsAndroid.value) ? androidAnimator : soldierAnimator;
 	}
 
-	void SetPlayerPosition() {
-		transform.position = new Vector3(posx.value,posy.value,0);
-		moveToPosition.moveToPosition = transform.position;
-	}
 
 	/// <summary>
 	/// Updates the current information from the controller's state and sends it to the animator.

@@ -16,9 +16,15 @@ public class InventoryUI : MonoBehaviour {
 	public InvListVariable invItemEquip;
 	public InvListVariable invItemBag;
 
+	[Header("Scrolling")]
+	public GameObject scrollUpButton;
+	public GameObject scrollDownButton;
+	public IntVariable inventoryOffset;
+
 
 	// Use this for initialization
 	void Start () {
+		inventoryOffset.value = 0;	
 
 		//Slot initialization
 		equipSlots = equipItemsParent.GetComponentsInChildren<InventorySlot>();
@@ -57,14 +63,18 @@ public class InventoryUI : MonoBehaviour {
 			}
 		}
 
+		int currentPos = inventoryOffset.value;
 		for (int i = 0; i < bagSlots.Length; i++) {
-			if (invItemBag.values[i] != null) {
-				bagSlots[i].AddItem(invItemBag.values[i]);
+			if (invItemBag.values[currentPos] != null) {
+				bagSlots[i].AddItem(invItemBag.values[currentPos]);
 			}
 			else {
 				bagSlots[i].ClearSlot();
 			}
+			currentPos++;
 		}
-	}
 
+		scrollUpButton.SetActive(inventoryOffset.value != 0);
+		scrollDownButton.SetActive(inventoryOffset.value != Constants.GEAR_BAG_SPACE - bagSlots.Length);
+	}
 }

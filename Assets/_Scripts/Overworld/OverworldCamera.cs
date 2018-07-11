@@ -14,7 +14,7 @@ public class OverworldCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SetCameraInfo(constants.GetValues((Constants.OverworldArea)playerArea.value, (Constants.RoomNumber)playerRoomNumber.value));
+		SetCameraInfo(constants.GetValues((Constants.OverworldArea)playerArea.value, (Constants.ROOMNUMBER)playerRoomNumber.value));
 	}
 
 	void SetCameraInfo(CameraValues values) {

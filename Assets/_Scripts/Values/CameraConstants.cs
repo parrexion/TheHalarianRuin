@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraValues {
 
 	public Constants.OverworldArea area;
-	public Constants.RoomNumber roomNumber;
+	public Constants.ROOMNUMBER roomNumber;
 	public bool stationary;
 	public float size;
 	public Vector2 position;
@@ -19,7 +19,7 @@ public class CameraConstants : MonoBehaviour {
 	public CameraValues[] values;
 
 
-	public CameraValues GetValues(Constants.OverworldArea area, Constants.RoomNumber number) {
+	public CameraValues GetValues(Constants.OverworldArea area, Constants.ROOMNUMBER number) {
 		for (int i = 0; i < values.Length; i++) {
 			if (values[i].area == area && values[i].roomNumber == number)
 				return values[i];

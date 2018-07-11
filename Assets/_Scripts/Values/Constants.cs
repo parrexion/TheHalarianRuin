@@ -41,9 +41,13 @@ public static class Constants {
 
 	//Inventory
 	public const int GEAR_EQUIP_SPACE = 4;
-	public const int GEAR_BAG_SPACE = 20;
 	public const int MODULE_EQUIP_SPACE = 4;
+	// public const int MODULE_EQUIP_VISIBLE = 4;
+	// public const int MODULE_EQUIP_ROWLENGTH = 4;
+	public const int GEAR_BAG_SPACE = 20;
 	public const int MODULE_BAG_SPACE = 20;
+	// public const int MODULE_BAG_VISIBLE = 10;
+	// public const int MODULE_BAG_ROWLENGTH = 5;
 
 	//Player stats
 	public const int PLAYER_HEALTH_BASE = 50;
@@ -71,7 +75,7 @@ public static class Constants {
 		TEST_SCENE = 50
 	}
 
-	public enum RoomNumber {
+	public enum ROOMNUMBER {
 		ROOM_A = 0,
 		ROOM_B = 1,
 		ROOM_C = 2,

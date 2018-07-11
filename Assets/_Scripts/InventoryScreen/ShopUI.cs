@@ -26,6 +26,11 @@ public class ShopUI : MonoBehaviour {
 	public IntVariable totalMoney;
 	public Text moneyText;
 
+	[Header("Scrolling")]
+	public GameObject scrollUpButton;
+	public GameObject scrollDownButton;
+	public IntVariable inventoryOffset;
+
 
 	// Use this for initialization
 	void Start () {
@@ -76,13 +81,15 @@ public class ShopUI : MonoBehaviour {
 			}
 		}
 
+		int currentPos = inventoryOffset.value;
 		for (int i = 0; i < bagSlots.Length; i++) {
-			if (invItemBag.values[i] != null) {
-				bagSlots[i].AddItem(invItemBag.values[i]);
+			if (invItemBag.values[currentPos] != null) {
+				bagSlots[i].AddItem(invItemBag.values[currentPos]);
 			}
 			else {
 				bagSlots[i].ClearSlot();
 			}
+			currentPos++;
 		}
 
 		int pos = 0;
@@ -99,6 +106,9 @@ public class ShopUI : MonoBehaviour {
 			shopSlots[i].GetComponentInChildren<Text>().text = "";
 			shopSlots[i].ClearSlot();
 		}
+
+		scrollUpButton.SetActive(inventoryOffset.value != 0);
+		scrollDownButton.SetActive(inventoryOffset.value != Constants.GEAR_BAG_SPACE - bagSlots.Length);
 	}
 
 	public void ShowShopCategory(int category) {

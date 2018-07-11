@@ -22,8 +22,9 @@ public class AreaInfoValues : ScriptableObject {
 [System.Serializable]
 public class AreaValue {
 	public int id;
-	public int roomID = -1;
-	public int sceneID;
+	public string path;
 	public string locationName;
+	public int sceneID;
+	public int roomID = -1;
 	public Sprite minimap;
 }

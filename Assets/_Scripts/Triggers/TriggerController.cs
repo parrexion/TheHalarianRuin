@@ -62,7 +62,7 @@ public class TriggerController : MonoBehaviour {
     public void ReactivateTriggers() {
         Constants.CHAPTER chapter = (Constants.CHAPTER)currentChapter.value;
         Constants.OverworldArea index = (Constants.OverworldArea)currentScene.value;
-        Constants.RoomNumber roomNumber = (Constants.RoomNumber)currentRoomNumber.value;
+        Constants.ROOMNUMBER roomNumber = (Constants.ROOMNUMBER)currentRoomNumber.value;
         for (int i = 0; i < sectionList.Length; i++) {
             sectionList[i].ActivateSection(chapter, index, roomNumber);
         }

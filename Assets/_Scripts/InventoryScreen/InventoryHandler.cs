@@ -8,10 +8,14 @@ using UnityEngine.Events;
 /// </summary>
 public class InventoryHandler : MonoBehaviour {
 
+	public IntVariable inventoryOffset;
 	public InvListVariable equippedItems;
 	public InvListVariable bagItems;
 	public InvListVariable shopItems;
 	public IntVariable currentMoney;
+
+	public int bagInvSize;
+	public int rowLength;
 
 	public UnityEvent itemsChanged;
 
@@ -132,7 +136,7 @@ public class InventoryHandler : MonoBehaviour {
 			shopItems.values[index.id] = null;
 		}
 		else {
-			bagItems.values[index.id] = null;
+			bagItems.values[index.id + inventoryOffset.value] = null;
 		}
 	}
 
@@ -149,7 +153,7 @@ public class InventoryHandler : MonoBehaviour {
 			return (index.id < shopItems.values.Length) ? shopItems.values[index.id] : null;
 		}
 		else if (index.type == SlotType.BAG) {
-			return (index.id < bagItems.values.Length) ? bagItems.values[index.id] : null;
+			return (index.id + inventoryOffset.value < bagItems.values.Length) ? bagItems.values[index.id + inventoryOffset.value] : null;
 		}
 
 		return null;
@@ -174,10 +178,15 @@ public class InventoryHandler : MonoBehaviour {
 			}
 		}
 		else if (index.type == SlotType.BAG) {
-			if (index.id < bagItems.values.Length) {
-				bagItems.values[index.id] = item;
+			if (index.id + inventoryOffset.value < bagItems.values.Length) {
+				bagItems.values[index.id + inventoryOffset.value] = item;
 			}
 		}
 	}
 		
+	public void UpdateInvPos(int direction) {
+		inventoryOffset.value += direction * rowLength;
+		inventoryOffset.value = Mathf.Clamp(inventoryOffset.value, 0, Constants.GEAR_BAG_SPACE - bagInvSize);
+		itemsChanged.Invoke();
+	}
 }

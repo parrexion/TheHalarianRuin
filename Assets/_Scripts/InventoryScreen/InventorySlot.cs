@@ -15,7 +15,7 @@ public class SlotID {
 	public EquipType equipType;
 
 	public bool CanUse(ItemEntry item) {
-		return (!item || equipType == EquipType.WILD || equipType == item.equipType);
+		return (!item || equipType == EquipType.WILD || item.equipType == EquipType.WILD || equipType == item.equipType);
 	}
 	public static bool SameType(EquipType item, EquipType item2) {
 		return (item == EquipType.WILD || item2 == EquipType.WILD || item == item2);

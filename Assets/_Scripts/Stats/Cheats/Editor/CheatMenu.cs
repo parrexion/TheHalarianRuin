@@ -23,29 +23,6 @@ public class CheatMenu : EditorWindow {
 	const float defaultSpeedHackSpeed = 2.5f;
 
 
-	[MenuItem("Window/CheatMenu")]
-	public static void ShowWindow() {
-		GetWindow<CheatMenu>("Cheat Menu");
-	}
-
-	void OnEnable() {
-		EditorSceneManager.sceneOpened += SceneOpenedCallback;
-	}
-
-	void OnDisable() {
-		EditorSceneManager.sceneOpened -= SceneOpenedCallback;
-	}
-
-	/// <summary>
-	/// Makes sure the window stays open when switching scenes.
-	/// </summary>
-	/// <param name="_scene"></param>
-	/// <param name="_mode"></param>
-	void SceneOpenedCallback(Scene _scene, OpenSceneMode _mode) {
-		Debug.Log("SCENE LOADED");
-		InitializeWindow();
-	}
-
 	/// <summary>
 	/// Initializes all the window specific variables.
 	/// </summary>
@@ -56,7 +33,7 @@ public class CheatMenu : EditorWindow {
 	/// <summary>
 	/// Renders the window.
 	/// </summary>
-	void OnGUI() {
+	public void DrawGUI() {
 		// Hotkeys();
 
 		GUILayout.Label("Cheat Menu", EditorStyles.boldLabel);
@@ -86,7 +63,7 @@ public class CheatMenu : EditorWindow {
 		else if (speedHack.value == 1 || speedHack.value < 0)
 			speedHack.value = defaultSpeedHackSpeed;
 		EditorGUI.BeginDisabledGroup(!useSpeedHack);
-		speedHack.value = EditorGUILayout.FloatField("Speed", speedHack.value);
+		speedHack.value = EditorGUILayout.FloatField("Speed Multiplier", speedHack.value);
 		EditorGUI.EndDisabledGroup();
 		GUILayout.EndHorizontal();
 	}
