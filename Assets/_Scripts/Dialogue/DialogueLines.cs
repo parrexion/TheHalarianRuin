@@ -11,107 +11,100 @@ public class DialogueLines : MonoBehaviour {
 	public StringVariable dialogueUuid;
 	private DialogueEntry dialogueEntry;
 
-	public IntVariable currentFrame;
+	public IntVariable currentAction;
+	public BoolVariable overrideActionNumber;
 	private DialogueScene scene;
-	
-	public UnityEvent backgroundChanged;
-	public UnityEvent bkgMusicChanged;
-	public UnityEvent characterChanged;
-	public UnityEvent closeupChanged;
-	public UnityEvent dialogueTextChanged;
+
+	private bool isWaiting;
 
 
 	void Start() {
 		scene = GetComponent<DialogueScene>();
+		dialogueLibrary.initialized = false;
 		dialogueLibrary.GenerateDictionary();
 		dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
-		currentFrame.value = 0;
-		scene.SetFromFrame(dialogueEntry.frames[0]);
+		if (!overrideActionNumber.value) {
+			currentAction.value = 0;
+			scene.Reset();
+		}
+		else {
+			overrideActionNumber.value = false;
+		}
+		NextFrame();
 
-		backgroundChanged.Invoke();
-		bkgMusicChanged.Invoke();
-		characterChanged.Invoke();
-		closeupChanged.Invoke();
-		dialogueTextChanged.Invoke();
+		scene.backgroundChanged.Invoke();
+		scene.bkgMusicChanged.Invoke();
+		scene.characterChanged.Invoke();
+		scene.closeupChanged.Invoke();
+		scene.dialogueTextChanged.Invoke();
 	}
 
 	public void NextFrame(){
 
-		currentFrame.value++;
+		if (isWaiting)
+			return;
 
-		if (currentFrame.value >= dialogueEntry.size) {
-			Debug.Log("Reached the end");
-			DialogueAction da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
-			DialogueJsonItem data = new DialogueJsonItem();
-			data.entry = dialogueEntry;
-			da.Act(scene,data);
-		}
-		else {
-			CompareScenes(dialogueEntry.frames[currentFrame.value]);
-		}
+		StartCoroutine(RunNextFrame());
 	}
 
-	private void CompareScenes(Frame frame) {
-		DialogueAction da;
-		DialogueJsonItem data;
-		if (!ScrObjLibraryEntry.CompareEntries(scene.background.value,frame.background)) {
-			da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
-			data = new DialogueJsonItem();
-			data.entry = frame.background;
-			da.Act(scene,data);
-			backgroundChanged.Invoke();
-		}
-		bool changed = false;
-		for (int i = 0; i < 4; i++) {
-			if (!ScrObjLibraryEntry.CompareEntries(scene.characters[i].value,frame.characters[i]) || scene.poses[i].value != frame.poses[i]) {
-				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
-				data = new DialogueJsonItem();
-				data.position1 = i;
-				data.entry = frame.characters[i];
-				data.value = frame.poses[i];
-				da.Act(scene,data);
-				changed = true;
+	private IEnumerator RunNextFrame() {
+		isWaiting = true;
+		while(currentAction.value < dialogueEntry.actions.Count) {
+			DialogueActionData data = dialogueEntry.actions[currentAction.value];
+			DialogueAction da = DialogueAction.CreateAction(data.type);
+			da.Act(scene, data);
+			if (data.type == DActionType.MOVEMENT) {
+				for (int i = 0; i < Constants.DIALOGUE_PLAYERS_COUNT+2; i++) {
+					float speed = data.values[0] * 0.001f;
+					scene.characterTransforms[i].MoveCharacter(speed);
+				}
 			}
-		}
-		if (changed) {
-			characterChanged.Invoke();
-		}
 
-		changed = false;
-		if (!ScrObjLibraryEntry.CompareEntries(scene.talkingChar.value, frame.talkingChar) || scene.talkingPose.value != frame.talkingPose) {
-			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
-			data = new DialogueJsonItem();
-			data.entry = frame.talkingChar;
-			data.value = frame.talkingPose;
-			da.Act(scene,data);
-			changed = true;
-		}
+			RunEvents(data.type);
+			currentAction.value++;
 
-		if (scene.talkingName.value != frame.talkingName) {
-			da = (DASetName)ScriptableObject.CreateInstance("DASetName");
-			data = new DialogueJsonItem();
-			data.text = frame.talkingName;
-			da.Act(scene,data);
-			changed = true;
-		}
+			if (data.useDelay) {
+				if (data.type != DActionType.SET_TEXT && data.type != DActionType.END_SCENE) {
+					yield return new WaitForSeconds(scene.effectStartDuration.value);
+					yield return new WaitForSeconds(scene.effectEndDuration.value);
+				}
+			}
 
-		if (changed)
-			closeupChanged.Invoke();
-
-		if (scene.dialogueText.value != frame.dialogueText) {
-			da = (DASetText)ScriptableObject.CreateInstance("DASetText");
-			data = new DialogueJsonItem();
-			data.text = frame.dialogueText;
-			da.Act(scene,data);
-			dialogueTextChanged.Invoke();
+			if (!data.autoContinue)
+				break;
 		}
-
-		if (frame.bkgMusic != null) {
-			da = (DASetBkgMusic)ScriptableObject.CreateInstance("DASetBkgMusic");
-			data = new DialogueJsonItem();
-			data.entry = frame.bkgMusic;
-			da.Act(scene,data);
-			bkgMusicChanged.Invoke();
-		}
+		isWaiting = false;
+		yield break;
 	}
+
+	private bool CheckContinueAction(DialogueActionData data) {
+		if (data.type == DActionType.SET_TEXT)
+			return false;
+
+		return true;
+	}
+
+	private void RunEvents(DActionType type) {
+		switch (type)
+		{
+			case DActionType.START_SCENE:
+				scene.backgroundChanged.Invoke();
+				scene.bkgMusicChanged.Invoke();
+				scene.characterChanged.Invoke();
+				break;
+			case DActionType.END_SCENE: break;
+			case DActionType.SET_TEXT: 
+				scene.closeupChanged.Invoke();
+				scene.dialogueTextChanged.Invoke();
+				break;
+			case DActionType.SET_CHARS: scene.characterChanged.Invoke(); break;
+			case DActionType.SET_BKG: scene.backgroundChanged.Invoke(); break;
+			case DActionType.SET_MUSIC: scene.bkgMusicChanged.Invoke();break;
+			case DActionType.PLAY_SFX: scene.playSfx.Invoke(); break;
+			case DActionType.MOVEMENT: scene.characterChanged.Invoke(); break;
+			case DActionType.FLASH: scene.screenFlashEvent.Invoke(); break;
+			case DActionType.SHAKE: scene.screenShakeEvent.Invoke(); break;
+		}	
+	}
+
 }

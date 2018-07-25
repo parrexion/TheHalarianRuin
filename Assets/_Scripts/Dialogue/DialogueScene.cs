@@ -8,22 +8,22 @@ public class DialogueScene : MonoBehaviour {
 
 	public StringVariable dialogueUuid;
 	public ScrObjEntryReference background;
-	[SerializeField] private ScrObjEntryReference character0;
-	[SerializeField] private ScrObjEntryReference character1;
-	[SerializeField] private ScrObjEntryReference character2;
-	[SerializeField] private ScrObjEntryReference character3;
-	[SerializeField] private IntVariable pose0;
-	[SerializeField] private IntVariable pose1;
-	[SerializeField] private IntVariable pose2;
-	[SerializeField] private IntVariable pose3;
+	public ScrObjEntryReference[] characters;
+	public IntVariable[] poses;
 	public StringVariable talkingName;
 	public ScrObjEntryReference talkingChar;
 	public IntVariable talkingPose;
 	public StringVariable dialogueText;
+	public StringVariable inputText;
 	public AudioVariable bkgMusic;
+	public AudioVariable sfxClip;
+	public FloatVariable effectStartDuration;
+	public FloatVariable effectEndDuration;
 
-	[HideInInspector] public ScrObjEntryReference[] characters;
-	[HideInInspector] public IntVariable[] poses;
+	private int talkingIndex = -1;
+	
+	[Header("Animations")]
+	public Character[] characterTransforms;
 
 	[Header("Non-dialogue references")]
 	public BoolVariable paused;
@@ -32,43 +32,45 @@ public class DialogueScene : MonoBehaviour {
 	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
+
+	[Header("Events")]
 	public UnityEvent mapChangeEvent;
+	public UnityEvent backgroundChanged;
+	public UnityEvent bkgMusicChanged;
+	public UnityEvent playSfx;
+	public UnityEvent characterChanged;
+	public UnityEvent closeupChanged;
+	public UnityEvent dialogueTextChanged;
+	public UnityEvent screenFlashEvent;
+	public UnityEvent screenShakeEvent;
 
 
-	void Start() {
-		characters = new ScrObjEntryReference[]{ character0, character1, character2, character3 };
-		poses = new IntVariable[]{pose0, pose1, pose2, pose3};
-
+	public void Reset() {
+		Debug.Log("RESET!");
 		background.value = null;
-		character0.value = null;
-		character1.value = null;
-		character2.value = null;
-		character3.value = null;
-		pose0.value = -1;
-		pose1.value = -1;
-		pose2.value = -1;
-		pose3.value = -1;
+		for (int i = 0; i < characters.Length; i++) {
+			characters[i].value = null;
+		}
+		for (int i = 0; i < poses.Length; i++) {
+			poses[i].value = -1;
+		}
 		talkingName.value = "";
 		talkingChar.value = null;
 		talkingPose.value = -1;
 		dialogueText.value = "";
+		bkgMusic.value = null;
 	}
 
-	public void SetFromFrame(Frame f) {
-		background.value = f.background;
-		characters[0].value = f.characters[0];
-		characters[1].value = f.characters[1];
-		characters[2].value = f.characters[2];
-		characters[3].value = f.characters[3];
-		pose0.value = f.poses[0];
-		pose1.value = f.poses[1];
-		pose2.value = f.poses[2];
-		pose3.value = f.poses[3];
-		talkingName.value = f.talkingName;
-		talkingChar.value = f.talkingChar;
-		talkingPose.value = f.talkingPose;
-		dialogueText.value = f.dialogueText;
-		bkgMusic.value = (f.bkgMusic) ? f.bkgMusic.clip : null;
-	}
 
+	public void SetTalkingCharacter(int talkIndex) {
+		talkingIndex = talkIndex;
+		if (talkingIndex == -1 || talkingIndex == 4) {
+			talkingChar.value = null;
+			talkingPose.value = -1;
+		}
+		else {
+			talkingChar.value = characters[talkingIndex].value;
+			talkingPose.value = poses[talkingIndex].value;
+		}
+	}
 }

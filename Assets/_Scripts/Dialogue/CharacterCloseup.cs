@@ -10,8 +10,8 @@ public class CharacterCloseup : MonoBehaviour {
 	public IntVariable poseIndex;
 
 	public Text characterNameBox;
-	public SpriteRenderer characterRenderer;
-	public SpriteRenderer poseRenderer;
+	public Image characterImage;
+	public Image poseImage;
 
 
 	// Use this for initialization
@@ -25,15 +25,15 @@ public class CharacterCloseup : MonoBehaviour {
 		characterNameBox.text = characterName.value;
 
 		if (character.value == null){
-			characterRenderer.enabled = false;
-			poseRenderer.enabled = false;
+			characterImage.enabled = false;
+			poseImage.enabled = false;
 		}
 		else {
-			characterRenderer.enabled = true;
-			poseRenderer.enabled = true;
+			characterImage.enabled = true;
+			poseImage.enabled = true;
 			CharacterEntry ce = (CharacterEntry)character.value;
-			characterRenderer.sprite = ce.defaultColor;
-			poseRenderer.sprite = ce.poses[poseIndex.value];
+			characterImage.sprite = ce.defaultColor;
+			poseImage.sprite = ce.poses[poseIndex.value];
 		}
 	}
 }

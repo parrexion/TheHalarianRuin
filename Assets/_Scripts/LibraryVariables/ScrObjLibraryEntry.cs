@@ -68,7 +68,7 @@ public class ScrObjLibraryEntry : ScriptableObject {
 		return (uuid == other.uuid);
 	}
 
-	public static bool CompareEntries(ScrObjLibraryEntry obj1, ScrObjLibraryEntry obj2) {
+	public static bool CompareEqual(ScrObjLibraryEntry obj1, ScrObjLibraryEntry obj2) {
 		if (obj1 == null) {
 			if (obj2 == null)
 				return true;

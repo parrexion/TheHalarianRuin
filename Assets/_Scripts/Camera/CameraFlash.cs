@@ -10,8 +10,8 @@ public class CameraFlash : MonoBehaviour {
 	public Color flashColor;
 
 	[Header("Settings")]
-	public float flashBeforeTime;
-	public float flashAfterTime;
+	public FloatVariable flashBeforeTime;
+	public FloatVariable flashAfterTime;
 	
 
 	// Use this for initialization
@@ -27,16 +27,16 @@ public class CameraFlash : MonoBehaviour {
 
 	IEnumerator ScreenFlash() {
 		float currentTime = 0;
-		while (currentTime < flashBeforeTime) {
-			flashColor.a = Mathf.Lerp(0,1,currentTime/flashBeforeTime);
+		while (currentTime < flashBeforeTime.value) {
+			flashColor.a = Mathf.Lerp(0,1,currentTime/flashBeforeTime.value);
 			flashImage.color = flashColor;
 			currentTime += Time.deltaTime;
 			yield return null;
 		}
 
 		currentTime = 0;
-		while (currentTime < flashAfterTime) {
-			flashColor.a = Mathf.Lerp(1,0,currentTime/flashAfterTime);
+		while (currentTime < flashAfterTime.value) {
+			flashColor.a = Mathf.Lerp(1,0,currentTime/flashAfterTime.value);
 			flashImage.color = flashColor;
 			currentTime += Time.deltaTime;
 			yield return null;

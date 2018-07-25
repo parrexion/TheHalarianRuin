@@ -7,37 +7,32 @@ using UnityEngine.UI;
 public class DialogueTextHandler : MonoBehaviour {
 
 	public StringVariable dialogueText;
-	public string currentDialogue = "";
+	public StringVariable inputText;
+	public string currentDialogue;
+	public string finishedDialogue;
+	public StringVariable shownDialogueText;
 	public Text dialogueTextBox;
+	public CursorBobber cursorBobber;
 	// public GameObject choiceBox;
 	public UnityEvent nextFrameEvent;
-
-	[Header("SFX")]
-	public ScrObjLibraryVariable sfxLibrary;
-	public AudioVariable sfxClip;
-	public UnityEvent playSfx;
-
-	[Header("Screen Flash")]
-	public UnityEvent screenFlashEvent;
-
-	[Header("Screen Shake")]
-	public FloatVariable shakeDuration;
-	public UnityEvent screenShakeEvent;
+	public UnityEvent updateDialogueTextEvent;
 
 	private string[] words = new string[0];
 	private bool textUpdating = false;
+	private bool stopText = false;
 
 
 	// Use this for initialization
 	void Start () {
 		dialogueText.value = "";
-		dialogueTextBox.text = "";
-		sfxLibrary.GenerateDictionary();
+		inputText.value = "";
 	}
 
 	void Update() {
-		if (textUpdating)
-			dialogueTextBox.text = currentDialogue;
+		if (textUpdating) {
+			shownDialogueText.value = dialogueText.value + currentDialogue;
+			updateDialogueTextEvent.Invoke();
+		}
 	}
 	
 	/// <summary>
@@ -47,26 +42,46 @@ public class DialogueTextHandler : MonoBehaviour {
 
 		if (textUpdating) {
 			// Finish the text of this frame
+			cursorBobber.ShowCursor(true);
 			StopAllCoroutines();
 			textUpdating = false;
-			currentDialogue = dialogueText.value;
+			dialogueText.value += finishedDialogue;
+			currentDialogue = finishedDialogue;
 		}
 		else {
 			// Move on to the next frame
+			cursorBobber.ShowCursor(false);
 			nextFrameEvent.Invoke();
 		}
 
-		dialogueTextBox.text = currentDialogue;
+		shownDialogueText.value = dialogueText.value;
+		updateDialogueTextEvent.Invoke();
 	}
 
 	/// <summary>
 	/// Parses the current dialogue line and splits it into words and sets the characters.
 	/// </summary>
 	public void ParseLine() {
+		cursorBobber.ShowCursor(false);
 		StopAllCoroutines();
 		currentDialogue = "";
+		stopText = false;
 
-		words = dialogueText.value.Split(' ');
+		words = inputText.value.Split(' ');
+		bool first = true;
+		finishedDialogue = "";
+		for (int i = 0; i < words.Length; i++) {
+			if (string.IsNullOrEmpty(words[i]))
+				continue;
+			if (!IsSpecialWord(words[i])) {
+				if (first) {
+					finishedDialogue += words[i];
+					first = false;
+				}
+				else
+					finishedDialogue += " " + words[i];
+			}
+		}
 
 		StartCoroutine(TextUpdate());
 	}
@@ -76,9 +91,12 @@ public class DialogueTextHandler : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator TextUpdate() {
-		float timeInSeconds = .02f;
+		float timeInSeconds = .025f;
 		textUpdating = true;
+
 		for (int j = 0; j < words.Length; j++) {
+			if (stopText)
+				break;
 			if (words[j].Length == 0)
 				continue;
 			if (IsSpecialWord(words[j]))
@@ -92,7 +110,11 @@ public class DialogueTextHandler : MonoBehaviour {
 			currentDialogue += ' ';
 			yield return new WaitForSeconds(timeInSeconds);
 		}
-		textUpdating = false;
+		if (stopText) {
+			DialogueBoxClicked();
+		}
+		DialogueBoxClicked();
+
 	}
 
 	/// <summary>
@@ -103,41 +125,46 @@ public class DialogueTextHandler : MonoBehaviour {
 	private bool FitNextWord(string nextWord){
 		string word = nextWord.Split('\n')[0];
 		TextGenerationSettings settings = dialogueTextBox.GetGenerationSettings(dialogueTextBox.rectTransform.rect.size);
-		float originalHeight = dialogueTextBox.cachedTextGeneratorForLayout.GetPreferredHeight(currentDialogue,settings);
-		float newHeight = dialogueTextBox.cachedTextGeneratorForLayout.GetPreferredHeight(currentDialogue+word,settings);
+		float originalHeight = dialogueTextBox.cachedTextGeneratorForLayout.GetPreferredHeight(dialogueText.value + currentDialogue,settings);
+		float newHeight = dialogueTextBox.cachedTextGeneratorForLayout.GetPreferredHeight(dialogueText.value + currentDialogue+word,settings);
 
 		return newHeight > originalHeight;
 	}
 
 	bool IsSpecialWord(string word) {
-		if (word[0] == '@') {
-			Debug.Log("Found an sfx!");
-			string sfxString = word.Substring(1);
-			Debug.Log(sfxString);
-			SfxEntry sfx = (SfxEntry)sfxLibrary.GetEntry(sfxString);
-#if !UNITY_EDITOR
-			if (sfx == null)
-				return true;
-#endif
-			sfxClip.value = sfx.clip;
-			if (sfxClip.value != null)
-				playSfx.Invoke();
-			else
-				Debug.LogWarning("SFX clip is null in the dialogue!");
+		if (word[0] == '£') {
+			word = "";
+			stopText = true;
 			return true;
 		}
-		else if (word[0] == '¤') {
-			Debug.Log("Found a screen flash!");
-			screenFlashEvent.Invoke();
-			return true;
-		}
-		else if (word[0] == '§') {
-			Debug.Log("Found a screen shake!");
-			string shakeString = word.Substring(1);
-			shakeDuration.value = float.Parse(shakeString);
-			screenShakeEvent.Invoke();
-			return true;
-		}
+// 		else if (word[0] == '@') {
+// 			Debug.Log("Found an sfx!");
+// 			string sfxString = word.Substring(1);
+// 			Debug.Log(sfxString);
+// 			SfxEntry sfx = (SfxEntry)sfxLibrary.GetEntry(sfxString);
+// #if !UNITY_EDITOR
+// 			if (sfx == null)
+// 				return true;
+// #endif
+// 			sfxClip.value = sfx.clip;
+// 			if (sfxClip.value != null)
+// 				playSfx.Invoke();
+// 			else
+// 				Debug.LogWarning("SFX clip is null in the dialogue!");
+// 			return true;
+// 		}
+// 		else if (word[0] == '¤') {
+// 			Debug.Log("Found a screen flash!");
+// 			screenFlashEvent.Invoke();
+// 			return true;
+// 		}
+// 		else if (word[0] == '§') {
+// 			Debug.Log("Found a screen shake!");
+// 			string shakeString = word.Substring(1);
+// 			shakeDuration.value = float.Parse(shakeString);
+// 			screenShakeEvent.Invoke();
+// 			return true;
+// 		}
 
 		return false;
 	}

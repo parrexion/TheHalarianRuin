@@ -13,6 +13,9 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	private Dictionary<string, ScrObjLibraryEntry> entries = new Dictionary<string, ScrObjLibraryEntry>();
 
 	public void GenerateDictionary() {
+		if (initialized)
+			return;
+
 		entries.Clear();
 		representations.Clear();
 		for (int i = 0; i < list.Count ; i++) {
@@ -26,15 +29,13 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	}
 
 	public bool ContainsID(string id) {
-		if (!initialized)
-			GenerateDictionary();
+		GenerateDictionary();
 
 		return entries.ContainsKey(id);
 	}
 
 	public ScrObjLibraryEntry GetEntry(string uuid) {
-		if (!initialized)
-			GenerateDictionary();
+		GenerateDictionary();
 
 		if (entries.ContainsKey(uuid))
 			return entries[uuid];
@@ -43,8 +44,7 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetEntryByIndex(int index) {
-		if (!initialized)
-			GenerateDictionary();
+		GenerateDictionary();
 
 		if (index < 0)
 			return null;
@@ -53,15 +53,13 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetRandomEntry() {
-		if (!initialized)
-			GenerateDictionary();
+		GenerateDictionary();
 
 		return list[Random.Range(0,list.Count)];
 	}
 
 	public GUIContent[] GetRepresentations(string filter, string search) {
-		if (!initialized)
-			GenerateDictionary();
+		GenerateDictionary();
 
 		bool useFilter = !string.IsNullOrEmpty(filter);
 		bool useSearch = !string.IsNullOrEmpty(search);
@@ -83,17 +81,16 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	}
 
 	public void AddEntry(ScrObjLibraryEntry obj) {
-		if (!initialized)
-			GenerateDictionary();
+		// GenerateDictionary();
 
-		list.Add(obj);
-		entries.Add(obj.entryName, obj);
-		AddRepresentation(obj);
+		// list.Add(obj);
+		// entries.Add(obj.entryName, obj);
+		// AddRepresentation(obj);
+		Debug.LogError("USE ADD_ENTRY");
 	}
 
 	public void InsertEntry(ScrObjLibraryEntry obj, int pos) {
-		if (!initialized)
-			GenerateDictionary();
+		initialized = false;
 
 		list.Insert(pos, obj);
 		entries.Add(obj.entryName, obj);
@@ -101,8 +98,7 @@ public class ScrObjLibraryVariable : ScriptableObject {
 	}
 
 	public void RemoveEntryByIndex(int index) {
-		if (!initialized)
-			GenerateDictionary();
+		initialized = false;
 
 		ScrObjLibraryEntry entry = GetEntryByIndex(index);
 		list.RemoveAt(index);

@@ -8,8 +8,9 @@ MonoImporter:
   defaultReferences:
   - dialogueLibrary: {fileID: 11400000, guid: 81638be706d6e734c8573fd18a978b3c, type: 2}
   - dialogueUuid: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
-  - dialogueEntry: {fileID: 11400000, guid: 611aa1a2bbd09994d8bc22de9d8597f4, type: 2}
   - currentFrame: {fileID: 11400000, guid: c9b473fedda143c40a6a4c796c8ab50b, type: 2}
+  - overrideFrameNumber: {fileID: 11400000, guid: 98a60d577e9e7b5499aabcafd9533ebe,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

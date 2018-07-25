@@ -29,17 +29,17 @@ public class ValueController : EditorWindow {
 	private Constants.ROOMNUMBER _currentRoom;
 
 	private int toolbarPos;
-	private string[] toolbarStr = {"VALUES", "DIALOGUE", "SAVES", "SETTINGS", "CHEATS"};
+	private string[] toolbarStr = {"VALUES", "DIALOGUE", "SETTINGS", "CHEATS"};
 
 
 	[MenuItem("Window/ValueController")]
 	public static void ShowWindow() {
-		ValueController vc = GetWindow<ValueController>("Value Controller");
-		vc.InitializeWindow();
+		GetWindow<ValueController>("Value Controller");
 	}
 
 	void OnEnable() {
 		EditorSceneManager.sceneOpened += SceneOpenedCallback;
+		InitializeWindow();
 	}
 
 	void OnDisable() {
@@ -87,10 +87,10 @@ public class ValueController : EditorWindow {
 		else if (toolbarPos == 1) {
 			dialogueMenu.DrawGUI();
 		}
-		else if (toolbarPos == 3) {
+		else if (toolbarPos == 2) {
 			DrawSettings();
 		}
-		else if (toolbarPos == 4) {
+		else if (toolbarPos == 3) {
 			cheatMenu.DrawGUI();
 		}
 	}

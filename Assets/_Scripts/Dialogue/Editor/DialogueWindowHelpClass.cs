@@ -11,6 +11,7 @@ public class DialogueWindowHelpClass {
 	public Texture2D nextBackground;
 	public Texture2D soundBackground;
 	public Texture2D effectsBackground;
+	public Texture2D moveBackground;
 	public Texture2D rightBackground;
 
 	public Color headerColor = new Color(0.25f,0.5f,0.75f);
@@ -22,6 +23,7 @@ public class DialogueWindowHelpClass {
 	public Color nextColor = new Color(0.4f, 0.3f, 0.6f);
 	public Color soundColor = new Color(0.8f, 0.8f, 0.2f);
 	public Color effectsColor = new Color(0.15f, 0.8f, 0.8f);
+	public Color moveColor = new Color(0.75f, 0.3f, 0.5f);
 	public Color rightColor = new Color(0.4f, 0.6f, 0f);
 
 	public Rect headerRect = new Rect();
@@ -32,6 +34,7 @@ public class DialogueWindowHelpClass {
 	public Rect nextRect = new Rect();
 	public Rect soundRect = new Rect();
 	public Rect effectsRect = new Rect();
+	public Rect moveRect = new Rect();
 	public Rect rightRect = new Rect();
 
 
@@ -76,6 +79,10 @@ public class DialogueWindowHelpClass {
 		effectsBackground.SetPixel(0, 0, effectsColor);
 		effectsBackground.Apply();
 
+		moveBackground = new Texture2D(1, 1);
+		moveBackground.SetPixel(0, 0, moveColor);
+		moveBackground.Apply();
+
 		rightBackground = new Texture2D(1, 1);
 		rightBackground.SetPixel(0, 0, rightColor);
 		rightBackground.Apply();
@@ -91,6 +98,7 @@ public class DialogueWindowHelpClass {
 		int framePartHeight = 112;
 		int soundPartHeight = 160;//124;
 		int effectsPartHeight = 128;
+		int movePartHeight = 100;
 		int screenStep = characterWidth; //(Screen.width - rightPartWidth) / 5f;
 
 		headerRect.x = 0;
@@ -153,6 +161,11 @@ public class DialogueWindowHelpClass {
 		nextRect.width = characterWidth * 5 - dialoguePartWidth;
 		nextRect.height = dialoguePartHeight;
 
+		moveRect.x = dialoguePartWidth;
+		moveRect.y = topPartHeight + characterHeight + talkingHeight + soundPartHeight + dialoguePartHeight;
+		moveRect.width = characterWidth * 5 - dialoguePartWidth;
+		moveRect.height = movePartHeight;
+
 		rightRect.x = characterWidth * 5;
 		rightRect.y = 0;
 		rightRect.width = Screen.width - (characterWidth * 5);
@@ -172,6 +185,7 @@ public class DialogueWindowHelpClass {
 		GUI.DrawTexture(nextRect, nextBackground);
 		GUI.DrawTexture(soundRect, soundBackground);
 		GUI.DrawTexture(effectsRect, effectsBackground);
+		GUI.DrawTexture(moveRect, moveBackground);
 		GUI.DrawTexture(rightRect, rightBackground);
 	}
 }

@@ -21,15 +21,35 @@ public class DialogueEntry : ScrObjLibraryEntry {
 	}
 
 	public List<Frame> frames = new List<Frame>();
+	public List<DialogueActionData> actions = new List<DialogueActionData>();
 
+
+	public void CreateBasicActions() {
+		
+		actions = new List<DialogueActionData>();
+		DialogueActionData data = new DialogueActionData(){type = DActionType.SET_BKG};
+		DialogueAction.CreateAction(data.type).FillData(data);
+		actions.Add(data);
+		data = new DialogueActionData(){type = DActionType.SET_MUSIC};
+		DialogueAction.CreateAction(data.type).FillData(data);
+		actions.Add(data);
+		data = new DialogueActionData(){type = DActionType.SET_CHARS};
+		DialogueAction.CreateAction(data.type).FillData(data);
+		actions.Add(data);
+		data = new DialogueActionData(){type = DActionType.SET_TEXT};
+		DialogueAction.CreateAction(data.type).FillData(data);
+		actions.Add(data);
+		data = new DialogueActionData(){type = DActionType.END_SCENE};
+		DialogueAction.CreateAction(data.type).FillData(data);
+		actions.Add(data);
+	}
 
 	public override void ResetValues() {
 		base.ResetValues();
 
-		frames = new List<Frame>();
 		participantColors = new List<Color>();
+		CreateBasicActions();
 
-		frames.Add(new Frame());
 		nextLocation = BattleEntry.NextLocation.OVERWORLD;
 		dialogueEntry = null;
 		battleEntry = null;
@@ -42,7 +62,7 @@ public class DialogueEntry : ScrObjLibraryEntry {
 		base.CopyValues(other);
 		DialogueEntry de = (DialogueEntry)other;
 
-		frames = de.frames;
+		actions = de.actions;
 		participantColors = de.participantColors;
 
 		nextLocation = de.nextLocation;
@@ -51,24 +71,32 @@ public class DialogueEntry : ScrObjLibraryEntry {
 		changePosition = de.changePosition;
 		playerPosition = de.playerPosition;
 		nextArea = de.nextArea;
+		Debug.Log("COPY");
 	}
 
-	public void InsertFrame(int index, Frame f) {
-		frames.Insert(index, f);
+	public void InsertAction(int index, DialogueActionData da) {
+		actions.Insert(index, da);
 	}
 
-	public void RemoveFrame(int index) {
-		frames.RemoveAt(index);
+	public void RemoveAction(int index) {
+		actions.RemoveAt(index);
 	}
 
-	public GUIContent[] GenerateFrameRepresentation() {
-		GUIContent[] list = new GUIContent[frames.Count];
+	public GUIContent[] GenerateActionRepresentation() {
+		GUIContent[] list = new GUIContent[actions.Count];
 		GUIContent content;
-		string str;
-		for (int i = 0; i < frames.Count; i++) {
+		for (int i = 0; i < actions.Count; i++) {
 			content = new GUIContent();
-			str = frames[i].dialogueText.Split('\n')[0];
-			content.text = i + ":  " + str.Substring(0,Mathf.Min(50,str.Length));
+			content.text = actions[i].type.ToString();
+			if (i < 3 || actions[i].type == DActionType.END_SCENE) {
+				content.image = GenerateColorTexture(Color.black);
+			}
+			else if (!actions[i].autoContinue) {
+				content.image = GenerateColorTexture(Color.blue);
+			}
+			else if (actions[i].useDelay) {
+				content.image = GenerateColorTexture(Color.magenta);
+			}
 			list[i] = content;
 		}
 		return list;

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: e863e832cb1d0e54c80fe2390817269c
+timeCreated: 1515836531
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueLibrary: {fileID: 11400000, guid: 81638be706d6e734c8573fd18a978b3c, type: 2}
+  - backgroundLibrary: {fileID: 11400000, guid: 891f70156dfccd8478b72770afdffb20,
+      type: 2}
+  - characterLibrary: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - dialogueValues: {fileID: 11400000, guid: 1579d75f9bb57c04883265255931a16b, type: 2}
+  - noBackgroundSprite: {fileID: 21300000, guid: df2481fc6d190a44f960297a56372395,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: e1ef509a2b7ded8418c6f0c242525ff1
+timeCreated: 1515836531
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - noBackgroundSprite: {fileID: 11400000, guid: 41eb0b7c1b7f9f848956d047cf9a861d,
+      type: 2}
+  - noCharacterSprite: {fileID: 11400000, guid: 96a41c4b18a178749a2592186bc82172,
+      type: 2}
+  - dialogueUuid: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
+  - currentArea: {fileID: 11400000, guid: 12a76b9ecb4623145b88105a05db7654, type: 2}
+  - playerArea: {fileID: 11400000, guid: 97c8c168a575ed94fac5f33ca22a66d5, type: 2}
+  - currentAction: {fileID: 11400000, guid: c9b473fedda143c40a6a4c796c8ab50b, type: 2}
+  - overrideActionNumber: {fileID: 11400000, guid: 98a60d577e9e7b5499aabcafd9533ebe,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

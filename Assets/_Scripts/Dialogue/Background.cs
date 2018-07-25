@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class Background : MonoBehaviour {
 
 	public ScrObjEntryReference dialogueBackground;
-	private Image image;
+	public Image image;
 
 	// Use this for initialization
 	void Start () {
-		image = GetComponent<Image>();
 		UpdateBackground();
 	}
 	
@@ -20,7 +19,7 @@ public class Background : MonoBehaviour {
 			image.enabled = false;
 		}
 		else {
-			image.sprite = ((BackgroundEntry)(dialogueBackground.value)).sprite;
+			image.sprite = ((BackgroundEntry)dialogueBackground.value).sprite;
 			image.enabled = true;
 		}
 	}
