@@ -34,7 +34,7 @@ public class StatusController : MonoBehaviour {
 	public Text sDefenseText;
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
 		SetAllStats();
 	}
 	

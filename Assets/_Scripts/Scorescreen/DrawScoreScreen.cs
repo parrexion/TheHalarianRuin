@@ -39,6 +39,9 @@ public class DrawScoreScreen : MonoBehaviour {
 	public Text expText;
 	public Text moneyText;
 
+	[Header("Other")]
+	public GameObject levelupTutorial;
+
 	[Header("Events")]
 	public UnityEvent buttonClickEvent;
 	public UnityEvent changeMapEvent;
@@ -56,8 +59,11 @@ public class DrawScoreScreen : MonoBehaviour {
 		ExpLevel startLevel = new ExpLevel(totalExp.value);
 		totalExp.value += expGained.value;
 		ExpLevel endLevel = new ExpLevel(totalExp.value);
-		if (startLevel != endLevel)
+		if (startLevel != endLevel) {
 			playerStatsChangedEvent.Invoke();
+			if (endLevel.level == 2)
+				levelupTutorial.SetActive(true);
+		}
 
 		totalMoney.value += moneyGained.value;
 		SetValues();
