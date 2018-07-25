@@ -10,6 +10,7 @@ public class ValueController : EditorWindow {
 	[Header("Other menus")]
 	public CheatMenu cheatMenu;
 	public DialogueSceneEditorWindow dialogueMenu;
+	public BattleSceneEditorWindow battleMenu;
 
 	[Header("Area values")]
 	public AreaInfoValues areaInfo;
@@ -18,6 +19,16 @@ public class ValueController : EditorWindow {
 	public AreaIntVariable playerArea;
 	public IntVariable currentRoom;
 	public BoolVariable forcePosition;
+
+	[Header("Player Stats")]
+	public IntVariable totalExp;
+	public IntVariable totalMoney;
+	
+	public IntVariable playerMaxHealth;
+	public IntVariable playerAttack;
+	public IntVariable playerDefense;
+	public IntVariable playerSAttack;
+	public IntVariable playerSDefense;
 
 	[Header("Settings")]
 	public FloatVariable musicVolume;
@@ -29,7 +40,7 @@ public class ValueController : EditorWindow {
 	private Constants.ROOMNUMBER _currentRoom;
 
 	private int toolbarPos;
-	private string[] toolbarStr = {"VALUES", "DIALOGUE", "SETTINGS", "CHEATS"};
+	private string[] toolbarStr = {"VALUES", "DIALOGUE", "BATTLE", "SETTINGS", "CHEATS"};
 
 
 	[MenuItem("Window/ValueController")]
@@ -62,6 +73,7 @@ public class ValueController : EditorWindow {
 	void InitializeWindow() {
 		cheatMenu = (CheatMenu)ScriptableObject.CreateInstance("CheatMenu");
 		dialogueMenu = (DialogueSceneEditorWindow)ScriptableObject.CreateInstance("DialogueSceneEditorWindow");
+		battleMenu = (BattleSceneEditorWindow)ScriptableObject.CreateInstance("BattleSceneEditorWindow");
 		_currentChapter = (Constants.CHAPTER)currentChapter.value;
 		_currentArea = (Constants.SCENE_INDEXES)currentArea.value;
 		_playerArea = (Constants.SCENE_INDEXES)playerArea.value;
@@ -79,18 +91,21 @@ public class ValueController : EditorWindow {
 		toolbarPos = GUILayout.Toolbar(toolbarPos, toolbarStr);
 		GUILayout.Space(20);
 		if (toolbarPos == 0) {
-			DrawAreaValues();
-			GUILayout.Space(20);
 			if (GUILayout.Button("Start Game"))
 				StartGame();
+			GUILayout.Space(10);
+			DrawAreaValues();
 		}
 		else if (toolbarPos == 1) {
 			dialogueMenu.DrawGUI();
 		}
 		else if (toolbarPos == 2) {
-			DrawSettings();
+			battleMenu.DrawGUI();
 		}
 		else if (toolbarPos == 3) {
+			DrawSettings();
+		}
+		else if (toolbarPos == 4) {
 			cheatMenu.DrawGUI();
 		}
 	}
@@ -103,11 +118,25 @@ public class ValueController : EditorWindow {
 
 	void DrawAreaValues() {
 		GUILayout.Label("Area values", EditorStyles.boldLabel);
-
 		_currentChapter = (Constants.CHAPTER)EditorGUILayout.EnumPopup("Current Chapter", _currentChapter);
 		_currentArea = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Current Scene Index", _currentArea);
 		_playerArea = (Constants.SCENE_INDEXES)EditorGUILayout.EnumPopup("Current OW Scene Index", _playerArea);
 		_currentRoom = (Constants.ROOMNUMBER)EditorGUILayout.EnumPopup("Current Room", _currentRoom);
+		
+		GUILayout.Label("Player values", EditorStyles.boldLabel);
+		totalExp.value = EditorGUILayout.IntField("Total EXP", totalExp.value);
+		totalMoney.value = EditorGUILayout.IntField("Total Money", totalMoney.value);
+
+		GUILayout.Label("Player values", EditorStyles.boldLabel);
+		GUILayout.Label(playerMaxHealth.value + "     Max health");
+		GUILayout.BeginHorizontal();
+		GUILayout.Label(playerAttack.value + "     Android Attack");
+		GUILayout.Label(playerSAttack.value + "     Soldier Attack");
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		GUILayout.Label(playerDefense.value + "     Android Defense");
+		GUILayout.Label(playerSDefense.value + "     Soldier Defense");
+		GUILayout.EndHorizontal();
 	}
 
 

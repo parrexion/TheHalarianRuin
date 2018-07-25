@@ -43,6 +43,7 @@ public class DrawScoreScreen : MonoBehaviour {
 	public UnityEvent buttonClickEvent;
 	public UnityEvent changeMapEvent;
 	public UnityEvent playMusicEvent;
+	public UnityEvent playerStatsChangedEvent;
 
 
 	// Use this for initialization
@@ -52,7 +53,12 @@ public class DrawScoreScreen : MonoBehaviour {
 			return;
 		}
 
+		ExpLevel startLevel = new ExpLevel(totalExp.value);
 		totalExp.value += expGained.value;
+		ExpLevel endLevel = new ExpLevel(totalExp.value);
+		if (startLevel != endLevel)
+			playerStatsChangedEvent.Invoke();
+
 		totalMoney.value += moneyGained.value;
 		SetValues();
 		playMusicEvent.Invoke();

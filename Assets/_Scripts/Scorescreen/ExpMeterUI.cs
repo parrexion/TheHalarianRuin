@@ -14,6 +14,7 @@ public class ExpMeterUI : MonoBehaviour {
 	public Color levelupColor;
 	public float startDelay = 1f;
 	public float animationDuration = 2f;
+	public GameObject levelupText;
 	float currentAnimationTime;
 
 	[Header("Bar Image")]
@@ -22,6 +23,7 @@ public class ExpMeterUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		levelupText.SetActive(false);
 		StartCoroutine(FillExpBar());
 	}
 
@@ -44,12 +46,13 @@ public class ExpMeterUI : MonoBehaviour {
 			valueImage.fillAmount = expLevel.PercentToNext();
 
 			if (levelUp){
-
+				levelupText.SetActive(true);
 				valueImage.color = levelupColor;
 				valueImage.fillAmount = 1;
 				yield return new WaitForSeconds(1);
 				valueImage.fillAmount = 0;
 				valueImage.color = normalColor;
+				levelupText.SetActive(false);
 			}
 			yield return null;
 		} while (value < endExp);

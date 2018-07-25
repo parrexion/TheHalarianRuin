@@ -8,12 +8,21 @@ MonoImporter:
   defaultReferences:
   - m_PersistentViewDataDictionary: {instanceID: 0}
   - cheatMenu: {instanceID: 0}
+  - dialogueMenu: {instanceID: 0}
+  - battleMenu: {instanceID: 0}
   - areaInfo: {fileID: 11400000, guid: e0eb6412a717a024fbadb3045eb0829b, type: 2}
   - currentChapter: {fileID: 11400000, guid: a52eab4d5adb19347b5edb30ebce169d, type: 2}
   - currentArea: {fileID: 11400000, guid: 12a76b9ecb4623145b88105a05db7654, type: 2}
   - playerArea: {fileID: 11400000, guid: 97c8c168a575ed94fac5f33ca22a66d5, type: 2}
   - currentRoom: {fileID: 11400000, guid: c50c545444bd3a54a9c2d69696293d63, type: 2}
   - forcePosition: {fileID: 11400000, guid: e14514709f844334e858fa3959c52000, type: 2}
+  - totalExp: {fileID: 11400000, guid: d7c80e717fa21a4458a178e23dfda2ee, type: 2}
+  - totalMoney: {fileID: 11400000, guid: 7a87804545711f946b6c1b82e39d890d, type: 2}
+  - playerMaxHealth: {fileID: 11400000, guid: 659da0c044e21214d80524b89c1c6bfa, type: 2}
+  - playerAttack: {fileID: 11400000, guid: 347591f73a548254c98504e2242ad27c, type: 2}
+  - playerDefense: {fileID: 11400000, guid: 6bff1a6c6cf74bd4a994bb9cb17ee121, type: 2}
+  - playerSAttack: {fileID: 11400000, guid: 5740fbbd3a9baa44c8a79ef0739f7f87, type: 2}
+  - playerSDefense: {fileID: 11400000, guid: 8b921945b8d60594199dade02a28567e, type: 2}
   - musicVolume: {fileID: 11400000, guid: 57e0a641820786e489b71b139ade22e3, type: 2}
   - sfxVolume: {fileID: 11400000, guid: f0ee9cb5274ed5c448393806bd0307f0, type: 2}
   executionOrder: 0

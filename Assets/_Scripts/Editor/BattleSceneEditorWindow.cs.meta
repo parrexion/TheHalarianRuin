@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3263c6d673a2f584a9281e32fc1ab0f0
+timeCreated: 1532479514
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - battleUUID: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
+  - currentArea: {fileID: 11400000, guid: 12a76b9ecb4623145b88105a05db7654, type: 2}
+  - playerArea: {fileID: 11400000, guid: 97c8c168a575ed94fac5f33ca22a66d5, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
