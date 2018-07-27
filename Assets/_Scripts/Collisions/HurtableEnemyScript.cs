@@ -14,6 +14,7 @@ public class HurtableEnemyScript : MonoBehaviour {
 	public EnemyGroup group;
 	public Transform damageNumbers;
 	public BoolVariable invincibleEnemy;
+	public BoolVariable onehitKO;
 
 	private BattleGUIController battleGUI;
 	private SpriteRenderer spriteRenderer;
@@ -50,7 +51,7 @@ public class HurtableEnemyScript : MonoBehaviour {
 		if (invincibleEnemy.value)
 			return;
 
-		group.TakeDamage(projectile.damage);
+		group.TakeDamage((onehitKO.value) ? group.maxhp : projectile.damage);
 
 		Transform t = Instantiate(damageNumbers);
 		t.position = transform.position;

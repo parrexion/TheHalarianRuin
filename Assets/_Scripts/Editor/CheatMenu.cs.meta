@@ -6,11 +6,13 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - alwaysEscapeBattle: {fileID: 11400000, guid: 2481b0d3b2287904185fc9dd3a70ae05,
+      type: 2}
+  - onehitKO: {fileID: 11400000, guid: b4f293b8ee171a64daf1cfcd8ee30021, type: 2}
   - invinciblePlayers: {fileID: 11400000, guid: a28dbc5215ba24b409aa954822f85470,
       type: 2}
   - invincibleEnemies: {fileID: 11400000, guid: d6cb97b18f8b43346aaf3906adc9814f,
-      type: 2}
-  - alwaysEscapeBattle: {fileID: 11400000, guid: 2481b0d3b2287904185fc9dd3a70ae05,
       type: 2}
   - speedHack: {fileID: 11400000, guid: 916b3a23fd3a4b84ab68ba940aa798ae, type: 2}
   - alwaysSkippableDialogue: {fileID: 11400000, guid: 9ce7a4058c547224eb9a04691fb882ff,

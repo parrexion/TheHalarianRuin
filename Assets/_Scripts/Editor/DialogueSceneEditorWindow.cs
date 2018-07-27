@@ -12,7 +12,10 @@ public class DialogueSceneEditorWindow : EditorWindow {
 
 	public AreaIntVariable currentArea;
 	public AreaIntVariable playerArea;
-	public DialogueEntry entry;
+
+	[Header("Story Values")]
+	public BoolVariable useFollower;
+	public BoolVariable playAsAndroid;
 
 	int[] indexList = new int[]{0,2,3,1,4};
 	int[] reverseIndexList = new int[]{0,3,1,2,4};
@@ -27,7 +30,7 @@ public class DialogueSceneEditorWindow : EditorWindow {
 	}
 
 	void HeaderStuff() {
-		EditorGUILayout.SelectableLabel("Selected Dialogue UUID: " + dialogueUUID.value, EditorStyles.boldLabel);
+		GUILayout.Label("Selected Dialogue UUID: " + dialogueUUID.value, EditorStyles.boldLabel);
 
 		selectedDialogue = (DialogueEntry)EditorGUILayout.ObjectField("Dialogue", selectedDialogue, typeof(DialogueEntry),false);
 
@@ -56,10 +59,14 @@ public class DialogueSceneEditorWindow : EditorWindow {
 
 		GUILayout.Space(25);
 
-		if (GUILayout.Button("Convert Dialogue")) {
-			GenerateActionsFromFrame(selectedDialogue);
-			Debug.Log("Conversion finished!");
-		}
+		// if (GUILayout.Button("Convert Dialogue")) {
+		// 	GenerateActionsFromFrame(selectedDialogue);
+		// 	Debug.Log("Conversion finished!");
+		// }
+
+		GUILayout.Label("Story values: " + dialogueUUID.value, EditorStyles.boldLabel);
+		useFollower.value = EditorGUILayout.Toggle("Use follower", useFollower.value);
+		playAsAndroid.value = EditorGUILayout.Toggle("Play as android", playAsAndroid.value);
 	}
 
 	private void GenerateActionsFromFrame(DialogueEntry entry) {

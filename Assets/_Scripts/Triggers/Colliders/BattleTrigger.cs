@@ -7,10 +7,45 @@ public class BattleTrigger : OWTrigger {
 
 	public BattleEntry battle;
 	public StringVariable battleUuid;
+	public float fadeInTime;
+
+	public bool spawning;
+	private float currentTime;
+	private Color invisibleColor = new Color(1,1,1,0);
 
 
+	private void Start() {
+		currentTime = 0;
+		spawning = (fadeInTime != 0);
+		Debug.Log("Startin:  " + fadeInTime + "  :  " + name);
+		if (spawning) {
+			sprite.color = invisibleColor;
+			BoxCollider2D boxy = GetComponent<BoxCollider2D>();
+			boxy.enabled = false;
+		}
+	}
+
+	private void Update() {
+		if (!spawning)
+			return;
+
+		currentTime += Time.deltaTime;
+		float diff = currentTime / fadeInTime * 0.5f;
+		sprite.color = Color.Lerp(invisibleColor, Color.white, diff);
+		if (currentTime > fadeInTime) {
+			spawning = false;
+			sprite.color = Color.white;
+			BoxCollider2D boxy = GetComponent<BoxCollider2D>();
+			boxy.enabled = true;
+		}
+	}
+// 1hit-ko cheat
 	public override void Trigger() {
+		if (spawning)
+			return;
+
 		Debug.Log("Start battle: "+ battle.entryName);
+		Debug.Log("Fadein:  " + fadeInTime + "  :  " + name);
 		paused.value = true;
 		battleUuid.value = battle.uuid;
 

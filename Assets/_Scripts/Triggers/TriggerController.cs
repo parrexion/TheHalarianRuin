@@ -74,6 +74,11 @@ public class TriggerController : MonoBehaviour {
     /// <param name="uuid"></param>
     /// <returns></returns>
     public bool CheckActive(string uuid, bool alwaysActive) {
+        if (uuid == "-1") {
+            Debug.Log("ALways:  " + alwaysActive);
+            return alwaysActive;
+        }
+            
         if (triggerStates.ContainsKey(uuid))
             return triggerStates[uuid];
 

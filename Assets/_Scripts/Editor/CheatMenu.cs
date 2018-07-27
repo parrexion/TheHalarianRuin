@@ -8,9 +8,10 @@ using UnityEngine.SceneManagement;
 public class CheatMenu : EditorWindow {
 
 	[Header("Battle values")]
+	public BoolVariable alwaysEscapeBattle;
+	public BoolVariable onehitKO;
 	public BoolVariable invinciblePlayers;
 	public BoolVariable invincibleEnemies;
-	public BoolVariable alwaysEscapeBattle;
 
 	[Header("Overworld values")]
 	public FloatVariable speedHack;
@@ -49,6 +50,7 @@ public class CheatMenu : EditorWindow {
 		GUILayout.Label("Battle cheats", EditorStyles.boldLabel);
 
 		alwaysEscapeBattle.value = GUILayout.Toggle(alwaysEscapeBattle.value, "Enable escape from all battles");
+		onehitKO.value = GUILayout.Toggle(onehitKO.value, "1-hit KO enemies");
 		invinciblePlayers.value = GUILayout.Toggle(invinciblePlayers.value, "Invincible players");
 		invincibleEnemies.value = GUILayout.Toggle(invincibleEnemies.value, "Invincible enemies");
 	}
@@ -71,7 +73,7 @@ public class CheatMenu : EditorWindow {
 	void DrawDialogueCheats() {
 		GUILayout.Label("Dialogue cheats", EditorStyles.boldLabel);
 
-		alwaysSkippableDialogue.value = GUILayout.Toggle(alwaysSkippableDialogue.value, "Skippable dialogue");
+		alwaysSkippableDialogue.value = GUILayout.Toggle(alwaysSkippableDialogue.value, "Skippable dialogue (Key: S)");
 	}
 
 	// void Hotkeys() {

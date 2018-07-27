@@ -35,10 +35,11 @@ public abstract class OWTrigger : MonoBehaviour {
 	/// to the trigger list.
 	/// </summary>
 	/// <returns></returns>
-	IEnumerator CheckTrigger() {
+	public IEnumerator CheckTrigger() {
 		while(TriggerController.instance == null)
 			yield return null;
 
+        Debug.Log("Checking    " + name);
 		active = TriggerController.instance.CheckActive(uuid.uuid, alwaysActive);
 		if (areaSprite != null)
 			areaSprite.enabled = false;

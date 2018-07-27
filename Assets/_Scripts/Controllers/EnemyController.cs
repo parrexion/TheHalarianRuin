@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour {
 	// public ScrObjListVariable enemyLibrary;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
+	public BoolVariable onehitKO;
 	private BattleEntry be;
 	public bool initiated = false;
 
