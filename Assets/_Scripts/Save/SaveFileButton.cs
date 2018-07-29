@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class SaveFileButton : MonoBehaviour, IPointerClickHandler {
 
 	public GameObject emptyFile;
 	public GameObject saveStats;
+
+	public UnityEvent itemSelectedEvent;
 	
 	[Header("Save file data")]
 	public Text currentChapter;
@@ -30,7 +33,8 @@ public class SaveFileButton : MonoBehaviour, IPointerClickHandler {
 	}
 	
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-		if (controller != null)
+		if (controller != null) 
         	controller.SelectSaveFile(index);
+		itemSelectedEvent.Invoke();
     }
 }

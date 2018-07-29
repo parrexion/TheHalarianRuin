@@ -11,7 +11,7 @@ public class ShopTrigger : OWTrigger {
 
 	[Header("Shop Sign")]
 	public SpriteRenderer signSprite;
-	public ShopSignTrigger shopSignTrigger;
+	public PopupTrigger shopSignTrigger;
 
 
 	private void Start() {
@@ -31,8 +31,7 @@ public class ShopTrigger : OWTrigger {
 		signSprite.enabled = false;
 	}
 
-	public void EnterShop() {
-		Debug.Log("Entering shop...");
+	public override void IngameTrigger() {
 		paused.value = true;
 		currentArea.value = (int)Constants.SCENE_INDEXES.SHOP;
 		currentShopList.values = new ItemEntry[shopContentList.values.Length];

@@ -10,13 +10,14 @@ public class RandomBattleSpawner : MonoBehaviour {
 	public IntVariable fadeInTime;
 	public int spawnAmount = 1;
 
+	private List<Transform> spawnedTriggers = new List<Transform>();
 	private float spawnWidth;
 	private float spawnHeight;
 	private float triggerWidth;
 	private float triggerHeight;
 
 
-	private void Start () {
+	private void OnEnable() {
 		spawnWidth = spawnArea.size.x * 0.5f;
 		spawnHeight = spawnArea.size.y * 0.5f;
 		triggerWidth = triggerPrefab.localScale.x * 0.5f;
@@ -25,6 +26,13 @@ public class RandomBattleSpawner : MonoBehaviour {
 		for (int i = 0; i < spawnAmount; i++) {
 			SpawnBattle(i);
 		}
+	}
+
+	private void OnDisable() {
+		for (int i = 0; i < spawnedTriggers.Count; i++) {
+			Destroy(spawnedTriggers[i].gameObject);
+		}
+		spawnedTriggers.Clear();
 	}
 
 	private void SpawnBattle(int index) {
@@ -47,6 +55,7 @@ public class RandomBattleSpawner : MonoBehaviour {
 		bTrigger.spawning = true;
 
 		trigger.gameObject.SetActive(true);
+		spawnedTriggers.Add(trigger);
 	}
 
 }

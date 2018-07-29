@@ -24,6 +24,9 @@ public class Effect : MonoBehaviour {
 	private float deactivateTime;
 	private SpriteRenderer rend;
 
+	[Header("Other")]
+	public SfxEntry impactSound;
+
 
 	void Start () {
 		rend = GetComponent<SpriteRenderer>();

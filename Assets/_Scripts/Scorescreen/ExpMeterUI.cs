@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ExpMeterUI : MonoBehaviour {
@@ -19,6 +20,13 @@ public class ExpMeterUI : MonoBehaviour {
 
 	[Header("Bar Image")]
 	public Image valueImage;
+
+	[Header("Sounds")]
+	public float sfxDelayTime = 0.25f;
+	public SfxEntry gainExpSfx;
+	public SfxEntry levelupSfx;
+	public AudioVariable currentSfx;
+	public UnityEvent playSfxEvent;
 	
 
 	// Use this for initialization
@@ -38,22 +46,33 @@ public class ExpMeterUI : MonoBehaviour {
 
 		yield return new WaitForSeconds(startDelay);
 		float value = startExp;
+		float currentDelay = sfxDelayTime;
 
 		do {
 			currentAnimationTime += Time.deltaTime / animationDuration;
 			value = Mathf.Lerp(startExp,endExp,currentAnimationTime);
 			bool levelUp = expLevel.SetExp((int)value);
 			valueImage.fillAmount = expLevel.PercentToNext();
-
+			
+			currentDelay += Time.deltaTime / animationDuration;
+			
 			if (levelUp){
 				levelupText.SetActive(true);
 				valueImage.color = levelupColor;
 				valueImage.fillAmount = 1;
+				currentSfx.value = levelupSfx.clip;
+				playSfxEvent.Invoke();
 				yield return new WaitForSeconds(1);
 				valueImage.fillAmount = 0;
 				valueImage.color = normalColor;
 				levelupText.SetActive(false);
 			}
+			else if (currentDelay > sfxDelayTime){
+				currentSfx.value = gainExpSfx.clip;
+				currentDelay = 0;
+				playSfxEvent.Invoke();
+			}
+
 			yield return null;
 		} while (value < endExp);
 

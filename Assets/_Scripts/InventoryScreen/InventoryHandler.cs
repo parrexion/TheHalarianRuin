@@ -18,6 +18,8 @@ public class InventoryHandler : MonoBehaviour {
 	public int rowLength;
 
 	public UnityEvent itemsChanged;
+	public UnityEvent buyItemEvent;
+	public UnityEvent sellItemEvent;
 
 
 	/// <summary>
@@ -58,23 +60,25 @@ public class InventoryHandler : MonoBehaviour {
 
 	/// <summary>
 	/// Swaps the content of two inventory slots with the given ids.
+	/// Returns a bool that shows if it was a success.
 	/// </summary>
 	/// <param name="start"></param>
 	/// <param name="drop"></param>
-	public void Swap(SlotID start, SlotID drop) {
+	public bool Swap(SlotID start, SlotID drop) {
 		if (start.type != SlotType.EQUIP && start.type != SlotType.BAG)
-			return;
+			return false;
 
 
 		// Debug.Log(string.Format("Swappy: {0} <> {1}", posA, posB));
 		ItemEntry temp = GetItem(start);
-		if (!drop.CanUse(temp))
-			return;
+		if (!drop.CanUse(temp) || !start.CanUse(GetItem(drop)))
+			return false;
 
 		SetItem(start,GetItem(drop));
 		SetItem(drop,temp);
 
 		itemsChanged.Invoke();
+		return true;
 	}
 
 	/// <summary>
@@ -104,6 +108,7 @@ public class InventoryHandler : MonoBehaviour {
 			Debug.Log("Bought the item");
 			SetItem(dropped,item);
 			// AddBag(item);
+			buyItemEvent.Invoke();
 			itemsChanged.Invoke();
 		}
 	}
@@ -120,6 +125,7 @@ public class InventoryHandler : MonoBehaviour {
 		currentMoney.value += item.cost / 2;
 		Remove(start);
 		Debug.Log("Sold the item");
+		sellItemEvent.Invoke();
 		itemsChanged.Invoke();
 	}
 

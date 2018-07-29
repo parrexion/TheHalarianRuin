@@ -34,9 +34,15 @@ public class NRangeTargetCircleEffect : AttackEffect {
 		projectile.isEnemy = true;
 		projectile.multiHit = attackScript.multihit;
 		projectile.SetDamage(attackScript.damage, 0, 1);
+		projectile.impactSound = controller.values.attackImpactSfx;
 		projectile.SetMovement(attackScript.speed, info.rotationInternal);
 
 		attackScript.bgui.effectList.Add(projectile);
+
+		if (controller.values.attackActivateSfx != null) {
+			controller.currentSfx.value = controller.values.attackActivateSfx.clip;
+			controller.playSfxEvent.Invoke();
+		}
 
 		float startPoint = Random.Range(0,2*Mathf.PI);
 		for (int i = 0; i < circleProjectiles; i++) {

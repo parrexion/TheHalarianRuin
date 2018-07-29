@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public SlotID start_id;
 	public ItemEntryReference selectedItem;
 	public Transform invParent;
+	public UnityEvent itemSelectedEvent;
 
 	private Image image;
 
@@ -60,8 +62,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	#region IPointerDownHandler implementation
 
 	public void OnPointerDown(PointerEventData eventData) {
-		if (slot.slotID.type != SlotType.DESTROY && slot.slotID.type != SlotType.SELL)
+		if (slot.slotID.type != SlotType.DESTROY && slot.slotID.type != SlotType.SELL) {
 			selectedItem.reference = slot.item;
+			if (selectedItem.reference != null)
+				itemSelectedEvent.Invoke();
+		}
 	}
 
 	#endregion

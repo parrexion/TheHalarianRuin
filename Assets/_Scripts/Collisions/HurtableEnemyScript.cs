@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Collider script for enemies which reacts to player projectiles.
@@ -15,6 +16,10 @@ public class HurtableEnemyScript : MonoBehaviour {
 	public Transform damageNumbers;
 	public BoolVariable invincibleEnemy;
 	public BoolVariable onehitKO;
+
+	[Header("Sounds")]
+	public AudioVariable currentSfx;
+	public UnityEvent playSfxEvent;
 
 	private BattleGUIController battleGUI;
 	private SpriteRenderer spriteRenderer;
@@ -59,6 +64,11 @@ public class HurtableEnemyScript : MonoBehaviour {
 		dnd.damage = projectile.damage;
 		battleGUI.damages.Add(dnd);
 		id++;
+
+		if (projectile.impactSound != null) {
+			currentSfx.value = projectile.impactSound.clip;
+			playSfxEvent.Invoke();
+		}
 	}
 
 	/// <summary>

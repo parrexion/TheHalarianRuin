@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ContainerModule : MonoBehaviour {
 
 	public bool active = true;
 	public Module module;
+
+	[Header("Sounds")]
+	public AudioVariable currentSfx;
+	public UnityEvent playSfx;
 
 	[HideInInspector] public Rect slotPos;
 	[HideInInspector] public Rect slotFilled;
@@ -59,8 +64,21 @@ public class ContainerModule : MonoBehaviour {
 		return module.CanActivate(info);
 	}
 
+	/// <summary>
+	/// Creates the effects and projectiles defined in the module itself.
+	/// </summary>
+	/// <param name="info"></param>
+	/// <param name="attackValue"></param>
 	public void CreateEffect(MouseInformation info, int attackValue) {
 		module.CreateEffects(info, attackValue);
+	}
+
+	/// <summary>
+	/// Plays the activation sfx for the module.
+	/// </summary>
+	public void PlayActivationSfx() {
+		currentSfx.value = module.activationSound.clip;
+		playSfx.Invoke();
 	}
 
 	/// <summary>

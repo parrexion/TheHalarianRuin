@@ -21,6 +21,7 @@ public class EffectSingleProjectileMouseDirection : ModuleEffect {
 		projectile.steps = values.effectSteps;
 		projectile.multiHit = values.multihit;
 		projectile.SetDamage(values.damage, attackValue, values.baseDamageScale);
+		projectile.impactSound = values.impactSound;
 		projectile.SetMovement(values.projectileSpeed, info.rotationPlayer);
 
 		return true;

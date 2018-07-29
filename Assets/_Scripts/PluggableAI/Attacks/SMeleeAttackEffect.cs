@@ -31,8 +31,14 @@ public class SMeleeAttackEffect : AttackEffect {
 		projectile.multiHit = false;
 		projectile.multiHit = attackScript.multihit;
 		projectile.SetDamage(attackScript.damage, 0, 1);
+		projectile.impactSound = controller.values.attackImpactSfx;
 		projectile.SetMovement(attackScript.speed, info.rotationInternal);
 
 		attackScript.bgui.effectList.Add(projectile);
+
+		if (controller.values.attackActivateSfx != null) {
+			controller.currentSfx.value = controller.values.attackActivateSfx.clip;
+			controller.playSfxEvent.Invoke();
+		}
 	}
 }

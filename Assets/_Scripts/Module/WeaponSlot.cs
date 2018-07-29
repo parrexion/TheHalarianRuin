@@ -166,6 +166,7 @@ public class WeaponSlot : MonoBehaviour {
 			if (containerModules[i].CanActivate(mouseInfo)) {
 				shootCooldown = containerModules[i].module.delay;
 				containerModules[i].reduceCharge();
+				containerModules[i].PlayActivationSfx();
 				containerModules[i].CreateEffect(mouseInfo, playerAttack.value);
 				return true;
 			}

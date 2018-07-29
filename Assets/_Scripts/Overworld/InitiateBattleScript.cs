@@ -14,8 +14,16 @@ public class InitiateBattleScript : MonoBehaviour {
 	public BoolVariable paused;
 	public AreaIntVariable currentArea;
 
+	[Header("Dialogue")]
+	public StringVariable currentDialogueText;
+	public GameObject dialogueObject;
+	public Text dialogueTextBox;
+
 	[Header("Sound")]
 	public SfxEntry battleStartedSfx;
+	public SfxEntry changeAreaFadeSfx;
+	public SfxEntry dialogueStartedSfx;
+	public SfxEntry enterDoorSfx;
 	public AudioVariable musicClip;
 	public AudioVariable sfxClip;
 
@@ -35,7 +43,40 @@ public class InitiateBattleScript : MonoBehaviour {
 
 		musicClip.value = null;
 		playMusicEvent.Invoke();
-		sfxClip.value = (battleStartedSfx != null) ? battleStartedSfx.clip : null;
+		sfxClip.value = battleStartedSfx.clip;
 		playSfxEvent.Invoke();
+	}
+
+	/// <summary>
+	/// Plays the dialogue transition sound when a dialogue is triggered.
+	/// </summary>
+	public void StartDialogue() {
+		sfxClip.value = dialogueStartedSfx.clip;
+		playSfxEvent.Invoke();
+	}
+
+	/// <summary>
+	/// Plays the enter door sound sound when the player enters a door or a shop.
+	/// </summary>
+	public void EnterDoor() {
+		sfxClip.value = enterDoorSfx.clip;
+		playSfxEvent.Invoke();
+	}
+
+	/// <summary>
+	/// Plays the dialogue transition sound when a dialogue is triggered.
+	/// </summary>
+	public void ChangeWithFadeOut() {
+		sfxClip.value = changeAreaFadeSfx.clip;
+		playSfxEvent.Invoke();
+	}
+
+	/// <summary>
+	/// Shows the simple dialogue line.
+	/// </summary>
+	public void ShowSingleDialogue() {
+		paused.value = true;
+		dialogueTextBox.text = currentDialogueText.value;
+		dialogueObject.SetActive(true);
 	}
 }

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class TalkTrigger : OWTrigger {
 
 	public SpriteRenderer talkSprite;
-	public ChatBubbleTrigger chat;
+	public PopupTrigger chat;
 	public DialogueEntry dialogue;
 	public StringVariable dialogueUuid;
 
@@ -24,7 +24,7 @@ public class TalkTrigger : OWTrigger {
 		talkSprite.enabled = false;
 	}
 
-	public void StartTalking() {
+	public override void IngameTrigger() {
 		Debug.Log("Start dialogue: "+ dialogue.name);
 		dialogueUuid.value = dialogue.uuid;
 		startEvent.Invoke();

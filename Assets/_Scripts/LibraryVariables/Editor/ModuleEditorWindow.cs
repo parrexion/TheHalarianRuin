@@ -201,6 +201,13 @@ EditorGUIUtility.labelWidth = 100;
 	}
 
 	void DrawActivationPart() {
+		//Sound effects
+		GUILayout.Label("Sound effects", EditorStyles.boldLabel);
+		moduleBase.activationSound = (SfxEntry)EditorGUILayout.ObjectField("Activation Sfx", moduleBase.activationSound, typeof(SfxEntry),false);
+		moduleBase.impactSound = (SfxEntry)EditorGUILayout.ObjectField("Impact Sfx", moduleBase.impactSound, typeof(SfxEntry),false);
+
+		GUILayout.Space(10);
+
 		//Activation values
 		GUILayout.Label("Activation values", EditorStyles.boldLabel);
 		moduleBase.moduleType = (Module.ModuleType)EditorGUILayout.EnumPopup("Module Type",moduleBase.moduleType);

@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class StateController : MonoBehaviour {
 
 	public enum WaitStates {MOVE,CHASE,FLEE,RANGE}
 
+	[Header("Enemy Values")]
+	//Most of the stats
+	public EnemyEntry values;
 	public int enemyid;
 
 	[Space(10)]
@@ -27,6 +31,12 @@ public abstract class StateController : MonoBehaviour {
 	public AnimationScript animScript;
 	public AnimationInformation animInfo;
 
+	[Space(5)]
+
+	[Header("Sounds")]
+	public AudioVariable currentSfx;
+	public UnityEvent playSfxEvent;
+
 	[Space(10)]
 
 	[Header("AI State Machine")]
@@ -34,6 +44,7 @@ public abstract class StateController : MonoBehaviour {
 	public State currentState;
 	public State remainState;
 	[HideInInspector] public float stateTimeElapsed = 0;
+	public bool firstTime = true;
 	//Waiting
 	public bool finishedWaiting = false;
 	public float waitTime = 0;
@@ -41,12 +52,6 @@ public abstract class StateController : MonoBehaviour {
 	[HideInInspector] public AttackScript attack;
 	public bool hasAttacked = false;
 	//
-
-	[Space(10)]
-
-	[Header("Enemy Values")]
-	//Most of the stats
-	public EnemyEntry values;
 	
 
 	/// /////////////////////////////////////////////////////
@@ -70,6 +75,7 @@ public abstract class StateController : MonoBehaviour {
 		animInfo = new AnimationInformation();
 
 		waitTime = 0;
+		firstTime = true;
 		startPosition = thisTransform.position;
 		currentWaitState = WaitStates.MOVE;
 	}
@@ -79,6 +85,7 @@ public abstract class StateController : MonoBehaviour {
 		if (paused.value)
 			return;
 
+		firstTime = (stateTimeElapsed == 0);
 		stateTimeElapsed += (useSlowTime.value && !slowSoldierSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 		currentState.UpdateState(this);
 		UpdateAnimation();

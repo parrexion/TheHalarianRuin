@@ -38,6 +38,13 @@ public class EnemyEntry : ScrObjLibraryEntry {
 
 	[Space(5)]
 
+    [Header("Sounds")]
+    public SfxEntry attackChargeSfx;
+    public SfxEntry attackActivateSfx;
+    public SfxEntry attackImpactSfx;
+
+	[Space(5)]
+
 	[Header("Reward")]
 	public int exp = 0;
 	public int money = 0;
@@ -65,6 +72,11 @@ public class EnemyEntry : ScrObjLibraryEntry {
         attackRate = 1f;
         attacks = 1;
         meleeTimeStartup = 0.5f;
+
+        //Sounds
+        attackChargeSfx = null;
+        attackActivateSfx = null;
+        attackImpactSfx = null;
 
         // Reward
         exp = 0;
@@ -97,6 +109,11 @@ public class EnemyEntry : ScrObjLibraryEntry {
         attackRate = ee.attackRate;
         attacks = ee.attacks;
         meleeTimeStartup = ee.meleeTimeStartup;
+
+        //Sounds
+        attackChargeSfx = ee.attackChargeSfx;
+        attackActivateSfx = ee.attackActivateSfx;
+        attackImpactSfx = ee.attackImpactSfx;
 
         // Reward
         exp = ee.exp;

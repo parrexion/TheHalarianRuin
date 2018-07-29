@@ -17,7 +17,6 @@ public class BattleTrigger : OWTrigger {
 	private void Start() {
 		currentTime = 0;
 		spawning = (fadeInTime != 0);
-		Debug.Log("Startin:  " + fadeInTime + "  :  " + name);
 		if (spawning) {
 			sprite.color = invisibleColor;
 			BoxCollider2D boxy = GetComponent<BoxCollider2D>();
@@ -26,7 +25,7 @@ public class BattleTrigger : OWTrigger {
 	}
 
 	private void Update() {
-		if (!spawning)
+		if (!spawning || paused.value)
 			return;
 
 		currentTime += Time.deltaTime;
@@ -39,13 +38,11 @@ public class BattleTrigger : OWTrigger {
 			boxy.enabled = true;
 		}
 	}
-// 1hit-ko cheat
+
 	public override void Trigger() {
 		if (spawning)
 			return;
 
-		Debug.Log("Start battle: "+ battle.entryName);
-		Debug.Log("Fadein:  " + fadeInTime + "  :  " + name);
 		paused.value = true;
 		battleUuid.value = battle.uuid;
 

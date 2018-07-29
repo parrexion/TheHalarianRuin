@@ -168,6 +168,11 @@ public class EnemyEditorWindow {
         enemyValues.attacks = EditorGUILayout.IntField("Attacks", enemyValues.attacks);
         enemyValues.meleeTimeStartup = EditorGUILayout.FloatField("Melee time startup", enemyValues.meleeTimeStartup);
 
+		GUILayout.Label("Sounds", EditorStyles.boldLabel);
+		enemyValues.attackChargeSfx = (SfxEntry)EditorGUILayout.ObjectField("Charging Sfx", enemyValues.attackChargeSfx, typeof(SfxEntry),false);
+		enemyValues.attackActivateSfx = (SfxEntry)EditorGUILayout.ObjectField("Attack Sfx", enemyValues.attackActivateSfx, typeof(SfxEntry),false);
+		enemyValues.attackImpactSfx = (SfxEntry)EditorGUILayout.ObjectField("Impact Sfx", enemyValues.attackImpactSfx, typeof(SfxEntry),false);
+
         GUILayout.Label("Reward", EditorStyles.boldLabel);
         enemyValues.exp = EditorGUILayout.IntField("Exp yield", enemyValues.exp);
         enemyValues.money = EditorGUILayout.IntField("Money yield", enemyValues.money);

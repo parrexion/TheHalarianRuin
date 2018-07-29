@@ -26,6 +26,7 @@ public class EffectSingleProjectileAtPosition : ModuleEffect {
 		projectile.steps = values.effectSteps;
 		projectile.multiHit = values.multihit;
 		projectile.SetDamage(values.damage, attackValue, values.baseDamageScale);
+		projectile.impactSound = values.impactSound;
 		projectile.SetMovement(values.projectileSpeed, info.rotationInternal);
 
 		MainControllerScript.instance.battleGUI.effectList.Add(projectile);

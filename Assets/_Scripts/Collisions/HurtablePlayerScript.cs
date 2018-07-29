@@ -16,8 +16,13 @@ public class HurtablePlayerScript : HurtableBaseScript {
 	public BoolVariable invinciblePlayer;
 	public bool canBeHurt = true;
 
+	[Header("Sounds")]
+	public AudioVariable currentSfx;
+
+	[Header("Events")]
 	public UnityEvent playerDiedEvent;
 	public UnityEvent takenDamageEvent;
+	public UnityEvent playSfxEvent;
 
 
 	/// <summary>
@@ -42,8 +47,13 @@ public class HurtablePlayerScript : HurtableBaseScript {
 		defense = playerDefense.value;
 		int dmg = TakeDamage(projectile.damage);
 		damageTaken.value += dmg;
-		if (dmg > 0)
+		if (dmg > 0) {
 			takenDamageEvent.Invoke();
+			if (projectile.impactSound != null) {
+				currentSfx.value = projectile.impactSound.clip;
+				playSfxEvent.Invoke();
+			}
+		}
 
 		if (damageTaken.value + otherDamageTaken.value >= playerMaxHealth.value)
 			Die();

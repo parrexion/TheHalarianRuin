@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 /// <summary>
@@ -25,6 +26,8 @@ public class SlotHandler : MonoBehaviour, IDropHandler {
 
 	private DragHandler dragHandler;
 	private InventorySlot slot;
+
+	public UnityEvent itemDroppedEvent;
 
 
 	void Start() {
@@ -55,7 +58,8 @@ public class SlotHandler : MonoBehaviour, IDropHandler {
 				invContainer.BuyItem(startID, slot.slotID);
 			}
 			else {
-				invContainer.Swap(startID,slot.slotID);
+				if (invContainer.Swap(startID,slot.slotID))
+					itemDroppedEvent.Invoke();
 			}
 		}
 	}

@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SoldierGridController : MonoBehaviour {
+
+	const float DELAY_PLAYER_HURT = 0.5f;
 
 	[Header("Game speed")]
 	public BoolVariable paused;
@@ -39,7 +42,12 @@ public class SoldierGridController : MonoBehaviour {
 	public HurtablePlayerScript hurtScript;
 	private float hurting = 0;
 
-	const float delayPlayerHurt = 0.5f;
+	[Header("Sounds")]
+	public SfxEntry basicActivationSound;
+	public SfxEntry specialActivationSound;
+	public AudioVariable currentSfx;
+	public UnityEvent playSfxEvent;
+
 
 
 	// Use this for initialization
@@ -232,6 +240,10 @@ public class SoldierGridController : MonoBehaviour {
 			shotTransform.position = dv.entityHit.position + new Vector3(Random.Range(-0.25f,0.25f),Random.Range(-0.25f,0.25f),0);
 			balanceController.TriggerNormal();
 		}
+		if (dmgs.Count > 0){
+			currentSfx.value = basicActivationSound.clip;
+			playSfxEvent.Invoke();
+		}
 	}
 
 	//Creates a stronger attack when the end of a branch is reached.
@@ -251,6 +263,10 @@ public class SoldierGridController : MonoBehaviour {
 			var shotTransform = Instantiate(lightningProjectile) as Transform;
 			shotTransform.GetComponent<Projectile>().SetDamage(dv.GetDamage(),soldierAttack.value,1);
 			shotTransform.position = enemy.position;
+		}
+		if (dmgs.Count > 0){
+			currentSfx.value = specialActivationSound.clip;
+			playSfxEvent.Invoke();
 		}
 	}
 

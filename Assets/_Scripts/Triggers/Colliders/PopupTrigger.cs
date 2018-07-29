@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChatBubbleTrigger : MonoBehaviour {
+public class PopupTrigger : MonoBehaviour {
 
-	public TalkTrigger interact;
+	public OWTrigger interact;
 	public bool active = false;
 	
 	void OnMouseDown() {
         if (!active)
 			return;
 
-		interact.StartTalking();
+		interact.IngameTrigger();
     }
 }

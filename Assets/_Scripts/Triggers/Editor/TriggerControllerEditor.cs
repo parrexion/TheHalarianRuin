@@ -84,7 +84,7 @@ public class TriggerControllerEditor : Editor {
             for (int j = 0; j < uuids.Length; j++) {
                 if (foundIDs.ContainsKey(uuids[j].uuid)) {
                     Debug.LogWarning(string.Format("Duplicate key: {0}", uuids[j].uuid));
-                    uuids[i].uuid = System.Guid.NewGuid().ToString();
+                    uuids[j].uuid = System.Guid.NewGuid().ToString();
                     changed = true;
                 }
                 else

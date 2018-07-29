@@ -45,6 +45,12 @@ public class Module : ItemEntry {
 	public float baseDamageScale = 1.0f;
 	public bool multihit = true;
 
+	[Space(10)]
+
+	[Header("Sounds")]
+	public SfxEntry activationSound;
+	public SfxEntry impactSound;
+
 
 	/// <summary>
 	/// Checks if all activation requirements are fullfilled.
@@ -111,6 +117,9 @@ public class Module : ItemEntry {
 		damage = 0;
 		baseDamageScale = 1f;
 		multihit = true;
+
+		activationSound = null;
+		impactSound = null;
 	}
 
 	/// <summary>
@@ -149,5 +158,8 @@ public class Module : ItemEntry {
 		damage = module.damage;
 		baseDamageScale = module.baseDamageScale;
 		multihit = module.multihit;
+
+		activationSound = module.activationSound;
+		impactSound = module.impactSound;
 	}
 }

@@ -137,6 +137,7 @@ public class AudioController : MonoBehaviour {
 			case Constants.SCENE_INDEXES.DIALOGUE:
 				return 2;
 			case Constants.SCENE_INDEXES.INVENTORY:
+			case Constants.SCENE_INDEXES.SHOP:
 				return 3;
 			case Constants.SCENE_INDEXES.MAINMENU:
 				return 4;
@@ -164,21 +165,23 @@ public class AudioController : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Plays a single audio clip.
-	/// </summary>
-	/// <param name="clip">Clip.</param>
-	private void PlaySingle(AudioClip clip) {
-		efxSource.clip = clip;
-		efxSource.Play();
-	}
-
-	/// <summary>
 	/// Plays the next sfx clip.
 	/// </summary>
 	/// <param name="clip">Clip.</param>
 	public void PlaySfx() {
 		if (sfxClip.value != null) {
 			efxSource.clip = sfxClip.value;
+			efxSource.Play();
+		}
+	}
+
+	/// <summary>
+	/// Plays the next sfx clip.
+	/// </summary>
+	/// <param name="clip">Clip.</param>
+	public void PlaySfxEntry(SfxEntry entry) {
+		if (entry != null && entry.clip != null) {
+			efxSource.clip = entry.clip;
 			efxSource.Play();
 		}
 	}

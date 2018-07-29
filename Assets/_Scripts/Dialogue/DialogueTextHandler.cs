@@ -13,9 +13,11 @@ public class DialogueTextHandler : MonoBehaviour {
 	public StringVariable shownDialogueText;
 	public Text dialogueTextBox;
 	public CursorBobber cursorBobber;
+	public FloatVariable blipSfxDelay;
 	// public GameObject choiceBox;
 	public UnityEvent nextFrameEvent;
 	public UnityEvent updateDialogueTextEvent;
+	public UnityEvent playDialogueBlipEvent;
 
 	private string[] words = new string[0];
 	private bool textUpdating = false;
@@ -92,6 +94,7 @@ public class DialogueTextHandler : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator TextUpdate() {
 		float timeInSeconds = .025f;
+		float currentDelay = 0;
 		textUpdating = true;
 
 		for (int j = 0; j < words.Length; j++) {
@@ -105,9 +108,15 @@ public class DialogueTextHandler : MonoBehaviour {
 				currentDialogue += "\n";
 			for (int i = 0; i < words[j].Length; i++) {
 				currentDialogue += words[j][i];
+				currentDelay += timeInSeconds;
+				if (currentDelay >= blipSfxDelay.value) {
+					currentDelay -= blipSfxDelay.value;
+					playDialogueBlipEvent.Invoke();
+				}
 				yield return new WaitForSeconds(timeInSeconds);
 			}
 			currentDialogue += ' ';
+
 			yield return new WaitForSeconds(timeInSeconds);
 		}
 		if (stopText) {
