@@ -5,11 +5,12 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Actions/Flee")]
 public class FleeAction : Action {
 
-	public override void Act (StateController controller) {
+
+	public override void Act (BasicStateMachine controller) {
 		Flee(controller);
 	}
 
-	private void Flee(StateController controller) {
+	private void Flee(BasicStateMachine controller) {
 
 		AStateController ncon = (AStateController)controller;
 
@@ -22,10 +23,7 @@ public class FleeAction : Action {
 			+ (new Vector2(direction.normalized.x * ncon.values.speed.x,
 							direction.normalized.y * ncon.values.speed.y) * speed);
 
-		ncon.movement.Set(
-			Mathf.Clamp(ncon.movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
-			Mathf.Clamp(ncon.movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_WIDTH));
-
+		ncon.movement = ncon.moveBounds.bounds.ClosestPoint(ncon.movement);
 		ncon.rigidBody.MovePosition(ncon.movement);
 
 		if (ncon.thisTransform.position.x < ncon.aPlayer.position.x)

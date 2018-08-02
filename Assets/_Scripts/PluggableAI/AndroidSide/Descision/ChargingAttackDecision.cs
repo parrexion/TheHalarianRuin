@@ -5,9 +5,10 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Decisions/ChargingAttack")]
 public class ChargingAttackDecision : Decision {
 
-	public override bool Decide(StateController controller) {
+	public override bool Decide(BasicStateMachine controller) {
 
-		if (controller.stateTimeElapsed >= controller.values.meleeTimeStartup) {
+		StateController con = (StateController)controller;
+		if (con.stateTimeElapsed >= con.values.meleeTimeStartup) {
 			return true;
 		}
 

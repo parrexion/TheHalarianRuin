@@ -24,8 +24,8 @@ public class DamageNumberDisplay : MonoBehaviour {
 		drawTop = (removeBattleSide.value != 1);
 		drawBottom = (removeBattleSide.value != 2);
 
-		rN = new Rect(-32,-32,32,32);
-		rS = new Rect(-32,-32,32,32);
+		rN = new Rect(-32,-32,64,32);
+		rS = new Rect(-32,-32,64,32);
 		SetupPositions();
 
 		style = new GUIStyle();

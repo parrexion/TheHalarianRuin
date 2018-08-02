@@ -5,32 +5,27 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Actions/RandomMove")]
 public class RandomMoveAction : Action {
 
-	public override void Act (StateController controller)
-	{
+	public override void Act(BasicStateMachine controller) {
 		Move(controller);
 	}
 
-	private void Move(StateController controller) {
+	private void Move(BasicStateMachine controller) {
 
-		AStateController ncon = (AStateController)controller;
-
-		if (ncon.moveToPoint == new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT)) {
-			float xpos = Random.Range(Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH);
-			float ypos = Random.Range(Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_HEIGHT,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_HEIGHT);
-			ncon.moveToPoint = new Vector2(xpos,ypos);
+		Bounds b = controller.moveBounds.bounds;
+		if (controller.moveToPoint == new Vector2(-999,-999)) {
+			float xpos = Random.Range(b.min.x, b.max.x);
+			float ypos = Random.Range(b.min.y, b.max.y);
+			controller.moveToPoint = new Vector2(xpos,ypos);
 		}
 
-		ncon.movement = Vector2.MoveTowards(ncon.thisTransform.position,ncon.moveToPoint,ncon.values.speed.x*Time.fixedDeltaTime);
+		controller.movement = Vector2.MoveTowards(controller.thisTransform.position,controller.moveToPoint,controller.moveSpeed*Time.fixedDeltaTime);
 
-		ncon.movement.Set(
-			Mathf.Clamp(ncon.movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
-			Mathf.Clamp(ncon.movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_WIDTH));
+		controller.movement = b.ClosestPoint(controller.movement);
+		controller.rigidBody.MovePosition(controller.movement);
 
-		ncon.rigidBody.MovePosition(ncon.movement);
-
-		if (ncon.thisTransform.position.x < ncon.moveToPoint.x)
-			ncon.moveDirection = 1;
+		if (controller.thisTransform.position.x < controller.moveToPoint.x)
+			controller.moveDirection = 1;
 		else
-			ncon.moveDirection = -1;
+			controller.moveDirection = -1;
 	}
 }

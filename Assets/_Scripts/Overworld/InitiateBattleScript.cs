@@ -17,7 +17,6 @@ public class InitiateBattleScript : MonoBehaviour {
 	[Header("Dialogue")]
 	public StringVariable currentDialogueText;
 	public GameObject dialogueObject;
-	public Text dialogueTextBox;
 
 	[Header("Sound")]
 	public SfxEntry battleStartedSfx;
@@ -30,6 +29,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	[Header("Events")]
 	public UnityEvent playMusicEvent;
 	public UnityEvent playSfxEvent;
+	public UnityEvent dialogueTextChanged;
 	
 
 	/// <summary>
@@ -75,8 +75,10 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// Shows the simple dialogue line.
 	/// </summary>
 	public void ShowSingleDialogue() {
+		if (paused.value)
+			return;
 		paused.value = true;
-		dialogueTextBox.text = currentDialogueText.value;
 		dialogueObject.SetActive(true);
+		dialogueTextChanged.Invoke();
 	}
 }

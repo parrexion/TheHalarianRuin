@@ -5,18 +5,18 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Decisions/Wait")]
 public class WaitDecision : Decision {
 
-	public StateController.WaitStates waitAction;
+	public WaitStates waitAction;
 
-	public override bool Decide(StateController controller) {
+	public override bool Decide(BasicStateMachine controller) {
 		controller.finishedWaiting = Wait(controller);
 		return controller.finishedWaiting;
 	}
 
 
-	private bool Wait(StateController controller) {
+	private bool Wait(BasicStateMachine controller) {
 
 		if (controller.waitTime == 0) {
-			controller.waitTime = Random.Range(controller.values.waitTimeLimits.minValue,controller.values.waitTimeLimits.maxValue);
+			controller.waitTime = Random.Range(controller.waitTimeLimits.minValue,controller.waitTimeLimits.maxValue);
 			controller.currentWaitState = controller.GetRandomWaitState();
 		}
 

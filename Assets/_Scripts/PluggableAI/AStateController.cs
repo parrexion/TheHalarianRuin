@@ -4,20 +4,6 @@ using UnityEngine;
 
 public class AStateController : StateController {
 
-	//Moving
-	private int lastTime = 0;
-	[HideInInspector] public int moveDirection;
-
-	//Chasing
-	[HideInInspector] public Vector2 movement;
-	//
-
-	//Move to point
-	[HideInInspector] public Vector2 moveToPoint = new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT);
-	//
-
-
-	/// /////////////////////////////////////////////////////
 
 	override protected void Start() {
 		base.Start();
@@ -32,7 +18,8 @@ public class AStateController : StateController {
 			moveDirection = 1;
 		else
 			moveDirection = -1;
-		moveToPoint = new Vector2(-5*Constants.ANDROID_BORDER_WIDTH,-5*Constants.ANDROID_BORDER_HEIGHT);
+		moveToPoint = new Vector2(-999,-999);
+		gameObject.layer = LayerMask.NameToLayer(((State.StateLayer)currentState.stateLayer).ToString());
 	}
 
 	override protected void UpdateAnimation() {
@@ -84,6 +71,6 @@ public class AStateController : StateController {
 	public override Vector3 GetRandomLocation() {
 		float dist = Random.Range(Constants.ENEMY_OFFSET_MIN_ANDROID, Constants.ENEMY_OFFSET_MAX_ANDROID);
 		Vector2 offset = Random.insideUnitCircle.normalized * dist;
-		return new Vector3(Constants.ANDROID_START_X + offset.x, Constants.ANDROID_START_Y + offset.y,0);
+		return new Vector3(moveBounds.bounds.center.x + offset.x, moveBounds.bounds.center.y + offset.y,0);
 	}
 }

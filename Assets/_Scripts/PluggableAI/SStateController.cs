@@ -5,7 +5,6 @@ using UnityEngine;
 public class SStateController : StateController {
 
 	[HideInInspector] public bool leftSide = false;
-	private int lastTime = 0;
 
 	/// /////////////////////////////////////////////////////
 

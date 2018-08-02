@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Actions/Melee")]
 public class MeleeAction : Action {
 
-	public override void Act (StateController controller) {
-		Attack(controller);
+	public override void Act (BasicStateMachine controller) {
+		Attack((StateController)controller);
 	}
 
 

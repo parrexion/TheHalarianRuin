@@ -14,7 +14,7 @@ public class EnemyEntry : ScrObjLibraryEntry {
 	[Space(5)]
 
 	[Header("AI Values")]
-	public List<StateController.WaitStates> waitStates = new List<StateController.WaitStates>();
+	public List<WaitStates> waitStates = new List<WaitStates>();
 	[MinMaxRangeAttribute(0.1f,10.0f)]
 	public RangedFloat waitTimeLimits = new RangedFloat(3f,5f);
 
@@ -61,7 +61,7 @@ public class EnemyEntry : ScrObjLibraryEntry {
         speed = new Vector2(0f,0f);
 
         // AI values
-        waitStates = new List<StateController.WaitStates>();
+        waitStates = new List<WaitStates>();
         waitTimeLimits = new RangedFloat(3f,5f);
         chaseTimeLimit = 30f;
         fleeDistance = 3f;
@@ -95,7 +95,7 @@ public class EnemyEntry : ScrObjLibraryEntry {
         speed = ee.speed;
 
         // AI values
-        waitStates = new List<StateController.WaitStates>();
+        waitStates = new List<WaitStates>();
         for (int i = 0; i < ee.waitStates.Count; i++) {
             waitStates.Add(ee.waitStates[i]);
         }

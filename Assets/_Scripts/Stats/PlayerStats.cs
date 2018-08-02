@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour {
 	#region Singleton
 	private static PlayerStats instance;
 
-	protected void Awake() {
+	private void Awake() {
 		if (instance != null) {
 			Destroy(gameObject);
 		}
@@ -118,6 +118,7 @@ public class PlayerStats : MonoBehaviour {
 	/// Recalculates the player's stats using the current equipment.
 	/// </summary>
 	public void RecalculateStats() {
+		CalculateExp();
 		ResetPlayerStats();
 
 		// Start by adding upp all base stats
@@ -222,7 +223,6 @@ public class PlayerStats : MonoBehaviour {
 		ingameDay.value = 1;
 		playedSeconds.value = 0;
 
-		CalculateExp();
 		RecalculateStats();
 
 		Debug.Log("NEWGAME");

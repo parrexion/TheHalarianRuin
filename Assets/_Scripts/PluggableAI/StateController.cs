@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class StateController : MonoBehaviour {
-
-	public enum WaitStates {MOVE,CHASE,FLEE,RANGE}
+public abstract class StateController : BasicStateMachine {
 
 	[Header("Enemy Values")]
 	//Most of the stats
@@ -15,7 +13,6 @@ public abstract class StateController : MonoBehaviour {
 	[Space(10)]
 
 	[Header("Game speed")]
-	public BoolVariable paused;
 	public BoolVariable useSlowTime;
 	public BoolVariable slowSoldierSide;
 	public FloatVariable slowAmount;
@@ -23,40 +20,21 @@ public abstract class StateController : MonoBehaviour {
 	[Header("Transforms")]
 	[HideInInspector] public Transform aPlayer;
 	[HideInInspector] public Transform sPlayer;
-	[HideInInspector] public Transform thisTransform;
-	[HideInInspector] public Rigidbody2D rigidBody;
 	public Vector2 startPosition;
 
-	[Header("Animations")]
-	public AnimationScript animScript;
-	public AnimationInformation animInfo;
+	//Attacking
+	[HideInInspector] public AttackScript attack;
 
 	[Space(5)]
 
 	[Header("Sounds")]
 	public AudioVariable currentSfx;
 	public UnityEvent playSfxEvent;
-
-	[Space(10)]
-
-	[Header("AI State Machine")]
-	public WaitStates currentWaitState;
-	public State currentState;
-	public State remainState;
-	[HideInInspector] public float stateTimeElapsed = 0;
-	public bool firstTime = true;
-	//Waiting
-	public bool finishedWaiting = false;
-	public float waitTime = 0;
-	//Attacking
-	[HideInInspector] public AttackScript attack;
-	public bool hasAttacked = false;
-	//
 	
 
 	/// /////////////////////////////////////////////////////
 
-	protected virtual void Start(){
+	protected virtual void Start() {
 		if (values == null) {
 			Debug.LogError("No enemy values could be found");
 		}
@@ -68,8 +46,6 @@ public abstract class StateController : MonoBehaviour {
 		if (go != null)
 			sPlayer = go.transform;
 
-		thisTransform = GetComponent<Transform>();
-		rigidBody = GetComponent<Rigidbody2D>();
 		attack = GetComponent<AttackScript>();
 
 		animInfo = new AnimationInformation();
@@ -78,10 +54,11 @@ public abstract class StateController : MonoBehaviour {
 		firstTime = true;
 		startPosition = thisTransform.position;
 		currentWaitState = WaitStates.MOVE;
+		waitTimeLimits = values.waitTimeLimits;
+		moveSpeed = values.speed.x;
 	}
 
-	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 		if (paused.value)
 			return;
 
@@ -91,20 +68,6 @@ public abstract class StateController : MonoBehaviour {
 		UpdateAnimation();
 	}
 
-	public void TransitionToState(State nextState) {
-		if (nextState != remainState) {
-			currentState = nextState;
-			stateTimeElapsed = 0;
-			waitTime = 0;
-			hasAttacked = false;
-			OnExitState();
-		}
-	}
-
-	protected abstract void OnExitState();
-
-	protected abstract void UpdateAnimation();
-
 	private void OnDrawGizmos() {
 		if (currentState != null) {
 			Gizmos.color = currentState.sceneGizmoColor;
@@ -112,7 +75,7 @@ public abstract class StateController : MonoBehaviour {
 		}
 	}
 
-	public WaitStates GetRandomWaitState(){
+	public override WaitStates GetRandomWaitState(){
 		int select = Random.Range(0,values.waitStates.Count);
 		return values.waitStates[select];
 	}

@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Actions/SwitchSide")]
 public class SwitchSideAction : Action {
 
-	public override void Act (StateController controller)
+	public override void Act(BasicStateMachine controller)
 	{
 		Move(controller);
 	}
 
-	private void Move(StateController controller) {
+	private void Move(BasicStateMachine controller) {
 
 		SStateController scon = (SStateController)controller;
 

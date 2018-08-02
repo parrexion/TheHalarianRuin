@@ -7,7 +7,7 @@ public class PopupTrigger : MonoBehaviour {
 	public OWTrigger interact;
 	public bool active = false;
 	
-	void OnMouseDown() {
+	public void Clicked() {
         if (!active)
 			return;
 

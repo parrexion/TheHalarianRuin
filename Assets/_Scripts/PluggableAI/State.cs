@@ -5,27 +5,30 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/State")]
 public class State : ScriptableObject {
 
+	public enum StateLayer { Player, Enemy, RunningEnemy, Projectile }
+
 	public Action[] actions;
 	public Transition[] transitions;
 	public Color sceneGizmoColor = Color.grey;
 	public AnimationScript.StateString stateString = AnimationScript.StateString.Idle;
+	public StateLayer stateLayer;
 
 
-	public void UpdateState(StateController controller){
+	public void UpdateState(BasicStateMachine controller){
 
 		DoActions(controller);
 		CheckTransitions(controller);
 	}
 
 
-	private void DoActions(StateController controller){
+	private void DoActions(BasicStateMachine controller){
 
 		for (int i = 0; i < actions.Length; i++) {
 			actions [i].Act(controller);
 		}
 	}
 
-	private void CheckTransitions(StateController controller) {
+	private void CheckTransitions(BasicStateMachine controller) {
 		for (int i = 0; i < transitions.Length; i++) {
 			bool decisionSucceeded = transitions[i].decision.Decide(controller);
 

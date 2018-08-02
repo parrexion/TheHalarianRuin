@@ -7,8 +7,14 @@ public class TalkSimpleTrigger : OWTrigger {
 
 	public SpriteRenderer talkSprite;
 	public PopupTrigger chat;
+
 	public string dialogueLine;
-	public StringVariable dialogueShownText;
+	public CharacterEntry character;
+
+	public StringVariable startText;
+	public StringVariable showText;
+	public StringVariable talkingName;
+	public ScrObjEntryReference talkingCharacter;
 
 
 	public override void Trigger() {
@@ -25,7 +31,10 @@ public class TalkSimpleTrigger : OWTrigger {
 	}
 
 	public override void IngameTrigger() {
-		dialogueShownText.value = dialogueLine;
+		startText.value = "";
+		showText.value = dialogueLine;
+		talkingName.value = character.entryName;
+		talkingCharacter.value = character;
 		startEvent.Invoke();
 	}
 }

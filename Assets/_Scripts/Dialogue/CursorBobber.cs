@@ -31,6 +31,9 @@ public class CursorBobber : MonoBehaviour {
 	}
 
 	public void ShowCursor(bool visible) {
+		if (cursor == null)
+			cursor = GetComponent<Image>();
+			
 		cursor.enabled = visible;
 	}
 

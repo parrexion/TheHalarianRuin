@@ -17,6 +17,7 @@ public class MoveHomingScript : MonoBehaviour {
 	public Vector2 moveToPosition = new Vector2(0, 0);
 	public Transform objectToFollow;
 	public int moveDirection = 0;
+	public BoxCollider2D moveBounds;
 
 	private Vector2 movement;
 	private Rigidbody2D rigidbodyComponent;
@@ -101,9 +102,8 @@ public class MoveHomingScript : MonoBehaviour {
 				moveDirection = 0;
 			}
 		}
-		movement.Set(
-			Mathf.Clamp(movement.x,Constants.ANDROID_START_X-Constants.ANDROID_BORDER_WIDTH,Constants.ANDROID_START_X+Constants.ANDROID_BORDER_WIDTH),
-			Mathf.Clamp(movement.y,Constants.ANDROID_START_Y-Constants.ANDROID_BORDER_HEIGHT,Constants.ANDROID_START_Y+Constants.ANDROID_BORDER_HEIGHT));
+		
+		movement = moveBounds.bounds.ClosestPoint(movement);
 		
 		rigidbodyComponent.MovePosition(movement);
 	}

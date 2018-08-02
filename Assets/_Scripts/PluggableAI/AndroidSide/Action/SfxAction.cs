@@ -10,8 +10,8 @@ public class SfxAction : Action {
 	public SfxType type;
 
 
-	public override void Act (StateController controller) {
-		PlaySfx(controller);
+	public override void Act(BasicStateMachine controller) {
+		PlaySfx((StateController)controller);
 	}
 
 

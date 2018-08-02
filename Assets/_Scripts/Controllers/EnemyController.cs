@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour {
 
-	// public ScrObjListVariable enemyLibrary;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
-	public BoolVariable onehitKO;
 	private BattleEntry be;
 	public bool initiated = false;
+
+	public BoxCollider2D aMoveBounds;
+	public BoxCollider2D sMoveBounds;
 
 	private static int enemyId = 0;
 	public int numberOfEnemies;
@@ -86,7 +87,7 @@ public class EnemyController : MonoBehaviour {
 		EnemyGroup group = new EnemyGroup(enemyId, ee.maxhp);
 		enemyId++;
 		group.deadEnemy = deadEnemy;
-		CreateN(ee,group);
+		CreateA(ee,group);
 		CreateS(ee,group);
 		return group;
 	}
@@ -97,7 +98,7 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="values"></param>
 	/// <param name="group"></param>
 	/// <param name="index"></param>
-	private void CreateN(EnemyEntry values, EnemyGroup group){
+	private void CreateA(EnemyEntry values, EnemyGroup group){
 		if (!spawnBottom)
 			return;
 		ggobjN = Instantiate(values.enemyModelN) as Transform;
@@ -105,12 +106,13 @@ public class EnemyController : MonoBehaviour {
 		HurtableEnemyScript hurt = ggobjN.GetComponent<HurtableEnemyScript>();
 		AttackScript attack = ggobjN.GetComponent<AttackScript>();
 
-		ggobjN.position = state.GetRandomLocation();
 		hurt.group = group;
 		state.enemyid = enemyId;
 		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
+		state.moveBounds = aMoveBounds;
 
+		ggobjN.position = state.GetRandomLocation();
 		group.bot = hurt;
 		group.nStateController = state;
 		group.nTransform = ggobjN;
@@ -136,14 +138,14 @@ public class EnemyController : MonoBehaviour {
 			state.leftSide = true;
 		}
 
-		ggobjS.position = state.GetRandomLocation();
-
 		hurt.group = group;
 
 		state.enemyid = enemyId;
 		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
+		state.moveBounds = sMoveBounds;
 
+		ggobjS.position = state.GetRandomLocation();
 		group.top = hurt;
 		group.sStateController = state;
 		group.sTransform = ggobjS;

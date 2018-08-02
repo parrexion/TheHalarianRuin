@@ -20,6 +20,9 @@ public class SaveController : MonoBehaviour {
     public UnityEvent startSavingEvent;
     public UnityEvent startLoadingEvent;
 
+	[Header("DEBUG")]
+	public BoolVariable forcePlayerPosition;
+
 	private string savePath = "";
 	private int fileChecks;
 
@@ -122,6 +125,7 @@ public class SaveController : MonoBehaviour {
 	/// </summary>
 	/// <param name="fileIndex"></param>
 	public void LoadSaveFile() {
+		forcePlayerPosition.value = false;
 		fileChecks = 0;
 		startLoadingEvent.Invoke();
 

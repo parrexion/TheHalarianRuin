@@ -9,10 +9,10 @@ public static class Constants {
 	public const int SCREEN_HEIGHT = 525;
 
 	//Battle arena
-	public const float ANDROID_BORDER_WIDTH = 6.1f;
-	public const float ANDROID_BORDER_HEIGHT = 3.5f;
-	public const float ANDROID_START_X = -5.0f;
-	public const float ANDROID_START_Y = 0f;
+	// public const float ANDROID_BORDER_WIDTH = 6.1f;
+	// public const float ANDROID_BORDER_HEIGHT = 3.5f;
+	// public const float ANDROID_START_X = -5.0f;
+	// public const float ANDROID_START_Y = 0f;
 	public const float SOLDIER_BORDER_WIDTH = 3.5f;
 	public const float SOLDIER_BORDER_HEIGHT = 2.25f;
 	public const float SOLDIER_START_X = 13.0f;

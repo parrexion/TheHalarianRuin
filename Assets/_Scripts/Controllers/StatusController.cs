@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class StatusController : MonoBehaviour {
 
 	[Header("Values - left side")]
-	public IntVariable ingameDay;
-	// public IntVariable playerLevel;
 	public IntVariable totalExp;
 	public IntVariable totalMoney;
+	public IntVariable currentChapter;
+	public AreaIntVariable currentArea;
 	public StringVariable playTime;
 
 	[Header("Values - right side")]
@@ -20,10 +20,11 @@ public class StatusController : MonoBehaviour {
 	public IntVariable sDefense;
 
 	[Header("References - left side")]
-	public Text dayText;
 	public Text levelText;
 	public Text expText;
 	public Text moneyText;
+	public Text chapterText;
+	public Text areaText;
 	public Text playtimeText;
 
 	[Header("References - right side")]
@@ -48,11 +49,11 @@ public class StatusController : MonoBehaviour {
 	void SetAllStats() {
 		ExpLevel expLevel = new ExpLevel(totalExp.value);
 
-		dayText.text = ingameDay.value.ToString();
-		// levelText.text = playerLevel.value.ToString();
 		levelText.text = expLevel.level.ToString();
 		expText.text = expLevel.restExp.ToString();
 		moneyText.text = totalMoney.value.ToString();
+		chapterText.text = ((Constants.CHAPTER)currentChapter.value).ToString();
+		areaText.text = ((Constants.SCENE_INDEXES)currentArea.value).ToString();
 		playtimeText.text = playTime.value;
 
 		healthText.text = maxHealth.value.ToString();

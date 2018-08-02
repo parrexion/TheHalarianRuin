@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Decisions/MeleeAttack")]
 public class MeleeAttackDecision : Decision {
 
-	public override bool Decide(StateController controller) {
+	public override bool Decide(BasicStateMachine controller) {
 
-		AStateController ncon = (AStateController)controller;
-		float dist = Vector2.Distance(controller.aPlayer.position,controller.thisTransform.position);
-		if (dist <= ncon.values.meleeRange) {
-			ncon.hasAttacked = false;
+		AStateController acon = (AStateController)controller;
+		float dist = Vector2.Distance(acon.aPlayer.position,acon.thisTransform.position);
+		if (dist <= acon.values.meleeRange) {
+			acon.hasAttacked = false;
 			return true;
 		}
 

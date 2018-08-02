@@ -56,32 +56,34 @@ public class DrawScoreScreen : MonoBehaviour {
 			return;
 		}
 
+		if (wonBattleState.value == "escape") {
+			expGained.value = 0;
+			moneyGained.value = 0;
+		}
+
 		ExpLevel startLevel = new ExpLevel(totalExp.value);
 		totalExp.value += expGained.value;
 		ExpLevel endLevel = new ExpLevel(totalExp.value);
-		if (startLevel != endLevel) {
+		if (startLevel.level != endLevel.level) {
 			playerStatsChangedEvent.Invoke();
 			if (endLevel.level == 2)
 				levelupTutorial.SetActive(true);
 		}
 
 		totalMoney.value += moneyGained.value;
-		SetValues();
+		SetTexts();
 		playMusicEvent.Invoke();
 	}
 
 	/// <summary>
 	/// Sets the values for all the texts in the score screen.
 	/// </summary>
-	private void SetValues(){
+	private void SetTexts(){
 
 		if (wonBattleState.value == "win") {
 			escapedText.text = "";
 		}
-		else if (wonBattleState.value == "escape") {
-			expGained.value = 0;
-			moneyGained.value = 0;
-		}
+
 		timeText.text = "Time:    "+ battleTime.value.ToString("F2") + "s";
 		if (playerMaxHealth.value == 0 || playerInvincible.value) {
 			healthText.text = "";

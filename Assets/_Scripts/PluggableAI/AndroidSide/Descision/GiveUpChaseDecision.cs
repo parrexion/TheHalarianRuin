@@ -6,7 +6,7 @@ using UnityEngine;
 public class GiveUpChaseDecision : Decision {
 
 
-	public override bool Decide(StateController controller) {
+	public override bool Decide(BasicStateMachine controller) {
 
 		AStateController ncon = (AStateController)controller;
 

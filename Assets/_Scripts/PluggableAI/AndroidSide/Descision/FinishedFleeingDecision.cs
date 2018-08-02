@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Decisions/FinishedDecision")]
 public class FinishedFleeingDecision : Decision {
 
-	public override bool Decide(StateController controller) {
+	public override bool Decide(BasicStateMachine controller) {
 
 		AStateController ncon = (AStateController)controller;
 
