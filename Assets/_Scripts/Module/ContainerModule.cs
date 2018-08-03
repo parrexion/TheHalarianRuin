@@ -9,7 +9,7 @@ public class ContainerModule : MonoBehaviour {
 	public Module module;
 
 	[Header("Sounds")]
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playSfx;
 
 	[HideInInspector] public Rect slotPos;
@@ -77,7 +77,7 @@ public class ContainerModule : MonoBehaviour {
 	/// Plays the activation sfx for the module.
 	/// </summary>
 	public void PlayActivationSfx() {
-		currentSfx.value = module.activationSound.clip;
+		currentSfx.value.Enqueue(module.activationSound.clip);
 		playSfx.Invoke();
 	}
 

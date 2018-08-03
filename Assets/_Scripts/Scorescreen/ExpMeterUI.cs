@@ -25,7 +25,7 @@ public class ExpMeterUI : MonoBehaviour {
 	public float sfxDelayTime = 0.25f;
 	public SfxEntry gainExpSfx;
 	public SfxEntry levelupSfx;
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playSfxEvent;
 	
 
@@ -60,7 +60,7 @@ public class ExpMeterUI : MonoBehaviour {
 				levelupText.SetActive(true);
 				valueImage.color = levelupColor;
 				valueImage.fillAmount = 1;
-				currentSfx.value = levelupSfx.clip;
+				currentSfx.value.Enqueue(levelupSfx.clip);
 				playSfxEvent.Invoke();
 				yield return new WaitForSeconds(1);
 				valueImage.fillAmount = 0;
@@ -68,7 +68,7 @@ public class ExpMeterUI : MonoBehaviour {
 				levelupText.SetActive(false);
 			}
 			else if (currentDelay > sfxDelayTime){
-				currentSfx.value = gainExpSfx.clip;
+				currentSfx.value.Enqueue(gainExpSfx.clip);
 				currentDelay = 0;
 				playSfxEvent.Invoke();
 			}

@@ -24,7 +24,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	public SfxEntry dialogueStartedSfx;
 	public SfxEntry enterDoorSfx;
 	public AudioVariable musicClip;
-	public AudioVariable sfxClip;
+	public AudioQueueVariable sfxClip;
 
 	[Header("Events")]
 	public UnityEvent playMusicEvent;
@@ -43,7 +43,7 @@ public class InitiateBattleScript : MonoBehaviour {
 
 		musicClip.value = null;
 		playMusicEvent.Invoke();
-		sfxClip.value = battleStartedSfx.clip;
+		sfxClip.value.Enqueue(battleStartedSfx.clip);
 		playSfxEvent.Invoke();
 	}
 
@@ -51,7 +51,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// Plays the dialogue transition sound when a dialogue is triggered.
 	/// </summary>
 	public void StartDialogue() {
-		sfxClip.value = dialogueStartedSfx.clip;
+		sfxClip.value.Enqueue(dialogueStartedSfx.clip);
 		playSfxEvent.Invoke();
 	}
 
@@ -59,7 +59,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// Plays the enter door sound sound when the player enters a door or a shop.
 	/// </summary>
 	public void EnterDoor() {
-		sfxClip.value = enterDoorSfx.clip;
+		sfxClip.value.Enqueue(enterDoorSfx.clip);
 		playSfxEvent.Invoke();
 	}
 
@@ -67,7 +67,7 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// Plays the dialogue transition sound when a dialogue is triggered.
 	/// </summary>
 	public void ChangeWithFadeOut() {
-		sfxClip.value = changeAreaFadeSfx.clip;
+		sfxClip.value.Enqueue(changeAreaFadeSfx.clip);
 		playSfxEvent.Invoke();
 	}
 

@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class HurtableBaseScript : MonoBehaviour {
 
 	public BoolVariable invincible;
 	protected int defense;
+
+	[Header("Sounds")]
+	public AudioQueueVariable currentSfx;
+	public FloatVariable hurtNoiseChance;
+	public SfxList hurtNoises;
+	public UnityEvent playSfxEvent;
 
 
 	public virtual int TakeDamage(int damage) {

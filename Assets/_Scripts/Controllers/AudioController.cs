@@ -27,9 +27,9 @@ public class AudioController : MonoBehaviour {
 	public IntVariable lastPlayedArea;
 
 	[Header("SFX")]
-	public AudioVariable sfxClip;
+	public AudioQueueVariable sfxQueue;
 	public FloatVariable effectVolume;
-	public AudioSource efxSource;
+	public AudioSource[] efxSource;
 
 	[Header("Music")]
 	public AudioVariable battleMusic;
@@ -45,6 +45,7 @@ public class AudioController : MonoBehaviour {
 	public RangedFloat pitchRange = new RangedFloat(0.95f,1.05f);
 	
 	private bool playingBkg = false;
+	private int currentSfxTrack;
 
 
 	void Startup() {
@@ -56,7 +57,9 @@ public class AudioController : MonoBehaviour {
 	/// Updates the volumes to a value between 0 and 1.
 	/// </summary>
 	public void UpdateVolume() {
-		efxSource.volume = Mathf.Clamp01(effectVolume.value);
+		for (int i = 0; i < efxSource.Length; i++) {
+			efxSource[i].volume = Mathf.Clamp01(effectVolume.value);
+		}
 		musicSource.volume = Mathf.Clamp01(musicVolume.value);
 	}
 
@@ -169,9 +172,15 @@ public class AudioController : MonoBehaviour {
 	/// </summary>
 	/// <param name="clip">Clip.</param>
 	public void PlaySfx() {
-		if (sfxClip.value != null) {
-			efxSource.clip = sfxClip.value;
-			efxSource.Play();
+		while(sfxQueue.value.Count > 0) {
+			AudioClip sfxClip = sfxQueue.value.Dequeue();
+			if (sfxClip != null) {
+				Debug.Log("Play track " + currentSfxTrack);
+				RandomizePitch();
+				efxSource[currentSfxTrack].clip = sfxClip;
+				efxSource[currentSfxTrack].Play();
+				currentSfxTrack = (currentSfxTrack + 1) % efxSource.Length;
+			}
 		}
 	}
 
@@ -181,8 +190,11 @@ public class AudioController : MonoBehaviour {
 	/// <param name="clip">Clip.</param>
 	public void PlaySfxEntry(SfxEntry entry) {
 		if (entry != null && entry.clip != null) {
-			efxSource.clip = entry.clip;
-			efxSource.Play();
+			Debug.Log("Play track " + currentSfxTrack);
+			RandomizePitch();
+			efxSource[currentSfxTrack].clip = entry.clip;
+			efxSource[currentSfxTrack].Play();
+			currentSfxTrack = (currentSfxTrack + 1) % efxSource.Length;
 		}
 	}
 
@@ -190,13 +202,8 @@ public class AudioController : MonoBehaviour {
 	/// Plays a random sfx from the list with a random pitch
 	/// </summary>
 	/// <param name="clips">Clips.</param>
-	public void RandomizeSfx(AudioClip[] clips) {
-		int randomIndex = Random.Range(0,clips.Length);
+	public void RandomizePitch() {
 		float randomPitch = Random.Range(pitchRange.minValue,pitchRange.maxValue);
-
-		efxSource.pitch = randomPitch;
-		efxSource.clip = clips[randomIndex];
-
-		efxSource.Play();
+		efxSource[currentSfxTrack].pitch = randomPitch;
 	}
 }

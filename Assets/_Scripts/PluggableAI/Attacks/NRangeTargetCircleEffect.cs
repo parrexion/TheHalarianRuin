@@ -40,7 +40,7 @@ public class NRangeTargetCircleEffect : AttackEffect {
 		attackScript.bgui.effectList.Add(projectile);
 
 		if (controller.values.attackActivateSfx != null) {
-			controller.currentSfx.value = controller.values.attackActivateSfx.clip;
+			controller.currentSfx.value.Enqueue(controller.values.attackActivateSfx.clip);
 			controller.playSfxEvent.Invoke();
 		}
 

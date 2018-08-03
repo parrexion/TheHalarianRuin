@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class SingleSfxAudioController : MonoBehaviour {
 
 	[Header("References")]
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playSfx;
 
 
@@ -14,7 +14,7 @@ public class SingleSfxAudioController : MonoBehaviour {
 	/// Plays the buy item sfx when triggered.
 	/// </summary>
 	public void PlaySingleSfx(SfxEntry entry) {
-		currentSfx.value = entry.clip;
+		currentSfx.value.Enqueue(entry.clip);
 		playSfx.Invoke();
 	}
 

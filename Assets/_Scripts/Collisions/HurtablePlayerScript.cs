@@ -8,21 +8,19 @@ using UnityEngine.Events;
 /// </summary>
 public class HurtablePlayerScript : HurtableBaseScript {
 
+	[Header("Player Stats")]
 	public IntVariable playerMaxHealth;
 	public FloatVariable damageTaken;
 	public FloatVariable otherDamageTaken;
 	public IntVariable playerDefense;
 
+	[Header("Hurt stuff")]
 	public BoolVariable invinciblePlayer;
 	public bool canBeHurt = true;
-
-	[Header("Sounds")]
-	public AudioVariable currentSfx;
 
 	[Header("Events")]
 	public UnityEvent playerDiedEvent;
 	public UnityEvent takenDamageEvent;
-	public UnityEvent playSfxEvent;
 
 
 	/// <summary>
@@ -50,9 +48,12 @@ public class HurtablePlayerScript : HurtableBaseScript {
 		if (dmg > 0) {
 			takenDamageEvent.Invoke();
 			if (projectile.impactSound != null) {
-				currentSfx.value = projectile.impactSound.clip;
-				playSfxEvent.Invoke();
+				currentSfx.value.Enqueue(projectile.impactSound.clip);
 			}
+			if (Random.Range(0f,1f) < hurtNoiseChance.value){
+				currentSfx.value.Enqueue(hurtNoises.RandomClip());
+			}
+			playSfxEvent.Invoke();
 		}
 
 		if (damageTaken.value + otherDamageTaken.value >= playerMaxHealth.value)

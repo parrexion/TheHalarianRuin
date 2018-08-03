@@ -28,7 +28,7 @@ public abstract class StateController : BasicStateMachine {
 	[Space(5)]
 
 	[Header("Sounds")]
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playSfxEvent;
 	
 

@@ -10,7 +10,7 @@ public class FadeAwayScript : MonoBehaviour {
 	
 	[Header("Music")]
 	public SfxList sfxList;
-	public AudioVariable sfxClip;
+	public AudioQueueVariable sfxClip;
 	public UnityEvent playSfx;
 
 	private SpriteRenderer rend;
@@ -23,7 +23,7 @@ public class FadeAwayScript : MonoBehaviour {
 
 		alphaColor = rend.color;
 		colorValue = 1.0f;
-		sfxClip.value = sfxList.RandomClip();
+		sfxClip.value.Enqueue(sfxList.RandomClip());
 		playSfx.Invoke();
 	}
 	

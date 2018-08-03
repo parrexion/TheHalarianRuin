@@ -64,7 +64,7 @@ public class DialogueSceneEditorWindow : EditorWindow {
 		// 	Debug.Log("Conversion finished!");
 		// }
 
-		GUILayout.Label("Story values: " + dialogueUUID.value, EditorStyles.boldLabel);
+		GUILayout.Label("Story values");
 		useFollower.value = EditorGUILayout.Toggle("Use follower", useFollower.value);
 		playAsAndroid.value = EditorGUILayout.Toggle("Play as android", playAsAndroid.value);
 	}

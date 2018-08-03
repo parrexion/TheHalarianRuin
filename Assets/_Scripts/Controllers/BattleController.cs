@@ -39,7 +39,7 @@ public class BattleController : MonoBehaviour {
 	[Header("Audio")]
 	public SfxEntry diedClip;
 	public AudioVariable currentMusic;
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playMusicEvent;
 	public UnityEvent playSfxEvent;
 
@@ -244,7 +244,7 @@ public class BattleController : MonoBehaviour {
 
 		currentMusic.value = null;
 		playMusicEvent.Invoke();
-		currentSfx.value = diedClip.clip;
+		currentSfx.value.Enqueue(diedClip.clip);
 		playSfxEvent.Invoke();
 
 		ScoreScreenValues values = GetComponent<ScoreScreenValues>();

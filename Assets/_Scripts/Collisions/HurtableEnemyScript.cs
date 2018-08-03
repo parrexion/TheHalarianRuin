@@ -8,18 +8,15 @@ using UnityEngine.Events;
 /// </summary>
 [RequireComponent(typeof(StateController),typeof(Collider2D))]
 [RequireComponent(typeof(SpriteRenderer),typeof(Rigidbody2D))]
-public class HurtableEnemyScript : MonoBehaviour {
+public class HurtableEnemyScript : HurtableBaseScript {
 
 	private static int id = 0;
 
+	[Header("Enemy Health Stuff")]
 	public EnemyGroup group;
 	public Transform damageNumbers;
 	public BoolVariable invincibleEnemy;
 	public BoolVariable onehitKO;
-
-	[Header("Sounds")]
-	public AudioVariable currentSfx;
-	public UnityEvent playSfxEvent;
 
 	private BattleGUIController battleGUI;
 	private SpriteRenderer spriteRenderer;
@@ -66,7 +63,7 @@ public class HurtableEnemyScript : MonoBehaviour {
 		id++;
 
 		if (projectile.impactSound != null) {
-			currentSfx.value = projectile.impactSound.clip;
+			currentSfx.value.Enqueue(projectile.impactSound.clip);
 			playSfxEvent.Invoke();
 		}
 	}
@@ -74,7 +71,7 @@ public class HurtableEnemyScript : MonoBehaviour {
 	/// <summary>
 	/// Removes the dead enemy and spawns a dead version of it.
 	/// </summary>
-	public void Die(){
+	public override void Die(){
 		spriteRenderer.enabled = false;
 		stateController.enabled = false;
 		rigid.Sleep();

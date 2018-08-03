@@ -45,7 +45,7 @@ public class SoldierGridController : MonoBehaviour {
 	[Header("Sounds")]
 	public SfxEntry basicActivationSound;
 	public SfxEntry specialActivationSound;
-	public AudioVariable currentSfx;
+	public AudioQueueVariable currentSfx;
 	public UnityEvent playSfxEvent;
 
 
@@ -241,7 +241,7 @@ public class SoldierGridController : MonoBehaviour {
 			balanceController.TriggerNormal();
 		}
 		if (dmgs.Count > 0){
-			currentSfx.value = basicActivationSound.clip;
+			currentSfx.value.Enqueue(basicActivationSound.clip);
 			playSfxEvent.Invoke();
 		}
 	}
@@ -265,7 +265,7 @@ public class SoldierGridController : MonoBehaviour {
 			shotTransform.position = enemy.position;
 		}
 		if (dmgs.Count > 0){
-			currentSfx.value = specialActivationSound.clip;
+			currentSfx.value.Enqueue(specialActivationSound.clip);
 			playSfxEvent.Invoke();
 		}
 	}

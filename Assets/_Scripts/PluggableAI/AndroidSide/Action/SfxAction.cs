@@ -22,11 +22,11 @@ public class SfxAction : Action {
 			switch (type)
 			{
 				case SfxType.ATTACK:
-					controller.currentSfx.value = controller.values.attackActivateSfx.clip;
+					controller.currentSfx.value.Enqueue(controller.values.attackActivateSfx.clip);
 					controller.playSfxEvent.Invoke();
 					break;
 				case SfxType.CHARGE:
-					controller.currentSfx.value = controller.values.attackChargeSfx.clip;
+					controller.currentSfx.value.Enqueue(controller.values.attackChargeSfx.clip);
 					controller.playSfxEvent.Invoke();
 					break;
 			}

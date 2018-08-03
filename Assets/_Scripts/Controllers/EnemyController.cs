@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour {
 	public bool spawnBottom = true;
 
 	public Transform deadEnemy;
-	private Transform ggobjN;
+	private Transform ggobjA;
 	private Transform ggobjS;
 
 	private List<EnemyGroup> groups;
@@ -101,10 +101,10 @@ public class EnemyController : MonoBehaviour {
 	private void CreateA(EnemyEntry values, EnemyGroup group){
 		if (!spawnBottom)
 			return;
-		ggobjN = Instantiate(values.enemyModelN) as Transform;
-		AStateController state = ggobjN.GetComponent<AStateController>();
-		HurtableEnemyScript hurt = ggobjN.GetComponent<HurtableEnemyScript>();
-		AttackScript attack = ggobjN.GetComponent<AttackScript>();
+		ggobjA = Instantiate(values.enemyModelN) as Transform;
+		AStateController state = ggobjA.GetComponent<AStateController>();
+		HurtableEnemyScript hurt = ggobjA.GetComponent<HurtableEnemyScript>();
+		AttackScript attack = ggobjA.GetComponent<AttackScript>();
 
 		hurt.group = group;
 		state.enemyid = enemyId;
@@ -112,10 +112,10 @@ public class EnemyController : MonoBehaviour {
 		state.values.CopyValues(values);
 		state.moveBounds = aMoveBounds;
 
-		ggobjN.position = state.GetRandomLocation();
+		ggobjA.position = state.GetRandomLocation();
 		group.bot = hurt;
 		group.nStateController = state;
-		group.nTransform = ggobjN;
+		group.nTransform = ggobjA;
 		group.nAttackScript = attack;
 	}
 
@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour {
 		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
 		state.moveBounds = sMoveBounds;
-
+//The S enemies moves from their spawn positions
 		ggobjS.position = state.GetRandomLocation();
 		group.top = hurt;
 		group.sStateController = state;
