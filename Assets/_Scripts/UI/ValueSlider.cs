@@ -13,7 +13,7 @@ public class ValueSlider : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable() {
 		slider.value = sliderValue.value;
 		UpdateText();
 	}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MenuScreenController : MonoBehaviour {
 
-	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
+	public enum MenuScreen {STATUS,MODULE,EQUIP,MAP,MESSAGE,OPTIONS,SAVE}
 
 	public IntVariable currentInventoryScreen;
 	public BoolVariable menuLock;
@@ -17,7 +17,7 @@ public class MenuScreenController : MonoBehaviour {
 	public GameObject equipScreen;
 	public GameObject mapScreen;
 	public GameObject messageScreen;
-	public GameObject journalScreen;
+	public GameObject optionsScreen;
 	public GameObject saveScreen;
 
 	[Space(3)]
@@ -27,7 +27,7 @@ public class MenuScreenController : MonoBehaviour {
 	public Button equipButton;
 	public Button mapButton;
 	public Button messageButton;
-	public Button journalButton;
+	public Button optionsButton;
 	public Button saveButton;
 
 	[Header("Other values")]
@@ -80,7 +80,7 @@ public class MenuScreenController : MonoBehaviour {
 		equipScreen.SetActive(screen == MenuScreen.EQUIP);
 		mapScreen.SetActive(screen == MenuScreen.MAP);
 		messageScreen.SetActive(screen == MenuScreen.MESSAGE);
-		journalScreen.SetActive(screen == MenuScreen.JOURNAL);
+		optionsScreen.SetActive(screen == MenuScreen.OPTIONS);
 		saveScreen.SetActive(screen == MenuScreen.SAVE);
 
 		//Set current buttons
@@ -90,7 +90,7 @@ public class MenuScreenController : MonoBehaviour {
 		saveButton.interactable = (screen != MenuScreen.SAVE);
 		mapButton.interactable = (screen != MenuScreen.MAP);
 		messageButton.interactable = (screen != MenuScreen.MESSAGE);
-		journalButton.interactable = (screen != MenuScreen.JOURNAL);
+		optionsButton.interactable = (screen != MenuScreen.OPTIONS);
 	}
 
 	/// <summary>

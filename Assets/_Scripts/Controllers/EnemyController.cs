@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour {
 		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
 		state.moveBounds = sMoveBounds;
-//The S enemies moves from their spawn positions
+// The S enemies moves from their spawn positions
 		ggobjS.position = state.GetRandomLocation();
 		group.top = hurt;
 		group.sStateController = state;

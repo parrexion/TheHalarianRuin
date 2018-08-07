@@ -128,14 +128,14 @@ public class ValueController : EditorWindow {
 		totalMoney.value = EditorGUILayout.IntField("Total Money", totalMoney.value);
 
 		GUILayout.Label("Player values", EditorStyles.boldLabel);
-		GUILayout.Label(playerMaxHealth.value + "     Max health");
+		EditorGUILayout.LabelField("Max health", playerMaxHealth.value.ToString());
 		GUILayout.BeginHorizontal();
-		GUILayout.Label(playerAttack.value + "     Android Attack");
-		GUILayout.Label(playerSAttack.value + "     Soldier Attack");
+		EditorGUILayout.LabelField("Android Attack", playerAttack.value.ToString());
+		EditorGUILayout.LabelField("Soldier Attack", playerSAttack.value.ToString());
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		GUILayout.Label(playerDefense.value + "     Android Defense");
-		GUILayout.Label(playerSDefense.value + "     Soldier Defense");
+		EditorGUILayout.LabelField("Android Defense", playerDefense.value.ToString());
+		EditorGUILayout.LabelField("Soldier Defense", playerSDefense.value.ToString());
 		GUILayout.EndHorizontal();
 	}
 

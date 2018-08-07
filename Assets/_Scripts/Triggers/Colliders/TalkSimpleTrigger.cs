@@ -8,18 +8,20 @@ public class TalkSimpleTrigger : OWTrigger {
 	public SpriteRenderer talkSprite;
 	public PopupTrigger chat;
 
-	public string dialogueLine;
-	public CharacterEntry character;
+	public OneLiner[] dialogueLines;
+	private int currentDialogue;
 
 	public StringVariable startText;
 	public StringVariable showText;
 	public StringVariable talkingName;
 	public ScrObjEntryReference talkingCharacter;
+	public IntVariable talkingPose;
 
 
 	public override void Trigger() {
 		chat.active = true;
 		talkSprite.enabled = true;
+		currentDialogue = 0;
 	}
 
 	void OnTriggerExit2D(Collider2D otherCollider){
@@ -31,10 +33,14 @@ public class TalkSimpleTrigger : OWTrigger {
 	}
 
 	public override void IngameTrigger() {
+		OneLiner one = dialogueLines[currentDialogue];
+		currentDialogue = (currentDialogue +1) % dialogueLines.Length;
+
 		startText.value = "";
-		showText.value = dialogueLine;
-		talkingName.value = character.entryName;
-		talkingCharacter.value = character;
+		showText.value = one.text;
+		talkingName.value = one.character.entryName;
+		talkingCharacter.value = one.character;
+		talkingPose.value = one.pose;
 		startEvent.Invoke();
 	}
 }
